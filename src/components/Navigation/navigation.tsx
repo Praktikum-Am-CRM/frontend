@@ -1,6 +1,6 @@
 import { Text } from '@gravity-ui/uikit';
 import { NavLink } from 'react-router-dom';
-import styles from './styles.module.css';
+import styles from './navigation.module.css';
 
 export default function Navigation() {
   const data = [

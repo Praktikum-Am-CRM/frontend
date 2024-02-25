@@ -1,0 +1,21 @@
+.nav {
+  width: 622px;
+  height: 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--Base-Generic);
+  padding: 3px;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.nav__link {
+  color: var(--Text-Complementary);
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.nav__link_active {
+}
