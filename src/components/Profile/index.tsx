@@ -1,4 +1,4 @@
-import styles from './profile.module.css';
+import styles from './styles.module.css';
 
 const data = {
   urlPhoto: 'http://www.coffeeambassador.ru/photo/photo63.jpeg',

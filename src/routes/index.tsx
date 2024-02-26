@@ -5,12 +5,12 @@ import {
 } from 'react-router-dom';
 
 import * as page from '../pages';
-import Layout from '../components/Layout/layout';
+import Layout from '../components/Layout';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />} errorElement={<page.NotFoundPage />}>
-      <Route path="ambassodors" element={<page.AmbassodorsPage />} />
+      <Route path="ambassadors" element={<page.AmbassadorsPage />} />
       <Route path="candidates" element={<page.CandidatesPage />} />
       <Route path="notifications" element={<page.NotificationsPage />} />
       <Route path="statistics" element={<page.StatisticsPage />} />
