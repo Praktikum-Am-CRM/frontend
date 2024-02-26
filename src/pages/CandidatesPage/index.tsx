@@ -1,3 +1,9 @@
+import CandidateTable from '../../components/CandidateTable';
+
 export default function CandidatesPage() {
-  return <>текст2</>;
+  return (
+    <>
+      <CandidateTable />
+    </>
+  );
 }
