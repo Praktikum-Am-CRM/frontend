@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 
 import * as page from '../pages';
-import Layout from '../components/Layout/layout';
+import Layout from '../components/Layout/Layout';
 
 const router = createBrowserRouter(
   createRoutesFromElements(

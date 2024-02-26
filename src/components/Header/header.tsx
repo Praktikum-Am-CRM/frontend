@@ -1,5 +1,5 @@
-import Navigation from '../Navigation/navigation';
-import Profile from '../Profile/profile';
+import Navigation from '../Navigation/Navigation';
+import Profile from '../Profile/Profile';
 import styles from './header.module.css';
 
 export default function Header() {
