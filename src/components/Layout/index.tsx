@@ -18,7 +18,7 @@ export default function Layout() {
     <ScrollToTop>
       <div className={styles.layout}>
         <Header />
-        <main>
+        <main className={styles.layout__main}>
           <Outlet />
         </main>
       </div>
