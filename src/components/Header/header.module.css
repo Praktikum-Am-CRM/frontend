@@ -1,9 +1,25 @@
 .header {
+  width: 100%;
+  border-bottom: 1px solid var(--Base-Semantic-Neutral-Light);
+  background-color: var(--Base-Area-Ultralight);
+}
+
+.header__container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
   height: 60px;
   background-color: #fff;
-  border-bottom: 1px solid #ccc;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  background-color: transparent;
+}
+
+.header__link {
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
 }
