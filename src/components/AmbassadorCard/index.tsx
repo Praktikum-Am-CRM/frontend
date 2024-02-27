@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styles from './styles.module.css';
 
 import { Link } from '@gravity-ui/uikit';
 
-export default function AmbassadorCard({ rowData }) {
+export default function AmbassadorCard({ rowData }: { rowData: any }) {
   return (
     <div className={styles.ambassadorCard}>
       <h2 className={styles.ambassadorCard__heading}>{rowData.ambassador}</h2>
