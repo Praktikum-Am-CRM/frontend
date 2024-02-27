@@ -70,24 +70,26 @@ export default function TableComponent({
     </Tooltip>
   );
 
-  const prepareDataForTable = (data: (typeof tableRowData)[0]) => ({
-    ...data,
-    id: data.id,
-    ambassador: textWithTooltip(data.ambassador),
-    status: data.status && determineStatus(data.status),
-    promo: data.promo,
-    telegram: (
-      <Link view="normal" href={`https://t.me/${data.telegram}`}>
-        {data.telegram}
-      </Link>
-    ),
-    program: data.program,
-    registration: data.registration,
-    gender: determineGender(data.gender),
-    address: data.address && textWithTooltip(data.address),
-    tel: data.tel,
-    email: data.email,
-  });
+  function prepareDataForTable(data: TableRowData) {
+    return {
+      ...data,
+      id: data.id,
+      ambassador: textWithTooltip(data.ambassador),
+      status: data.status && determineStatus(data.status),
+      promo: data.promo,
+      telegram: (
+        <Link view="normal" href={`https://t.me/${data.telegram}`}>
+          {data.telegram}
+        </Link>
+      ),
+      program: data.program,
+      registration: data.registration,
+      gender: determineGender(data.gender),
+      address: data.address && textWithTooltip(data.address),
+      tel: data.tel,
+      email: data.email,
+    };
+  }
 
   return (
     <>
