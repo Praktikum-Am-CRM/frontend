@@ -14,6 +14,7 @@ import { useState } from 'react';
 import styles from './styles.module.css';
 import { WomanIcon } from '../../images/WomanIcon';
 import { ManIcon } from '../../images/ManIcon';
+import { TableRowData } from '../../types/types';
 
 type TableSettingsData = Array<{
   id: string;
@@ -24,7 +25,7 @@ export default function TableComponent({
   tableRowData,
   tableHeaderData,
 }: {
-  tableRowData: any;
+  tableRowData: TableRowData[];
   tableHeaderData: any[];
 }) {
   const [settings, setSettings] = useState<TableSettingsData>(
@@ -73,7 +74,7 @@ export default function TableComponent({
     ...data,
     id: data.id,
     ambassador: textWithTooltip(data.ambassador),
-    status: determineStatus(data.status),
+    status: data.status && determineStatus(data.status),
     promo: data.promo,
     telegram: (
       <Link view="normal" href={`https://t.me/${data.telegram}`}>
@@ -83,21 +84,19 @@ export default function TableComponent({
     program: data.program,
     registration: data.registration,
     gender: determineGender(data.gender),
-    address: textWithTooltip(data.address),
+    address: data.address && textWithTooltip(data.address),
     tel: data.tel,
     email: data.email,
   });
 
-  const finalArray = tableRowData.map(prepareDataForTable);
-
   return (
     <>
-      {finalArray && columnsWithAddedProps && (
+      {tableRowData && columnsWithAddedProps && (
         <MyTable
           className={styles.table}
           onRowClick={() => null}
           emptyMessage="Ничего не найдено ¯\_(ツ)_/¯"
-          data={finalArray}
+          data={tableRowData.map(prepareDataForTable)}
           columns={columnsWithAddedProps}
           settings={settings}
           getRowId={getRowId}

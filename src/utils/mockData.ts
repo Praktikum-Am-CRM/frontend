@@ -74,3 +74,28 @@ export const candidateArray = [
     program: 'Бэк',
   },
 ];
+
+export const candidateArchiveArray = [
+  {
+    id: 1,
+    ambassador: 'Архив Амбассадор',
+    tel: '343234234',
+    promo: '444',
+    telegram: 'moskow',
+    email: 'test@test',
+    registration: '02.02.2022',
+    gender: 'woman',
+    program: 'Фронт',
+  },
+  {
+    id: 2,
+    ambassador: 'Амбассадор',
+    tel: '343234234',
+    promo: '444',
+    telegram: 'mosk888ow',
+    email: 'test@test',
+    registration: '02.02.2022',
+    gender: 'man',
+    program: 'Бэк',
+  },
+];

@@ -1,7 +1,11 @@
-import { candidateArray } from '../../utils/mockData';
+import { TableRowData } from '../../types/types';
 import TableComponent from '../TableComponent';
 
-export default function CandidateTable() {
+export default function CandidateTable({
+  candidateArray,
+}: {
+  candidateArray: TableRowData[];
+}) {
   const columns = [
     { id: 'ambassador', name: 'Амбассадор', meta: { sort: true } },
     { id: 'registration', name: 'Регистрация', meta: { sort: true } },
