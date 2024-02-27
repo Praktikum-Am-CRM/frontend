@@ -1,9 +1,24 @@
-.header {
+.nav {
+  width: 622px;
+  height: 36px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
-  height: 60px;
-  background-color: #fff;
-  border-bottom: 1px solid #ccc;
+  background-color: var(--Base-Semantic-Neutral-Light);
+  padding: 3px;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.nav__link {
+  color: var(--Text-Complementary);
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 18px;
+  padding: 6px 15px;
+  border-radius: 5px;
+}
+
+.nav__link_active {
+  background-color: var(--Branding-Base-Background);
 }

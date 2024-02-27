@@ -10,8 +10,8 @@ import Layout from '../components/Layout';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />} errorElement={<page.NotFoundPage />}>
+      <Route path="ambassadors" element={<page.AmbassadorsPage />} />
       <Route path="login" element={<page.LoginPage />} />
-      <Route path="ambassodors" element={<page.AmbassodorsPage />} />
       <Route path="candidates" element={<page.CandidatesPage />} />
       <Route path="notifications" element={<page.NotificationsPage />} />
       <Route path="statistics" element={<page.StatisticsPage />} />

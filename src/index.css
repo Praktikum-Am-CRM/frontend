@@ -1,3 +1,5 @@
+@import url(./vendor/normalize.css);
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-size: 14px;
@@ -13,4 +15,12 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --Text-Complementary: #000000b2;
+  --Text-Primary: #000000d9;
+  --Text-Secondary: #00000080;
+  --Branding-Base-Background: #fff;
+  --Base-Semantic-Neutral-Light: #0000000d;
+  --Base-Area-Ultralight: #fafafa;
+  --max-desktop-width: 1440px;
 }

@@ -4,7 +4,7 @@ import styles from './styles.module.css';
 
 export default function Navigation() {
   const data = [
-    { title: 'Амбассодоры', url: 'ambassodors' },
+    { title: 'Амбассадоры', url: 'ambassadors' },
     { title: 'Кандидаты', url: 'candidates' },
     { title: 'Статистика', url: 'statistics' },
     { title: 'Уведомления', url: 'notifications' },
