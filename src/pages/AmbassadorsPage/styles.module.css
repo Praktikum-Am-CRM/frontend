@@ -1,15 +1,11 @@
-.candidatesPage {
+.ambassadorsPage {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.candidatesPage__searchContainer {
+.ambassadorsPage__searchContainer {
   display: flex;
   align-items: center;
   gap: 20px;
-}
-
-.tabs {
-  width: fit-content;
 }
