@@ -15,6 +15,7 @@ import styles from './styles.module.css';
 import { WomanIcon } from '../../images/WomanIcon';
 import { ManIcon } from '../../images/ManIcon';
 import { TableRowData } from '../../types/types';
+import ModalWindow from '../ModalWindow';
 
 type TableSettingsData = Array<{
   id: string;
@@ -32,6 +33,8 @@ export default function TableComponent({
     tableHeaderData?.map(col => ({ id: col.id, isSelected: true })),
   );
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
+  const [isRowData, setisRowData] = useState({});
   const getRowId = 'id';
 
   const MyTable = withTableSorting(
@@ -91,12 +94,30 @@ export default function TableComponent({
     };
   }
 
+  function closeModal() {
+    setIsModalOpened(false);
+  }
+
   return (
     <>
       {tableRowData && columnsWithAddedProps && (
         <MyTable
           className={styles.table}
-          onRowClick={() => null}
+          onRowClick={evt => {
+            setisRowData({
+              telegram: evt.telegram.props.children,
+              id: evt.id,
+              ambassador: evt.ambassador.props.content,
+              status: evt.status.props.children,
+              promo: evt.promo,
+              program: evt.program,
+              registration: evt.registration,
+              address: evt.address.props.content,
+              tel: evt.tel,
+              email: evt.email,
+            });
+            setIsModalOpened(true);
+          }}
           emptyMessage="Ничего не найдено ¯\_(ツ)_/¯"
           data={tableRowData.map(prepareDataForTable)}
           columns={columnsWithAddedProps}
@@ -110,6 +131,11 @@ export default function TableComponent({
           }}
         />
       )}
+      <ModalWindow
+        isModalOpened={isModalOpened}
+        closeModal={closeModal}
+        rowData={isRowData}
+      />
     </>
   );
 }
