@@ -8,7 +8,13 @@ import AmbassadorMerch from '../AmbassadorMerch';
 import AmbassadorHistory from '../AmbassadorHistory';
 
 // eslint-disable-next-line no-console
-export default function AmbassadorCard({ rowData }) {
+export default function AmbassadorCard({
+  rowData,
+  isAmbassador,
+}: {
+  rowData: any;
+  isAmbassador: boolean;
+}) {
   const [isTabsDataActive, setIsTabsDataActive] = useState<boolean>(true);
   const [isTabsActivityActive, setIsTabsActivityActive] =
     useState<boolean>(false);
@@ -39,7 +45,7 @@ export default function AmbassadorCard({ rowData }) {
         color="primary"
         variant="header-2"
       >
-        {rowData.ambassador}
+        Амбассадор
       </Text>
       <div className={styles.ambassadorCard__infoContainer}>
         <ul className={styles.ambassadorCard__infoList}>
@@ -87,9 +93,15 @@ export default function AmbassadorCard({ rowData }) {
             </Text>
           </li>
         </ul>
-        <Button className={styles.ambassadorCard__assignMerchButton}>
-          Присвоить мерч
-        </Button>
+        {isAmbassador ? (
+          <Button className={styles.ambassadorCard__assignButton}>
+            Присвоить мерч
+          </Button>
+        ) : (
+          <Button className={styles.ambassadorCard__assignButton}>
+            Сделать амбассадором
+          </Button>
+        )}
       </div>
       <Tabs size="l" className={styles.ambassadorCard__tabs}>
         <Tabs.Item
@@ -103,28 +115,32 @@ export default function AmbassadorCard({ rowData }) {
             setIsTabsHistoryActive(false);
           }}
         ></Tabs.Item>
-        <Tabs.Item
-          id="tabs-activity"
-          title="Деятельность"
-          active={isTabsActivityActive}
-          onClick={() => {
-            setIsTabsDataActive(false);
-            setIsTabsActivityActive(true);
-            setIsTabsMerchActive(false);
-            setIsTabsHistoryActive(false);
-          }}
-        ></Tabs.Item>
-        <Tabs.Item
-          id="tabs-merch"
-          title="Мерч"
-          active={isTabsMerchActive}
-          onClick={() => {
-            setIsTabsDataActive(false);
-            setIsTabsActivityActive(false);
-            setIsTabsMerchActive(true);
-            setIsTabsHistoryActive(false);
-          }}
-        ></Tabs.Item>
+        {isAmbassador && (
+          <Tabs.Item
+            id="tabs-activity"
+            title="Деятельность"
+            active={isTabsActivityActive}
+            onClick={() => {
+              setIsTabsDataActive(false);
+              setIsTabsActivityActive(true);
+              setIsTabsMerchActive(false);
+              setIsTabsHistoryActive(false);
+            }}
+          ></Tabs.Item>
+        )}
+        {isAmbassador && (
+          <Tabs.Item
+            id="tabs-merch"
+            title="Мерч"
+            active={isTabsMerchActive}
+            onClick={() => {
+              setIsTabsDataActive(false);
+              setIsTabsActivityActive(false);
+              setIsTabsMerchActive(true);
+              setIsTabsHistoryActive(false);
+            }}
+          ></Tabs.Item>
+        )}
         <Tabs.Item
           id="tabs-history"
           title="История"

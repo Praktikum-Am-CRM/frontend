@@ -16,6 +16,9 @@ export default function ModalWindow({
 
   const defineContent = () => {
     if (location.pathname === '/ambassadors') {
+      return <AmbassadorCard rowData={rowData} isAmbassador />;
+    }
+    if (location.pathname === '/candidates') {
       return <AmbassadorCard rowData={rowData} />;
     }
     return null;

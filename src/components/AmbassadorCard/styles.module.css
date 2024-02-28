@@ -45,13 +45,12 @@
   cursor: default;
 }
 
-.ambassadorCard__assignMerchButton {
-  width: 138px;
+.ambassadorCard__assignButton {
   height: 36px;
   background-color: var(--Base-Brand);
   color: var(--Text-Primary);
 }
 
 .ambassadorCard__tabs {
-  max-width: 349px;
+  width: max-content;
 }
