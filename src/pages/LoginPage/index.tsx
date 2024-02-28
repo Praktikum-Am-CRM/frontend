@@ -1,5 +1,5 @@
 import styles from './LoginPage.module.css';
-import { Button, TextInput } from '@gravity-ui/uikit';
+import { Button, Text, TextInput } from '@gravity-ui/uikit';
 import Logo from '../../components/Logo';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -30,7 +30,9 @@ export default function LoginPage() {
     <div className={styles.container}>
       <Logo className={styles.logo} />
       <div className={styles.loginContainer}>
-        <h3 className={styles.title}>Добро пожаловать</h3>
+        <Text className={styles.title} variant="display-2">
+          Добро пожаловать!
+        </Text>
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           {(errors.email || errors.password) && (
             <p className={styles.error}>Введены неверная почта и/или пароль</p>
@@ -61,7 +63,7 @@ export default function LoginPage() {
           />
 
           <div className={styles.buttonsContainer}>
-            <Button type="submit" view="action" size="l">
+            <Button type="submit" view="action" size="xl">
               Войти
             </Button>
           </div>

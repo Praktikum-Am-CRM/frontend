@@ -8,13 +8,13 @@
 }
 
 .logo {
-  margin-top: 10vh;
+  margin-top: 11vh;
   margin-bottom: 12vh;
   height: 54px;
 }
 
 .loginContainer {
-  width: 474px;
+  width: 400px;
   display: flex;
   flex-direction: column;
   background-color: white;
@@ -24,11 +24,7 @@
 
 .title {
   text-align: center;
-  font-family: Inter;
-  font-size: 32px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 40px;
+  margin-bottom: 34px;
 }
 
 .error {
@@ -44,6 +40,8 @@
 .form {
   display: flex;
   flex-direction: column;
+  padding: 0 24px;
+  gap: 4px;
 }
 
 .label {
@@ -52,10 +50,6 @@
 
 .input {
   margin-bottom: 24px;
-}
-
-.input:focus {
-  background-color: gray;
 }
 
 .buttonsContainer {
@@ -70,13 +64,14 @@
   padding: 0;
   width: 474px;
   position: absolute;
-  bottom: 48px;
+  bottom: 28px;
 }
 
 .items {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin: 0 40px;
 }
 
 .link {

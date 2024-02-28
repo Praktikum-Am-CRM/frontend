@@ -6,12 +6,14 @@ import { authService } from '../../services/authService';
 
 interface AuthState {
   user: any;
+  isLoggedIn: boolean;
   isLoading: boolean;
   error: string | null | unknown;
 }
 
 const initialState: AuthState = {
   user: null,
+  isLoggedIn: false,
   isLoading: false,
   error: null,
 };
@@ -39,6 +41,7 @@ const authSlice = createSlice({
     builder.addCase(login.fulfilled, (state, action) => {
       state.user = action.payload.user;
       localStorage.setItem('token', action.payload.token);
+      state.isLoggedIn = true;
       state.isLoading = false;
     });
     builder.addCase(login.rejected, (state, action) => {
