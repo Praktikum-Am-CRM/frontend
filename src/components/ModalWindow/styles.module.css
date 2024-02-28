@@ -1,0 +1,42 @@
+.modal {
+  max-width: calc(714px + 19px + 24px);
+  width: 52.56vw;
+  height: calc(100vh - 66px);
+  position: absolute;
+  top: -16px;
+  right: 0;
+  z-index: 2;
+  background-color: var(--Branding-Base-Background);
+  display: none;
+}
+
+.modal_active {
+  display: block;
+}
+
+.modal__container {
+  max-width: 714px;
+  width: 49.58vw;
+  position: absolute;
+  top: 0;
+  left: 24px;
+  border-radius: 10px;
+  border: 1px solid var(--Line-Generic);
+  box-sizing: border-box;
+}
+
+.modal__closeIcon {
+  position: absolute;
+  cursor: pointer;
+  right: 28px;
+  top: 26px;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  background-image: url(../../ui/closeIcon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 10px;
+}
