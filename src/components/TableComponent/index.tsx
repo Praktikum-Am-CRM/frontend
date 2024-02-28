@@ -89,19 +89,20 @@ export default function TableComponent({
         <MyTable
           className={styles.table}
           onRowClick={evt => {
-            console.log(evt);
-            setIsRowData({
-              telegram: evt.telegram.props.children,
-              id: evt.id,
-              ambassador: evt.ambassador.props.content,
-              status: evt.status,
-              promo: evt.promo,
-              program: evt.program,
-              registration: evt.registration,
-              address: evt.address.props.content,
-              tel: evt.tel,
-              email: evt.email,
-            });
+            if (evt.status) {
+              setIsRowData({
+                telegram: evt.telegram.props.children,
+                id: evt.id,
+                ambassador: evt.ambassador.props.content,
+                status: evt.status,
+                promo: evt.promo,
+                program: evt.program,
+                registration: evt.registration,
+                address: evt.address.props.content,
+                tel: evt.tel,
+                email: evt.email,
+              });
+            }
             setIsModalOpened(true);
           }}
           emptyMessage="Ничего не найдено ¯\_(ツ)_/¯"
