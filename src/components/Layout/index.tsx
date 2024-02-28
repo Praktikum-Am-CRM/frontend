@@ -19,7 +19,9 @@ export default function Layout() {
       <div className={styles.layout}>
         <Header />
         <main className={styles.layout__main}>
-          <Outlet />
+          <div className={styles.layout__сontainer}>
+            <Outlet />
+          </div>
         </main>
       </div>
     </ScrollToTop>

@@ -1,4 +1,5 @@
 import styles from './styles.module.css';
+import { Text } from '@gravity-ui/uikit';
 
 const data = {
   urlPhoto: 'http://www.coffeeambassador.ru/photo/photo63.jpeg',
@@ -15,8 +16,14 @@ export default function Profile() {
         className={styles.profile__photo}
       />
       <div className={styles.profile__userData}>
-        <p className={styles.profile__userName}>{data.username}</p>
-        <p className={styles.profile__userMail}>{data.usermail}</p>
+        <Text variant="body-short">{data.username}</Text>
+        <Text
+          className={styles.profile__userMail}
+          variant="body-short"
+          color="secondary"
+        >
+          {data.usermail}
+        </Text>
       </div>
     </div>
   );

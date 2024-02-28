@@ -3,17 +3,13 @@
 }
 
 .ambassadorCard__heading {
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 28px;
-  color: var(--Text-Primary);
-  padding: 0;
-  margin: 0 0 24px 0;
+  cursor: default;
 }
 
 .ambassadorCard__infoContainer {
   display: flex;
   justify-content: space-between;
+  margin-top: 24px;
 }
 
 .ambassadorCard__infoList {
@@ -36,29 +32,21 @@
 }
 
 .ambassadorCard__pointDescription {
-  font-size: 13px;
-  line-height: 18px;
-  color: var(--Text-Secondary);
-  padding: 0;
   margin: 0 12px 0 0;
   cursor: default;
 }
 
 .ambassadorCard__course {
-  margin: 0;
-  padding: 0;
-  font-size: 13px;
-  line-height: 18px;
-  color: var(--Text-Primary);
+  cursor: default;
+}
+
+.ambassadorCard__status {
+  cursor: default;
 }
 
 .ambassadorCard__assignMerchButton {
   width: 138px;
   height: 36px;
-  padding: 10px 16px;
-  border-radius: 8px;
-  border: none;
-  box-sizing: border-box;
   background-color: var(--Base-Brand);
   color: var(--Text-Primary);
 }
