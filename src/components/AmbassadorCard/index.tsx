@@ -7,6 +7,7 @@ import AmbassadorActivity from '../AmbassadorActivity';
 import AmbassadorMerch from '../AmbassadorMerch';
 import AmbassadorHistory from '../AmbassadorHistory';
 
+// eslint-disable-next-line no-console
 export default function AmbassadorCard({ rowData }) {
   const [isTabsDataActive, setIsTabsDataActive] = useState<boolean>(true);
   const [isTabsActivityActive, setIsTabsActivityActive] =
