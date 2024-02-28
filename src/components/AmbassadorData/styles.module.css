@@ -1,0 +1,46 @@
+.ambassodorDataSection {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+}
+
+.ambassodorDataSection__promoInfo {
+  padding: 9px 0;
+  margin-top: 16px;
+}
+
+.ambassodorDataSection__promo {
+  margin-right: 12px;
+}
+
+.ambassodorDataSection__list {
+  list-style: none;
+  padding: 16px;
+  margin: 0;
+  border: 1px solid var(--Line-Generic);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+}
+
+.ambassodorDataSection__listAnother {
+  border: none;
+  padding: 0;
+}
+
+.ambassodorDataSection__item {
+  padding: 9px 0;
+  display: flex;
+}
+
+.ambassodorDataSection__itemAnother {
+  flex-direction: column;
+  row-gap: 8px;
+  padding: 0;
+}
+
+.ambassodorDataSection__attribute {
+  margin-right: 12px;
+  flex: 0 0 auto;
+}

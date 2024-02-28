@@ -1,8 +1,36 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import styles from './styles.module.css';
-import { Button, Link, Text } from '@gravity-ui/uikit';
+import { Button, Link, Tabs, Text } from '@gravity-ui/uikit';
+import { useState } from 'react';
+import AmbassadorData from '../AmbassadorData';
+import AmbassadorActivity from '../AmbassadorActivity';
+import AmbassadorMerch from '../AmbassadorMerch';
+import AmbassadorHistory from '../AmbassadorHistory';
 
-export default function AmbassadorCard({ rowData }: { rowData: any }) {
+export default function AmbassadorCard({ rowData }) {
+  const [isTabsDataActive, setIsTabsDataActive] = useState<boolean>(true);
+  const [isTabsActivityActive, setIsTabsActivityActive] =
+    useState<boolean>(false);
+  const [isTabsMerchActive, setIsTabsMerchActive] = useState<boolean>(false);
+  const [isTabsHistoryActive, setIsTabsHistoryActive] =
+    useState<boolean>(false);
+
+  function determineContent() {
+    if (isTabsDataActive) {
+      return <AmbassadorData />;
+    }
+    if (isTabsActivityActive) {
+      return <AmbassadorActivity />;
+    }
+    if (isTabsMerchActive) {
+      return <AmbassadorMerch />;
+    }
+    if (isTabsHistoryActive) {
+      return <AmbassadorHistory />;
+    }
+    return null;
+  }
+
   return (
     <div className={styles.ambassadorCard}>
       <Text
@@ -62,6 +90,53 @@ export default function AmbassadorCard({ rowData }: { rowData: any }) {
           Присвоить мерч
         </Button>
       </div>
+      <Tabs size="l" className={styles.ambassadorCard__tabs}>
+        <Tabs.Item
+          id="tabs-data"
+          title="Данные"
+          active={isTabsDataActive}
+          onClick={() => {
+            setIsTabsDataActive(true);
+            setIsTabsActivityActive(false);
+            setIsTabsMerchActive(false);
+            setIsTabsHistoryActive(false);
+          }}
+        ></Tabs.Item>
+        <Tabs.Item
+          id="tabs-activity"
+          title="Деятельность"
+          active={isTabsActivityActive}
+          onClick={() => {
+            setIsTabsDataActive(false);
+            setIsTabsActivityActive(true);
+            setIsTabsMerchActive(false);
+            setIsTabsHistoryActive(false);
+          }}
+        ></Tabs.Item>
+        <Tabs.Item
+          id="tabs-merch"
+          title="Мерч"
+          active={isTabsMerchActive}
+          onClick={() => {
+            setIsTabsDataActive(false);
+            setIsTabsActivityActive(false);
+            setIsTabsMerchActive(true);
+            setIsTabsHistoryActive(false);
+          }}
+        ></Tabs.Item>
+        <Tabs.Item
+          id="tabs-history"
+          title="История"
+          active={isTabsHistoryActive}
+          onClick={() => {
+            setIsTabsDataActive(false);
+            setIsTabsActivityActive(false);
+            setIsTabsMerchActive(false);
+            setIsTabsHistoryActive(true);
+          }}
+        ></Tabs.Item>
+      </Tabs>
+      <div className={styles.ambassadorCard__content}>{determineContent()}</div>
     </div>
   );
 }

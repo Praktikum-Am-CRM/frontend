@@ -10,6 +10,7 @@
   display: flex;
   justify-content: space-between;
   margin-top: 24px;
+  margin-bottom: 28px;
 }
 
 .ambassadorCard__infoList {
@@ -49,4 +50,8 @@
   height: 36px;
   background-color: var(--Base-Brand);
   color: var(--Text-Primary);
+}
+
+.ambassadorCard__tabs {
+  max-width: 349px;
 }
