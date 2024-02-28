@@ -1,24 +1,22 @@
 .modal {
   max-width: calc(714px + 19px + 24px);
   width: 52.56vw;
-  height: calc(100vw - 66px);
+  height: calc(100vh - 66px);
   position: absolute;
   top: -16px;
   right: 0;
   z-index: 2;
   background-color: var(--Branding-Base-Background);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  display: none;
 }
 
 .modal_active {
-  opacity: 1;
+  display: block;
 }
 
 .modal__container {
   max-width: 714px;
   width: 49.58vw;
-  height: 100%;
   position: absolute;
   top: 0;
   left: 24px;

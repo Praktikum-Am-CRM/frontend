@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  Label,
   Link,
   Table,
   Text,
@@ -16,6 +15,7 @@ import { WomanIcon } from '../../images/WomanIcon';
 import { ManIcon } from '../../images/ManIcon';
 import { TableRowData } from '../../types/types';
 import ModalWindow from '../ModalWindow';
+import determineStatus from '../../utils/DetermineStatus';
 
 type TableSettingsData = Array<{
   id: string;
@@ -50,21 +50,6 @@ export default function TableComponent({
     return gender === 'woman' ? <WomanIcon /> : <ManIcon />;
   }
 
-  function determineStatus(status: string) {
-    switch (status) {
-      case 'active':
-        return <Label theme="success">Активный</Label>;
-      case 'pause':
-        return <Label theme="warning">На паузе</Label>;
-      case 'pending':
-        return <Label theme="unknown">Уточняется</Label>;
-      case 'deleted':
-        return <Label theme="danger">Не амбассадор</Label>;
-      default:
-        return null;
-    }
-  }
-
   const textWithTooltip = (text: string) => (
     <Tooltip content={text}>
       <Text ellipsis whiteSpace="nowrap" style={{ maxWidth: '300px' }}>
@@ -82,7 +67,7 @@ export default function TableComponent({
       promo: data.promo,
       telegram: (
         <Link view="normal" href={`https://t.me/${data.telegram}`}>
-          {data.telegram}
+          @{data.telegram}
         </Link>
       ),
       program: data.program,
@@ -109,7 +94,7 @@ export default function TableComponent({
               telegram: evt.telegram.props.children,
               id: evt.id,
               ambassador: evt.ambassador.props.content,
-              status: evt.status.props.children,
+              status: evt.status,
               promo: evt.promo,
               program: evt.program,
               registration: evt.registration,

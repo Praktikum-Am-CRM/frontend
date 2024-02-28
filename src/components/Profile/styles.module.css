@@ -13,20 +13,6 @@
 }
 
 .profile__userData {
-}
-
-.profile__userName {
-  padding: 0;
-  margin: 0;
-  font-size: 13px;
-  line-height: 16px;
-  color: var(--Text-Primary);
-}
-
-.profile__userMail {
-  padding: 0;
-  margin: 0;
-  font-size: 13px;
-  line-height: 16px;
-  color: var(--Text-Secondary);
+  display: flex;
+  flex-direction: column;
 }

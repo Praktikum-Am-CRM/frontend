@@ -1,41 +1,66 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import styles from './styles.module.css';
-
-import { Link } from '@gravity-ui/uikit';
+import { Button, Link, Text } from '@gravity-ui/uikit';
 
 export default function AmbassadorCard({ rowData }: { rowData: any }) {
   return (
     <div className={styles.ambassadorCard}>
-      <h2 className={styles.ambassadorCard__heading}>{rowData.ambassador}</h2>
+      <Text
+        className={styles.ambassadorCard__heading}
+        color="primary"
+        variant="header-2"
+      >
+        {rowData.ambassador}
+      </Text>
       <div className={styles.ambassadorCard__infoContainer}>
         <ul className={styles.ambassadorCard__infoList}>
           <li className={styles.ambassadorCard__infoPoint}>
-            <p className={styles.ambassadorCard__pointDescription}>
+            <Text
+              className={styles.ambassadorCard__pointDescription}
+              color="secondary"
+            >
               Телеграм/whatsapp
-            </p>
+            </Text>
             <Link view="normal" href={`https://t.me/${rowData.telegram}`}>
-              @{rowData.telegram}
+              {rowData.telegram}
             </Link>
           </li>
           <li className={styles.ambassadorCard__infoPoint}>
-            <p className={styles.ambassadorCard__pointDescription}>Статус</p>
-            <div>{rowData.status}</div>
+            <Text
+              className={styles.ambassadorCard__pointDescription}
+              color="secondary"
+            >
+              Статус
+            </Text>
+            <div className={styles.ambassadorCard__status}>
+              {rowData.status}
+            </div>
           </li>
           <li
             className={`${styles.ambassadorCard__infoPoint} ${styles.ambassadorCard__infoPoint_type_achievement}`}
           >
-            <p className={styles.ambassadorCard__pointDescription}>Ачивка</p>
+            <Text
+              className={styles.ambassadorCard__pointDescription}
+              color="secondary"
+            >
+              Ачивка
+            </Text>
           </li>
           <li className={styles.ambassadorCard__infoPoint}>
-            <p className={styles.ambassadorCard__pointDescription}>
+            <Text
+              className={styles.ambassadorCard__pointDescription}
+              color="secondary"
+            >
               Направление
-            </p>
-            <p className={styles.ambassadorCard__course}>{rowData.program}</p>
+            </Text>
+            <Text className={styles.ambassadorCard__course} color="primary">
+              {rowData.program}
+            </Text>
           </li>
         </ul>
-        <button className={styles.ambassadorCard__assignMerchButton}>
+        <Button className={styles.ambassadorCard__assignMerchButton}>
           Присвоить мерч
-        </button>
+        </Button>
       </div>
     </div>
   );
