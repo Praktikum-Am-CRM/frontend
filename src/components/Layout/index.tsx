@@ -2,7 +2,8 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import Header from '../Header';
 import ScrollToTop from '../../utils/ScrollToTop';
 import styles from './styles.module.css';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
+import { Loader } from '@gravity-ui/uikit';
 
 export default function Layout() {
   const location = useLocation();
@@ -19,9 +20,9 @@ export default function Layout() {
       <div className={styles.layout}>
         <Header />
         <main className={styles.layout__main}>
-          <div className={styles.layout__сontainer}>
+          <Suspense fallback={<Loader size="l" />}>
             <Outlet />
-          </div>
+          </Suspense>
         </main>
       </div>
     </ScrollToTop>

@@ -7,7 +7,7 @@
     "dev": "vite --port 3000 --open",
     "build": "tsc && vite build",
     "lint": "eslint . --ext .tsx .",
-    "lint:fix": "eslint src \"src/**/*.{scss,css,json,ts,tsx}\" --report-unused-disable-directives ",
+    "lint:fix": "eslint --fix src \"src/**/*.{scss,css,json,ts,tsx}\" --report-unused-disable-directives ",
     "format": "prettier --write 'src/**/*.{ts,tsx,scss,css,json}'",
     "preview": "vite preview",
     "prepare": "husky",
