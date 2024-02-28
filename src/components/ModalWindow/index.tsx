@@ -1,8 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styles from './styles.module.css';
 import { useLocation } from 'react-router-dom';
 import AmbassadorCard from '../AmbassadorCard';
 
-export default function ModalWindow({ isModalOpened, closeModal, rowData }) {
+export default function ModalWindow({
+  isModalOpened,
+  closeModal,
+  rowData,
+}: {
+  isModalOpened: boolean;
+  closeModal: () => void;
+  rowData: any;
+}) {
   const location = useLocation();
 
   const defineContent = () => {
@@ -21,7 +30,7 @@ export default function ModalWindow({ isModalOpened, closeModal, rowData }) {
           className={styles.modal__closeIcon}
           onClick={closeModal}
         ></button>
-        <div className={styles.modal__content}>{defineContent(location)}</div>
+        <div className={styles.modal__content}>{defineContent()}</div>
       </div>
     </div>
   );

@@ -34,7 +34,7 @@ export default function TableComponent({
   );
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
-  const [isRowData, setisRowData] = useState({});
+  const [isRowData, setIsRowData] = useState({});
   const getRowId = 'id';
 
   const MyTable = withTableSorting(
@@ -89,7 +89,8 @@ export default function TableComponent({
         <MyTable
           className={styles.table}
           onRowClick={evt => {
-            setisRowData({
+            console.log(evt);
+            setIsRowData({
               telegram: evt.telegram.props.children,
               id: evt.id,
               ambassador: evt.ambassador.props.content,
