@@ -2,6 +2,8 @@
   display: flex;
   flex-direction: column;
   row-gap: 16px;
+  position: relative;
+  padding-bottom: 36px;
 }
 
 .ambassodorDataSection__promoInfo {
@@ -43,4 +45,15 @@
 .ambassodorDataSection__attribute {
   margin-right: 12px;
   flex: 0 0 auto;
+}
+
+.ambassodorDataSection__deleteButton {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 36px;
+  background-image: url(../../ui/icontrash.svg);
+  background-repeat: no-repeat;
+  background-size: 16px;
+  background-position: center;
 }

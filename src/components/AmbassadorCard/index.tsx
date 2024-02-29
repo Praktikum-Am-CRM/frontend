@@ -6,14 +6,17 @@ import AmbassadorData from '../AmbassadorData';
 import AmbassadorActivity from '../AmbassadorActivity';
 import AmbassadorMerch from '../AmbassadorMerch';
 import AmbassadorHistory from '../AmbassadorHistory';
+import determineStatus from '../../utils/DetermineStatus';
+import { ambassadorArray, candidateArray } from '../../utils/mockData';
 
 // eslint-disable-next-line no-console
 export default function AmbassadorCard({
   rowData,
   isAmbassador,
 }: {
-  rowData: any;
+  rowData: string;
   isAmbassador?: boolean;
+
 }) {
   const [isTabsDataActive, setIsTabsDataActive] = useState<boolean>(true);
   const [isTabsActivityActive, setIsTabsActivityActive] =
@@ -22,18 +25,27 @@ export default function AmbassadorCard({
   const [isTabsHistoryActive, setIsTabsHistoryActive] =
     useState<boolean>(false);
 
+  function findUserById(id) {
+    if (isAmbassador) {
+      return ambassadorArray.find(ambassador => ambassador.id === id);
+    } else {
+      return candidateArray.find(candidate => candidate.id === id);
+    }
+  }
+  const user = findUserById(rowData);
+
   function determineContent() {
     if (isTabsDataActive) {
-      return <AmbassadorData />;
+      return <AmbassadorData user={user} />;
     }
     if (isTabsActivityActive) {
-      return <AmbassadorActivity />;
+      return <AmbassadorActivity user={user} />;
     }
     if (isTabsMerchActive) {
-      return <AmbassadorMerch />;
+      return <AmbassadorMerch user={user} />;
     }
     if (isTabsHistoryActive) {
-      return <AmbassadorHistory />;
+      return <AmbassadorHistory user={user} />;
     }
     return null;
   }
@@ -45,7 +57,7 @@ export default function AmbassadorCard({
         color="primary"
         variant="header-2"
       >
-        Амбассадор
+        {user.ambassador}
       </Text>
       <div className={styles.ambassadorCard__infoContainer}>
         <ul className={styles.ambassadorCard__infoList}>
@@ -56,31 +68,35 @@ export default function AmbassadorCard({
             >
               Телеграм/whatsapp
             </Text>
-            <Link view="normal" href={`https://t.me/${rowData.telegram}`}>
-              {rowData.telegram}
+            <Link view="normal" href={`https://t.me/${user.telegram}`}>
+              {user.telegram}
             </Link>
           </li>
-          <li className={styles.ambassadorCard__infoPoint}>
-            <Text
-              className={styles.ambassadorCard__pointDescription}
-              color="secondary"
+          {isAmbassador && (
+            <li className={styles.ambassadorCard__infoPoint}>
+              <Text
+                className={styles.ambassadorCard__pointDescription}
+                color="secondary"
+              >
+                Статус
+              </Text>
+              <div className={styles.ambassadorCard__status}>
+                {user.Status && determineStatus(user.Status)}
+              </div>
+            </li>
+          )}
+          {isAmbassador && (
+            <li
+              className={`${styles.ambassadorCard__infoPoint} ${styles.ambassadorCard__infoPoint_type_achievement}`}
             >
-              Статус
-            </Text>
-            <div className={styles.ambassadorCard__status}>
-              {rowData.status}
-            </div>
-          </li>
-          <li
-            className={`${styles.ambassadorCard__infoPoint} ${styles.ambassadorCard__infoPoint_type_achievement}`}
-          >
-            <Text
-              className={styles.ambassadorCard__pointDescription}
-              color="secondary"
-            >
-              Ачивка
-            </Text>
-          </li>
+              <Text
+                className={styles.ambassadorCard__pointDescription}
+                color="secondary"
+              >
+                Ачивка
+              </Text>
+            </li>
+          )}
           <li className={styles.ambassadorCard__infoPoint}>
             <Text
               className={styles.ambassadorCard__pointDescription}
@@ -89,7 +105,7 @@ export default function AmbassadorCard({
               Направление
             </Text>
             <Text className={styles.ambassadorCard__course} color="primary">
-              {rowData.program}
+              {user.program}
             </Text>
           </li>
         </ul>

@@ -1,14 +1,14 @@
 import styles from './styles.module.css';
-import { Text, TextInput } from '@gravity-ui/uikit';
+import { Button, Text, TextInput } from '@gravity-ui/uikit';
 
-export default function AmbassadorData() {
+export default function AmbassadorData({ user }) {
   return (
     <section className={styles.ambassodorDataSection}>
       <div className={styles.ambassodorDataSection__promoInfo}>
         <Text className={styles.ambassodorDataSection__promo} color="secondary">
           Промокод
         </Text>
-        <Text>Anton10</Text>
+        <Text>{user.promo}</Text>
       </div>
       <ul className={styles.ambassodorDataSection__list}>
         <li className={styles.ambassodorDataSection__item}>
@@ -54,7 +54,7 @@ export default function AmbassadorData() {
           >
             Email
           </Text>
-          <Text>AntonSubbotin@yandex.ru</Text>
+          <Text>{user.e_mail ? user.e_mail : ''}</Text>
         </li>
       </ul>
       <ul className={styles.ambassodorDataSection__list}>
@@ -92,7 +92,7 @@ export default function AmbassadorData() {
           >
             Желаемая деятельность
           </Text>
-          <Text>Писать статьи, вести блог</Text>
+          <Text>{user.activity ? user.activity : ''}</Text>
         </li>
       </ul>
       <ul className={styles.ambassodorDataSection__list}>
@@ -165,10 +165,15 @@ export default function AmbassadorData() {
             >
               Дата добавления
             </Text>
-            <Text>01.10.2023</Text>
+            <Text>{user.date_receipt}</Text>
           </li>
         </ul>
       </div>
+      <Button
+        size="l"
+        view="outlined"
+        className={styles.ambassodorDataSection__deleteButton}
+      ></Button>
     </section>
   );
 }
