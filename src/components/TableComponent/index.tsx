@@ -34,8 +34,7 @@ export default function TableComponent({
   );
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
-  const [isRowData, setIsRowData] = useState({});
-  const getRowId = 'id';
+  const [rowId, setRowId] = useState<string>();
 
   const MyTable = withTableSorting(
     withTableSelection(withTableSettings({ sortable: false })(Table)),
@@ -63,7 +62,7 @@ export default function TableComponent({
       ...data,
       id: data.id,
       ambassador: textWithTooltip(data.ambassador),
-      status: data.status && determineStatus(data.status),
+      status: data.Status && determineStatus(data.Status),
       promo: data.promo,
       telegram: (
         <Link view="normal" href={`https://t.me/${data.telegram}`}>
@@ -89,27 +88,13 @@ export default function TableComponent({
         <MyTable
           className={styles.table}
           onRowClick={evt => {
-            if (evt.status) {
-              setIsRowData({
-                telegram: evt.telegram.props.children,
-                id: evt.id,
-                ambassador: evt.ambassador.props.content,
-                status: evt.status,
-                promo: evt.promo,
-                program: evt.program,
-                registration: evt.registration,
-                address: evt.address.props.content,
-                tel: evt.tel,
-                email: evt.email,
-              });
-            }
+            setRowId(evt.id);
             setIsModalOpened(true);
           }}
           emptyMessage="Ничего не найдено ¯\_(ツ)_/¯"
           data={tableRowData.map(prepareDataForTable)}
           columns={columnsWithAddedProps}
           settings={settings}
-          getRowId={getRowId}
           selectedIds={selectedIds}
           onSelectionChange={setSelectedIds}
           updateSettings={checked => {
@@ -118,11 +103,13 @@ export default function TableComponent({
           }}
         />
       )}
-      <ModalWindow
-        isModalOpened={isModalOpened}
-        closeModal={closeModal}
-        rowData={isRowData}
-      />
+      {isModalOpened && (
+        <ModalWindow
+          isModalOpened={isModalOpened}
+          closeModal={closeModal}
+          rowData={rowId}
+        />
+      )}
     </>
   );
 }
