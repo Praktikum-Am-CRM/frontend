@@ -1,98 +1,28 @@
-import styles from './LoginPage.module.css';
-import { useEffect } from 'react';
-import { Button, Text, TextInput } from '@gravity-ui/uikit';
-import { useNavigate } from 'react-router-dom';
 import Logo from '../../components/Logo';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { loginSchema } from '../../utils/validationSchema';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../features/auth/authSlice';
-import { RootState, store } from '../../store/';
-
-interface ILoginForm {
-  email: string;
-  password: string;
-}
+import { Text } from '@gravity-ui/uikit';
+import { LoginForm } from '../../components/LoginForm';
+import { useAuthRedirect } from '../../hooks/useAuthRedirect';
+import styles from './LoginPage.module.css';
+import { TEXTS, URLS } from '../../utils/constants';
 
 export default function LoginPage() {
-  const dispatch = useDispatch<typeof store.dispatch>();
-  const navigate = useNavigate();
-  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ILoginForm>({
-    resolver: yupResolver(loginSchema),
-  });
-
-  const onSubmit: SubmitHandler<ILoginForm> = data => {
-    dispatch(login(data))
-      .unwrap()
-      .then(() => {
-        navigate('/');
-      });
-  };
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate('/');
-    }
-  }, [isLoggedIn, navigate]);
+  useAuthRedirect();
 
   return (
     <div className={styles.container}>
       <Logo className={styles.logo} />
       <div className={styles.loginContainer}>
         <Text className={styles.title} variant="display-2">
-          Добро пожаловать!
+          {TEXTS.LOGIN_PAGE.WELCOME}
         </Text>
-        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-          {(errors.email || errors.password) && (
-            <p className={styles.error}>Введены неверная почта и/или пароль</p>
-          )}
-          <label className={styles.label} htmlFor="email">
-            Электронная почта
-          </label>
-          <TextInput
-            {...register('email')}
-            type="email"
-            id="email"
-            placeholder="Введите почту"
-            errorMessage={errors.email?.message}
-            size="l"
-            style={{ marginBottom: '24px' }}
-          />
-
-          <label className={styles.label} htmlFor="password">
-            Пароль
-          </label>
-          <TextInput
-            {...register('password')}
-            type="password"
-            id="password"
-            placeholder="Введите пароль"
-            errorMessage={errors.password?.message}
-            size="l"
-          />
-
-          <div className={styles.buttonsContainer}>
-            <Button type="submit" view="action" size="xl">
-              Войти
-            </Button>
-          </div>
-        </form>
+        <LoginForm />
       </div>
       <ul className={styles.footer}>
         <li className={styles.items}>
-          <a
-            className={styles.link}
-            href="https://yandex.ru/legal/confidential/"
-          >
-            Политика конфиденциальности
+          <a className={styles.link} href={URLS.CONFIDENTIALITY_POLICY}>
+            {TEXTS.LOGIN_PAGE.FOOTER_CONFIDENTIALITY_POLICY}
           </a>
-          <p className={styles.link}>© Все права защищены</p>
+          <p className={styles.link}>{TEXTS.LOGIN_PAGE.FOOTER_COPYRIGHT}</p>
         </li>
       </ul>
     </div>
