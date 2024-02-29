@@ -1,16 +1,15 @@
 import styles from './LoginForm.module.css';
 import { Button, TextInput } from '@gravity-ui/uikit';
 import { useNavigate } from 'react-router-dom';
-import { SubmitHandler } from 'react-hook-form';
 import { useFormLogic } from '../../hooks/useFormLogic';
-import { useDispatch } from 'react-redux';
-import { login } from '../../features/auth/authSlice';
-import { store } from '../../store/';
+import { useActions } from '../../hooks/actions';
+import { useLoginMutation } from '../../store/amCrm/amCrm.api';
 import { ILoginForm } from '../../types/ILoginForm';
 import { TEXTS } from '../../utils/constants';
 
 export const LoginForm = () => {
-  const dispatch = useDispatch<typeof store.dispatch>();
+  const { setLoggedIn } = useActions();
+  const [login, { isLoading }] = useLoginMutation();
   const navigate = useNavigate();
   const {
     register,
@@ -18,12 +17,17 @@ export const LoginForm = () => {
     formState: { errors },
   } = useFormLogic();
 
-  const onSubmit: SubmitHandler<ILoginForm> = data => {
-    dispatch(login(data))
-      .unwrap()
-      .then(() => {
+  const onSubmit = async (data: ILoginForm) => {
+    try {
+      const res = await login(data).unwrap();
+      if (res.token) {
+        localStorage.setItem('token', res.token);
+        setLoggedIn(true);
         navigate('/');
-      });
+      }
+    } catch (error) {
+      throw new Error('Не удалось авторизоваться');
+    }
   };
 
   return (
@@ -42,6 +46,7 @@ export const LoginForm = () => {
         placeholder={TEXTS.LOGIN_PAGE.EMAIL_LABEL}
         errorMessage={errors.email?.message}
         size="l"
+        disabled={isLoading}
       />
       <label className={styles.label} htmlFor="password">
         {TEXTS.LOGIN_PAGE.PASSWORD_LABEL}
@@ -53,9 +58,10 @@ export const LoginForm = () => {
         placeholder={TEXTS.LOGIN_PAGE.PASSWORD_LABEL}
         errorMessage={errors.password?.message}
         size="l"
+        disabled={isLoading}
       />
       <div className={styles.buttonsContainer}>
-        <Button type="submit" view="action" size="xl">
+        <Button loading={isLoading} type="submit" view="action" size="xl">
           {TEXTS.LOGIN_PAGE.LOGIN_BUTTON}
         </Button>
       </div>

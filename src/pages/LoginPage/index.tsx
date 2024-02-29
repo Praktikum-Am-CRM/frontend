@@ -1,8 +1,8 @@
+import styles from './LoginPage.module.css';
 import Logo from '../../components/Logo';
 import { Text } from '@gravity-ui/uikit';
 import { LoginForm } from '../../components/LoginForm';
 import { useAuthRedirect } from '../../hooks/useAuthRedirect';
-import styles from './LoginPage.module.css';
 import { TEXTS, URLS } from '../../utils/constants';
 
 export default function LoginPage() {

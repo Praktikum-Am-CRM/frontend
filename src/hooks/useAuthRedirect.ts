@@ -1,11 +1,13 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from './redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../store';
 
 export function useAuthRedirect() {
   const navigate = useNavigate();
-  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+  const isLoggedIn = useAppSelector(
+    (state: RootState) => state.auth.isLoggedIn,
+  );
 
   useEffect(() => {
     if (isLoggedIn) {

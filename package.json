@@ -11,7 +11,8 @@
     "format": "prettier --write 'src/**/*.{ts,tsx,scss,css,json}'",
     "preview": "vite preview",
     "prepare": "husky",
-    "commit": "cz"
+    "commit": "cz",
+    "tsc": "tsc"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",

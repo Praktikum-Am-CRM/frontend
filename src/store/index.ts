@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { api } from './amCrm/amCrm.api';
-import authReducer from '../features/auth/authSlice';
+import authReducer from './amCrm/authSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
