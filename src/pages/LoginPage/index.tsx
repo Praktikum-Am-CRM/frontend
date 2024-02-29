@@ -4,8 +4,9 @@ import Logo from '../../components/Logo';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '../../utils/validationSchema';
-import { useAppDispatch } from '../../hooks/hooks';
+import { useDispatch } from 'react-redux';
 import { login } from '../../features/auth/authSlice';
+import { store } from '../../store/index';
 
 interface ILoginForm {
   email: string;
@@ -13,7 +14,7 @@ interface ILoginForm {
 }
 
 export default function LoginPage() {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch<typeof store.dispatch>();
   const {
     register,
     handleSubmit,

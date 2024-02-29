@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 
 import Layout from '../components/Layout';
+import ProtectedRoute from '../components/ProtectedRoute';
 
 const AmbassadorsPage = lazy(() => import('../pages/AmbassadorsPage'));
 const CandidatesPage = lazy(() => import('../pages/CandidatesPage'));
@@ -18,12 +19,14 @@ const LoginPage = lazy(() => import('../pages/LoginPage'));
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />} errorElement={<NotFoundPage />}>
-      <Route path="ambassadors" element={<AmbassadorsPage />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="ambassadors" element={<AmbassadorsPage />} />
+        <Route path="candidates" element={<CandidatesPage />} />
+        <Route path="notifications" element={<NotificationsPage />} />
+        <Route path="statistics" element={<StatisticsPage />} />
+        <Route path="merch" element={<MerchPage />} />
+      </Route>
       <Route path="login" element={<LoginPage />} />
-      <Route path="candidates" element={<CandidatesPage />} />
-      <Route path="notifications" element={<NotificationsPage />} />
-      <Route path="statistics" element={<StatisticsPage />} />
-      <Route path="merch" element={<MerchPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Route>,
   ),
