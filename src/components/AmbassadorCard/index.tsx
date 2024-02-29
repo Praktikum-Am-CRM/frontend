@@ -7,7 +7,7 @@ import AmbassadorActivity from '../AmbassadorActivity';
 import AmbassadorMerch from '../AmbassadorMerch';
 import AmbassadorHistory from '../AmbassadorHistory';
 import determineStatus from '../../utils/DetermineStatus';
-import { ambassadorArray, candidateArray } from '../../utils/mockData';
+import { ambassadorArray } from '../../utils/mockData';
 
 // eslint-disable-next-line no-console
 export default function AmbassadorCard({
@@ -29,7 +29,7 @@ export default function AmbassadorCard({
     if (isAmbassador) {
       return ambassadorArray.find(ambassador => ambassador.id === id);
     } else {
-      return candidateArray.find(candidate => candidate.id === id);
+      return ambassadorArray.find(candidate => candidate.id === id);
     }
   }
   const user = findUserById(rowData);
@@ -72,7 +72,7 @@ export default function AmbassadorCard({
               {user.telegram}
             </Link>
           </li>
-          {isAmbassador && (
+          {user.Status !== 'candidate' && (
             <li className={styles.ambassadorCard__infoPoint}>
               <Text
                 className={styles.ambassadorCard__pointDescription}
@@ -85,7 +85,7 @@ export default function AmbassadorCard({
               </div>
             </li>
           )}
-          {isAmbassador && (
+          {user.Status !== 'candidate' && (
             <li
               className={`${styles.ambassadorCard__infoPoint} ${styles.ambassadorCard__infoPoint_type_achievement}`}
             >
@@ -114,7 +114,12 @@ export default function AmbassadorCard({
             Присвоить мерч
           </Button>
         ) : (
-          <Button className={styles.ambassadorCard__assignButton}>
+          <Button
+            className={styles.ambassadorCard__assignButton}
+            onClick={() => {
+              user.Status = 'active';
+            }}
+          >
             Сделать амбассадором
           </Button>
         )}
