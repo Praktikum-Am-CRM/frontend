@@ -15,7 +15,8 @@ export default function AmbassadorCard({
   isAmbassador,
 }: {
   rowData: string;
-  isAmbassador: boolean;
+  isAmbassador?: boolean;
+
 }) {
   const [isTabsDataActive, setIsTabsDataActive] = useState<boolean>(true);
   const [isTabsActivityActive, setIsTabsActivityActive] =
