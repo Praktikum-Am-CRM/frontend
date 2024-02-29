@@ -1,12 +1,14 @@
 import styles from './LoginPage.module.css';
+import { useEffect } from 'react';
 import { Button, Text, TextInput } from '@gravity-ui/uikit';
+import { useNavigate } from 'react-router-dom';
 import Logo from '../../components/Logo';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '../../utils/validationSchema';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../features/auth/authSlice';
-import { store } from '../../store/index';
+import { RootState, store } from '../../store/';
 
 interface ILoginForm {
   email: string;
@@ -15,6 +17,8 @@ interface ILoginForm {
 
 export default function LoginPage() {
   const dispatch = useDispatch<typeof store.dispatch>();
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   const {
     register,
     handleSubmit,
@@ -24,8 +28,18 @@ export default function LoginPage() {
   });
 
   const onSubmit: SubmitHandler<ILoginForm> = data => {
-    dispatch(login(data));
+    dispatch(login(data))
+      .unwrap()
+      .then(() => {
+        navigate('/');
+      });
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/');
+    }
+  }, [isLoggedIn, navigate]);
 
   return (
     <div className={styles.container}>
@@ -72,7 +86,10 @@ export default function LoginPage() {
       </div>
       <ul className={styles.footer}>
         <li className={styles.items}>
-          <a className={styles.link} href="test.ru">
+          <a
+            className={styles.link}
+            href="https://yandex.ru/legal/confidential/"
+          >
             Политика конфиденциальности
           </a>
           <p className={styles.link}>© Все права защищены</p>
