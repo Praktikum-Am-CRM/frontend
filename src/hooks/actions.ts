@@ -1,10 +1,11 @@
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from '@reduxjs/toolkit';
+import { authActions } from '../store/amCrm/auth.slice';
 
 // import { userActions } from '../store/amCrm/user.slice';
 
 const actions = {
-  // ...userActions,
+  ...authActions,
 };
 
 export const useActions = () => {

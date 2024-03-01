@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styles from './styles.module.css';
 import { Button, Text, TextInput } from '@gravity-ui/uikit';
 import { useState } from 'react';
@@ -10,19 +11,20 @@ type Inputs = {
 export default function AmbassadorData({
   user,
 }: {
-  user: {
-    id: string;
-    ambassador: string;
-    status: string;
-    promo: string;
-    telegram: string;
-    program: string;
-    date_receipt: string;
-    gender: string;
-    address: string;
-    activity: string;
-    e_mail: string;
-  };
+  user: any;
+  // user: {
+  //   id: string;
+  //   ambassador: string;
+  //   status: string;
+  //   promo: string;
+  //   telegram: string;
+  //   program: string;
+  //   date_receipt: string;
+  //   gender: string;
+  //   address: string;
+  //   activity: string;
+  //   e_mail: string;
+  // };
 }) {
   const [isFormActive, setIsFormActive] = useState<boolean>(false);
   const {

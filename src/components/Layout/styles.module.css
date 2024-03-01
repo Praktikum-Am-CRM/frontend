@@ -6,7 +6,6 @@
 }
 
 .layout__main {
-  max-width: var(--max-desktop-width);
   margin: 0 20px;
   gap: 20px;
   display: flex;

@@ -22,20 +22,7 @@ export default function AmbassadorCard({
   function findUserById(id: string) {
     return ambassadorArray.find(candidate => candidate.id === id);
   }
-
-  const user: {
-    id: string;
-    ambassador: string;
-    status: string;
-    promo: string;
-    telegram: string;
-    program: string;
-    date_receipt: string;
-    gender: string;
-    address: string;
-    activity: string;
-    e_mail: string;
-  } = findUserById(rowData);
+  const user = findUserById(rowData);
 
   function determineContent(id: string) {
     if (id === 'tabs-data') {

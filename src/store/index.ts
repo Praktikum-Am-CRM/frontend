@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { api } from './amCrm/amCrm.api';
-// import { userReducer } from './amCrm/user.slice';
+import { authReducer } from './amCrm/auth.slice';
 
 export const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
-    // user: userReducer,
+    auth: authReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(api.middleware),

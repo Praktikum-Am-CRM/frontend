@@ -1,19 +1,29 @@
 /* eslint-disable camelcase */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
+interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+interface LoginResponse {
+  auth_token: string;
+}
 
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://localhost:3000/api/',
+    baseUrl: 'http://51.250.51.19/',
     prepareHeaders: headers => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        headers.set('authorization', token);
+      const auth_token = localStorage.getItem('auth_token');
+      if (auth_token) {
+        headers.set('authorization', `Bearer ${auth_token}`);
       }
       return headers;
     },
   }),
-  tagTypes: ['Comments', 'Ambassadors'],
+  tagTypes: ['Comments', 'Ambassadors', 'Auth'],
   endpoints: build => ({
     // Список сотрудников команды
     getAmbassadors: build.query<unknown, unknown>({
@@ -27,7 +37,15 @@ export const api = createApi({
         },
       }),
     }),
+    login: build.mutation<LoginResponse, LoginRequest>({
+      query: credentials => ({
+        url: 'api/v1/auth/token/login',
+        method: 'POST',
+        body: credentials,
+      }),
+      invalidatesTags: ['Auth'],
+    }),
   }),
 });
 
-export const { useGetAmbassadorsQuery } = api;
+export const { useGetAmbassadorsQuery, useLoginMutation } = api;
