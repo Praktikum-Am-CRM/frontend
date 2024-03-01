@@ -24,14 +24,26 @@ export default function AmbassadorCard({
   const [isTabsHistoryActive, setIsTabsHistoryActive] =
     useState<boolean>(false);
 
-  function findUserById(id) {
+  function findUserById(id: string) {
     if (isAmbassador) {
       return ambassadorArray.find(ambassador => ambassador.id === id);
     } else {
       return ambassadorArray.find(candidate => candidate.id === id);
     }
   }
-  const user = findUserById(rowData);
+  const user: {
+    id: string;
+    ambassador: string;
+    Status: string;
+    promo: string;
+    telegram: string;
+    program: string;
+    date_receipt: string;
+    gender: string;
+    address: string;
+    activity: string;
+    e_mail: string;
+  } = findUserById(rowData);
 
   function determineContent() {
     if (isTabsDataActive) {
