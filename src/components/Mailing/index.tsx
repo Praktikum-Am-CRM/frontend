@@ -15,7 +15,7 @@ const Mailing = () => {
           placeholder="Начните новую рассылку"
           size="l"
           className={styles.textArea}
-        ></TextArea>
+        />
 
         <div className={styles.actions}>
           <Button size="l" view="action" className={styles.actionButton}>
