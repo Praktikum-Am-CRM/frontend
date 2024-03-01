@@ -12,7 +12,7 @@ export default function CandidatesPage() {
 
   function determineCandidateArchiveArray() {
     return ambassadorArray.filter(ambassador => {
-      return ambassador.Status === 'deleted';
+      return ambassador.status === 'deleted';
     });
   }
 
@@ -20,7 +20,7 @@ export default function CandidatesPage() {
 
   function determineCandidateArray() {
     return ambassadorArray.filter(ambassador => {
-      return ambassador.Status === 'candidate';
+      return ambassador.status === 'candidate';
     });
   }
 

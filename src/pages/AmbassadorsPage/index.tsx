@@ -7,7 +7,7 @@ import { ambassadorArray } from '../../utils/mockData';
 export default function AmbassadorsPage() {
   function determineAmbassadorArray() {
     return ambassadorArray.filter(ambassador => {
-      return ambassador.Status === 'pending' || ambassador.Status === 'active';
+      return ambassador.status === 'pending' || ambassador.status === 'active';
     });
   }
 

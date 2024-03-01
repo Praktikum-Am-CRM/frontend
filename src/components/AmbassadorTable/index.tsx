@@ -12,8 +12,6 @@ export default function AmbassadorTable({ tableRowData }) {
     { id: 'address', name: 'Адрес' },
   ];
 
-  console.log(tableRowData);
-
   return (
     <TableComponent tableRowData={tableRowData} tableHeaderData={columns} />
   );

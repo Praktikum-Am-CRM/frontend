@@ -6,7 +6,7 @@ export default function AmbassadorMerch({
   user: {
     id: string;
     ambassador: string;
-    Status: string;
+    status: string;
     promo: string;
     telegram: string;
     program: string;
