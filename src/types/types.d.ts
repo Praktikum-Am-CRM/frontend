@@ -2,7 +2,7 @@ export type TableRowData = {
   id: number;
   ambassador: string;
   tel?: string;
-  Status?: string;
+  status?: string;
   promo?: string;
   telegram: string;
   email?: string;

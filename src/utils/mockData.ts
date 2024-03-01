@@ -3,7 +3,7 @@ export const ambassadorArray = [
     id: '1',
     ambassador:
       'Константин Константинопольский Константинопольский Константинопольский Константинопольский',
-    Status: 'active',
+    status: 'active',
     promo: '444',
     telegram: 'alter',
     program: 'Фронт',
@@ -17,7 +17,7 @@ export const ambassadorArray = [
   {
     id: '2',
     ambassador: 'Амбассадор',
-    Status: 'active',
+    status: 'active',
     promo: '44334',
     telegram: 'front',
     program: 'Фронт',
@@ -30,7 +30,7 @@ export const ambassadorArray = [
   {
     id: '3',
     ambassador: 'Амба22ссадор',
-    Status: 'pending',
+    status: 'pending',
     promo: '444',
     telegram: 'moskow',
     program: 'Фронт',
@@ -41,7 +41,7 @@ export const ambassadorArray = [
   {
     id: '4',
     ambassador: 'Амбассадор',
-    Status: 'candidate',
+    status: 'candidate',
     tel: '343234234',
     promo: '444',
     telegram: 'moskow',
@@ -53,7 +53,7 @@ export const ambassadorArray = [
   {
     id: '5',
     ambassador: 'Амбассадор',
-    Status: 'pending',
+    status: 'pending',
     tel: '343234234',
     promo: '444',
     telegram: 'mosk888ow',
@@ -66,7 +66,7 @@ export const ambassadorArray = [
   {
     id: '6',
     ambassador: 'Амбассадор',
-    Status: 'candidate',
+    status: 'candidate',
     tel: '343234234',
     promo: '444',
     telegram: 'mos4444kow',
@@ -78,7 +78,7 @@ export const ambassadorArray = [
   {
     id: '7',
     ambassador: 'Архив Амбассадор',
-    Status: 'deleted',
+    status: 'deleted',
     tel: '343234234',
     promo: '444',
     telegram: 'moskow',
@@ -90,7 +90,7 @@ export const ambassadorArray = [
   {
     id: '8',
     ambassador: 'Амбассадор',
-    Status: 'deleted',
+    status: 'deleted',
     tel: '343234234',
     promo: '444',
     telegram: 'mosk888ow',
