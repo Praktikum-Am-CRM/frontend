@@ -1,7 +1,34 @@
 import styles from './styles.module.css';
 import { Button, Text, TextInput } from '@gravity-ui/uikit';
+import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 export default function AmbassadorData({ user }) {
+  const [isFormActive, setIsFormActive] = useState<boolean>(false);
+  const { handleSubmit } = useForm();
+  const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
+
+  const variableInput = (value, placeholder) => {
+    return isFormActive ? (
+      <TextInput
+        view="normal"
+        size="l"
+        placeholder={placeholder}
+        value={value}
+      ></TextInput>
+    ) : (
+      <Text>{value}</Text>
+    );
+  };
+
+  function displayData(value) {
+    if (value) {
+      return value;
+    } else return '';
+  }
+
+  console.log(isFormActive);
+
   return (
     <section className={styles.ambassodorDataSection}>
       <div className={styles.ambassodorDataSection__promoInfo}>
@@ -10,133 +37,133 @@ export default function AmbassadorData({ user }) {
         </Text>
         <Text>{user.promo}</Text>
       </div>
-      <ul className={styles.ambassodorDataSection__list}>
-        <li className={styles.ambassodorDataSection__item}>
-          <Text
-            color="secondary"
-            className={styles.ambassodorDataSection__attribute}
-          >
-            Страна
-          </Text>
-          <Text>Россия</Text>
-        </li>
-        <li className={styles.ambassodorDataSection__item}>
-          <Text
-            color="secondary"
-            className={styles.ambassodorDataSection__attribute}
-          >
-            Город
-          </Text>
-          <Text>Москва</Text>
-        </li>
-        <li className={styles.ambassodorDataSection__item}>
-          <Text
-            color="secondary"
-            className={styles.ambassodorDataSection__attribute}
-          >
-            Индекс
-          </Text>
-          <Text>105037</Text>
-        </li>
-        <li className={styles.ambassodorDataSection__item}>
-          <Text
-            color="secondary"
-            className={styles.ambassodorDataSection__attribute}
-          >
-            Адрес
-          </Text>
-          <Text>Главная аллея, 11</Text>
-        </li>
-        <li className={styles.ambassodorDataSection__item}>
-          <Text
-            color="secondary"
-            className={styles.ambassodorDataSection__attribute}
-          >
-            Email
-          </Text>
-          <Text>{user.e_mail ? user.e_mail : ''}</Text>
-        </li>
-      </ul>
-      <ul className={styles.ambassodorDataSection__list}>
-        <li className={styles.ambassodorDataSection__item}>
-          <Text
-            color="secondary"
-            className={styles.ambassodorDataSection__attribute}
-          >
-            Образование
-          </Text>
-          <Text>Системный администратор</Text>
-        </li>
-        <li className={styles.ambassodorDataSection__item}>
-          <Text
-            color="secondary"
-            className={styles.ambassodorDataSection__attribute}
-          >
-            Место работы
-          </Text>
-          <Text>Небольшая компания</Text>
-        </li>
-        <li className={styles.ambassodorDataSection__item}>
-          <Text
-            color="secondary"
-            className={styles.ambassodorDataSection__attribute}
-          >
-            Цель учёбы в Практикум
-          </Text>
-          <Text>Получение новой профессии, чтобы сменить работу</Text>
-        </li>
-        <li className={styles.ambassodorDataSection__item}>
-          <Text
-            color="secondary"
-            className={styles.ambassodorDataSection__attribute}
-          >
-            Желаемая деятельность
-          </Text>
-          <Text>{user.activity ? user.activity : ''}</Text>
-        </li>
-      </ul>
-      <ul className={styles.ambassodorDataSection__list}>
-        <li className={styles.ambassodorDataSection__item}>
-          <Text
-            color="secondary"
-            className={styles.ambassodorDataSection__attribute}
-          >
-            Ссылка на блог
-          </Text>
-          <Text>https://habr.com/ru/articles/</Text>
-        </li>
-        <li className={styles.ambassodorDataSection__item}>
-          <Text
-            color="secondary"
-            className={styles.ambassodorDataSection__attribute}
-          >
-            Размер одежды
-          </Text>
-          <Text>XL</Text>
-        </li>
-        <li className={styles.ambassodorDataSection__item}>
-          <Text
-            color="secondary"
-            className={styles.ambassodorDataSection__attribute}
-          >
-            Размер ноги
-          </Text>
-          <Text>43</Text>
-        </li>
-        <li className={styles.ambassodorDataSection__item}>
-          <Text
-            color="secondary"
-            className={styles.ambassodorDataSection__attribute}
-          >
-            Доп. информация о себе
-          </Text>
-          <Text>
-            Был системным администратором, инженером технической поддержки и
-            руководителем ИТ-отдела.{' '}
-          </Text>
-        </li>
-      </ul>
-      <div className={styles.ambassodorDataSection__another}>
+      <form
+        className={styles.ambassodorDataSection__form}
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <ul className={styles.ambassodorDataSection__list}>
+          <li className={styles.ambassodorDataSection__item}>
+            <Text
+              color="secondary"
+              className={styles.ambassodorDataSection__attribute}
+            >
+              Страна
+            </Text>
+            {variableInput(displayData(user.promo), '')}
+          </li>
+          <li className={styles.ambassodorDataSection__item}>
+            <Text
+              color="secondary"
+              className={styles.ambassodorDataSection__attribute}
+            >
+              Город
+            </Text>
+            {variableInput(displayData(user.promo), '')}
+          </li>
+          <li className={styles.ambassodorDataSection__item}>
+            <Text
+              color="secondary"
+              className={styles.ambassodorDataSection__attribute}
+            >
+              Индекс
+            </Text>
+            {variableInput(displayData(user.promo), '')}
+          </li>
+          <li className={styles.ambassodorDataSection__item}>
+            <Text
+              color="secondary"
+              className={styles.ambassodorDataSection__attribute}
+            >
+              Адрес
+            </Text>
+            {variableInput(displayData(user.promo), '')}
+          </li>
+          <li className={styles.ambassodorDataSection__item}>
+            <Text
+              color="secondary"
+              className={styles.ambassodorDataSection__attribute}
+            >
+              Email
+            </Text>
+            {variableInput(displayData(user.e_mail), '')}
+          </li>
+        </ul>
+        <ul className={styles.ambassodorDataSection__list}>
+          <li className={styles.ambassodorDataSection__item}>
+            <Text
+              color="secondary"
+              className={styles.ambassodorDataSection__attribute}
+            >
+              Образование
+            </Text>
+            {variableInput(displayData(user.e_mail), '')}
+          </li>
+          <li className={styles.ambassodorDataSection__item}>
+            <Text
+              color="secondary"
+              className={styles.ambassodorDataSection__attribute}
+            >
+              Место работы
+            </Text>
+            {variableInput(displayData(user.e_mail), '')}
+          </li>
+          <li className={styles.ambassodorDataSection__item}>
+            <Text
+              color="secondary"
+              className={styles.ambassodorDataSection__attribute}
+            >
+              Цель учёбы в Практикум
+            </Text>
+            {variableInput(displayData(user.e_mail), '')}
+          </li>
+          <li className={styles.ambassodorDataSection__item}>
+            <Text
+              color="secondary"
+              className={styles.ambassodorDataSection__attribute}
+            >
+              Желаемая деятельность
+            </Text>
+            {variableInput(displayData(user.activity), '')}
+          </li>
+        </ul>
+        <ul className={styles.ambassodorDataSection__list}>
+          <li className={styles.ambassodorDataSection__item}>
+            <Text
+              color="secondary"
+              className={styles.ambassodorDataSection__attribute}
+            >
+              Ссылка на блог
+            </Text>
+            {variableInput(displayData(user.activity), '')}
+          </li>
+          <li className={styles.ambassodorDataSection__item}>
+            <Text
+              color="secondary"
+              className={styles.ambassodorDataSection__attribute}
+            >
+              Размер одежды
+            </Text>
+            {variableInput(displayData(user.activity), '')}
+          </li>
+          <li className={styles.ambassodorDataSection__item}>
+            <Text
+              color="secondary"
+              className={styles.ambassodorDataSection__attribute}
+            >
+              Размер ноги
+            </Text>
+            {variableInput(displayData(user.activity), '')}
+          </li>
+          <li className={styles.ambassodorDataSection__item}>
+            <Text
+              color="secondary"
+              className={styles.ambassodorDataSection__attribute}
+            >
+              Доп. информация о себе
+            </Text>
+            {variableInput(displayData(user.activity), '')}
+          </li>
+        </ul>
         <ul
           className={`${styles.ambassodorDataSection__list} ${styles.ambassodorDataSection__listAnother}`}
         >
@@ -144,31 +171,45 @@ export default function AmbassadorData({ user }) {
             className={`${styles.ambassodorDataSection__item} ${styles.ambassodorDataSection__itemAnother}`}
           >
             <Text color="secondary">Комментарий</Text>
-            <TextInput
+            {variableInput(
+              displayData(user.e_mail),
+              'Вы можете оставить здесь любые заметки, связанные с амбассадором',
+            )}
+          </li>
+          <li className={styles.ambassodorDataSection__item}>
+            <Button
               size="l"
-              placeholder="Вы можете оставить здесь любые заметки, связанные с амбассадором"
-            ></TextInput>
-          </li>
-          <li className={styles.ambassodorDataSection__item}>
-            <Text
-              color="secondary"
-              className={styles.ambassodorDataSection__attribute}
+              onClick={() => {
+                setIsFormActive(!isFormActive);
+              }}
             >
-              Счётчик напоминалок
-            </Text>
-            <Text>2</Text>
-          </li>
-          <li className={styles.ambassodorDataSection__item}>
-            <Text
-              color="secondary"
-              className={styles.ambassodorDataSection__attribute}
-            >
-              Дата добавления
-            </Text>
-            <Text>{user.date_receipt}</Text>
+              {isFormActive ? 'Сохранить изменения' : 'Изменить данные'}
+            </Button>
           </li>
         </ul>
-      </div>
+      </form>
+      <ul
+        className={`${styles.ambassodorDataSection__list} ${styles.ambassodorDataSection__listAnother}`}
+      >
+        <li className={styles.ambassodorDataSection__item}>
+          <Text
+            color="secondary"
+            className={styles.ambassodorDataSection__attribute}
+          >
+            Счётчик напоминалок
+          </Text>
+          <Text>2</Text>
+        </li>
+        <li className={styles.ambassodorDataSection__item}>
+          <Text
+            color="secondary"
+            className={styles.ambassodorDataSection__attribute}
+          >
+            Дата добавления
+          </Text>
+          <Text>{user.date_receipt}</Text>
+        </li>
+      </ul>
       <Button
         size="l"
         view="outlined"
