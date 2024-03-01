@@ -1,14 +1,18 @@
 .ambassodorDataSection {
+  position: relative;
+  padding-bottom: 36px;
+}
+
+.ambassodorDataSection__form {
   display: flex;
   flex-direction: column;
   row-gap: 16px;
-  position: relative;
-  padding-bottom: 36px;
 }
 
 .ambassodorDataSection__promoInfo {
   padding: 9px 0;
   margin-top: 16px;
+  margin-bottom: 16px;
 }
 
 .ambassodorDataSection__promo {
@@ -34,10 +38,12 @@
 .ambassodorDataSection__item {
   padding: 9px 0;
   display: flex;
+  align-items: center;
 }
 
 .ambassodorDataSection__itemAnother {
   flex-direction: column;
+  align-items: flex-start;
   row-gap: 8px;
   padding: 0;
 }

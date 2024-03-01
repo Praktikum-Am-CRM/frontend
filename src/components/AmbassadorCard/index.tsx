@@ -68,7 +68,7 @@ export default function AmbassadorCard({
               Телеграм/whatsapp
             </Text>
             <Link view="normal" href={`https://t.me/${user.telegram}`}>
-              {user.telegram}
+              @{user.telegram}
             </Link>
           </li>
           {user.Status !== 'candidate' && (
