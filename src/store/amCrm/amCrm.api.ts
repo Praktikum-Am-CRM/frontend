@@ -16,9 +16,9 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://my-vercel-project-coral-six.vercel.app/',
     prepareHeaders: headers => {
-      const auth_token = localStorage.getItem('auth_token');
-      if (auth_token) {
-        headers.set('authorization', `Bearer ${auth_token}`);
+      const token = localStorage.getItem('token');
+      if (token) {
+        headers.set('authorization', `Bearer ${token}`);
       }
       return headers;
     },

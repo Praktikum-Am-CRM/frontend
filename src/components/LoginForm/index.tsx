@@ -20,8 +20,8 @@ export const LoginForm = () => {
   const onSubmit = async (data: ILoginForm) => {
     try {
       const res = await login(data).unwrap();
-      if (res.auth_token) {
-        localStorage.setItem('auth_token', res.auth_token);
+      if (res.token) {
+        localStorage.setItem('token', res.token);
         setLoggedIn(true);
         navigate('/');
       }

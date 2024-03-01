@@ -1,19 +1,13 @@
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from '@reduxjs/toolkit';
-import { setLoggedIn } from '../store/amCrm/authSlice';
-import {
-  closeModal,
-  openModal,
-  setModalContentType,
-} from '../store/amCrm/modalSlice';
+import { authActions } from '../store/amCrm/auth.slice';
+import { modalActions } from '../store/amCrm/modal.slice';
 
 // import { userActions } from '../store/amCrm/user.slice';
 
 const actions = {
-  setLoggedIn,
-  closeModal,
-  openModal,
-  setModalContentType,
+  ...authActions,
+  ...modalActions,
 };
 
 export const useActions = () => {

@@ -17,36 +17,31 @@ export default function AmbassadorCard({
   rowData: string | undefined;
   isAmbassador?: boolean;
 }) {
-  const [isTabsDataActive, setIsTabsDataActive] = useState<boolean>(true);
-  const [isTabsActivityActive, setIsTabsActivityActive] =
-    useState<boolean>(false);
-  const [isTabsMerchActive, setIsTabsMerchActive] = useState<boolean>(false);
-  const [isTabsHistoryActive, setIsTabsHistoryActive] =
-    useState<boolean>(false);
+  const [activeTab, setActiveTab] = useState<string>('tabs-data');
 
-  function findUserById(id) {
-    if (isAmbassador) {
-      return ambassadorArray.find(ambassador => ambassador.id === id);
-    } else {
-      return ambassadorArray.find(candidate => candidate.id === id);
-    }
+  function findUserById(id: string) {
+    return ambassadorArray.find(candidate => candidate.id === id);
   }
   const user = findUserById(rowData);
 
-  function determineContent() {
-    if (isTabsDataActive) {
+  function determineContent(id: string) {
+    if (id === 'tabs-data') {
       return <AmbassadorData user={user} />;
     }
-    if (isTabsActivityActive) {
+    if (id === 'tabs-activity') {
       return <AmbassadorActivity user={user} />;
     }
-    if (isTabsMerchActive) {
+    if (id === 'tabs-merch') {
       return <AmbassadorMerch user={user} />;
     }
-    if (isTabsHistoryActive) {
+    if (id === 'tabs-history') {
       return <AmbassadorHistory user={user} />;
     }
     return null;
+  }
+
+  function handleTabClick(id: string) {
+    setActiveTab(id);
   }
 
   return (
@@ -68,10 +63,10 @@ export default function AmbassadorCard({
               Телеграм/whatsapp
             </Text>
             <Link view="normal" href={`https://t.me/${user.telegram}`}>
-              {user.telegram}
+              @{user.telegram}
             </Link>
           </li>
-          {user.Status !== 'candidate' && (
+          {user.status !== 'candidate' && (
             <li className={styles.ambassadorCard__infoPoint}>
               <Text
                 className={styles.ambassadorCard__pointDescription}
@@ -80,11 +75,11 @@ export default function AmbassadorCard({
                 Статус
               </Text>
               <div className={styles.ambassadorCard__status}>
-                {user.Status && determineStatus(user.Status)}
+                {user.status && determineStatus(user.status)}
               </div>
             </li>
           )}
-          {user.Status !== 'candidate' && (
+          {user.status !== 'candidate' && (
             <li
               className={`${styles.ambassadorCard__infoPoint} ${styles.ambassadorCard__infoPoint_type_achievement}`}
             >
@@ -116,35 +111,31 @@ export default function AmbassadorCard({
           <Button
             className={styles.ambassadorCard__assignButton}
             onClick={() => {
-              user.Status = 'active';
+              user.status = 'active';
             }}
           >
             Сделать амбассадором
           </Button>
         )}
       </div>
-      <Tabs size="l" className={styles.ambassadorCard__tabs}>
+      <Tabs
+        activeTab={activeTab}
+        size="l"
+        className={styles.ambassadorCard__tabs}
+      >
         <Tabs.Item
           id="tabs-data"
           title="Данные"
-          active={isTabsDataActive}
-          onClick={() => {
-            setIsTabsDataActive(true);
-            setIsTabsActivityActive(false);
-            setIsTabsMerchActive(false);
-            setIsTabsHistoryActive(false);
+          onClick={id => {
+            handleTabClick(id);
           }}
         ></Tabs.Item>
         {isAmbassador && (
           <Tabs.Item
             id="tabs-activity"
             title="Деятельность"
-            active={isTabsActivityActive}
-            onClick={() => {
-              setIsTabsDataActive(false);
-              setIsTabsActivityActive(true);
-              setIsTabsMerchActive(false);
-              setIsTabsHistoryActive(false);
+            onClick={id => {
+              handleTabClick(id);
             }}
           ></Tabs.Item>
         )}
@@ -152,28 +143,20 @@ export default function AmbassadorCard({
           <Tabs.Item
             id="tabs-merch"
             title="Мерч"
-            active={isTabsMerchActive}
-            onClick={() => {
-              setIsTabsDataActive(false);
-              setIsTabsActivityActive(false);
-              setIsTabsMerchActive(true);
-              setIsTabsHistoryActive(false);
+            onClick={id => {
+              handleTabClick(id);
             }}
           ></Tabs.Item>
         )}
         <Tabs.Item
           id="tabs-history"
           title="История"
-          active={isTabsHistoryActive}
-          onClick={() => {
-            setIsTabsDataActive(false);
-            setIsTabsActivityActive(false);
-            setIsTabsMerchActive(false);
-            setIsTabsHistoryActive(true);
+          onClick={id => {
+            handleTabClick(id);
           }}
         ></Tabs.Item>
       </Tabs>
-      <div className={styles.ambassadorCard__content}>{determineContent()}</div>
+      {determineContent(activeTab)}
     </div>
   );
 }

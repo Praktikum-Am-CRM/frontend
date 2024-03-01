@@ -1,18 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Tabs } from '@gravity-ui/uikit';
 import CandidateTable from '../../components/CandidateTable';
 import { ambassadorArray } from '../../utils/mockData';
 import { useEffect, useState } from 'react';
-import { TableRowData } from '../../types/types';
+
 import styles from './styles.module.css';
 import Search from '../../components/Search';
 
 export default function CandidatesPage() {
   const [activeTab, setActiveTab] = useState<string>('new');
-  const [activeArray, setActiveArray] = useState<TableRowData[]>([]);
+  const [activeArray, setActiveArray] = useState<any>([]);
 
   function determineCandidateArchiveArray() {
     return ambassadorArray.filter(ambassador => {
-      return ambassador.Status === 'deleted';
+      return ambassador.status === 'deleted';
     });
   }
 
@@ -20,7 +21,7 @@ export default function CandidatesPage() {
 
   function determineCandidateArray() {
     return ambassadorArray.filter(ambassador => {
-      return ambassador.Status === 'candidate';
+      return ambassador.status === 'candidate';
     });
   }
 

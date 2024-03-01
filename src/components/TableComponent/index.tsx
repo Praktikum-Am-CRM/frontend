@@ -70,7 +70,7 @@ export default function TableComponent({
       ...data,
       id: data.id,
       ambassador: textWithTooltip(data.ambassador),
-      status: data.Status && determineStatus(data.Status),
+      status: data.status && determineStatus(data.status),
       promo: data.promo,
       telegram: (
         <Link view="normal" href={`https://t.me/${data.telegram}`}>
