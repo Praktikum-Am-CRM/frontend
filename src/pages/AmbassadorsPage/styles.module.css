@@ -4,8 +4,14 @@
   gap: 20px;
 }
 
-.ambassadorsPage__searchContainer {
+.ambassadorsPage__container {
   display: flex;
   align-items: center;
   gap: 20px;
+}
+
+.ambassadorsPage__searchContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
