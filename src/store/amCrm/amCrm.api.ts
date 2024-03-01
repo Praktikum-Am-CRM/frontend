@@ -8,17 +8,17 @@ interface LoginRequest {
 }
 
 interface LoginResponse {
-  token: string;
+  auth_token: string;
 }
 
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://my-vercel-project-coral-six.vercel.app/',
+    baseUrl: 'http://51.250.51.19/',
     prepareHeaders: headers => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
+      const auth_token = localStorage.getItem('auth_token');
+      if (auth_token) {
+        headers.set('authorization', `Bearer ${auth_token}`);
       }
       return headers;
     },
