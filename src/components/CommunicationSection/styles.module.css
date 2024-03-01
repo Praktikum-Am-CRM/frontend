@@ -1,0 +1,11 @@
+.root {
+  padding: 32px 28px;
+}
+
+.radioButtons {
+  margin-bottom: 32px;
+}
+
+.activeTab {
+  background-color: white;
+}

@@ -6,6 +6,7 @@ import { ambassadorArray } from '../../utils/mockData';
 import { useActions } from '../../hooks/actions';
 import { useAppSelector } from '../../hooks/redux';
 import ModalWindow from '../../components/ModalWindow';
+import CommunicationSection from '../../components/CommunicationSection';
 
 export default function AmbassadorsPage() {
   const { setModalContentType, openModal } = useActions();
@@ -33,7 +34,7 @@ export default function AmbassadorsPage() {
       </div>
       <AmbassadorTable tableRowData={determineAmbassadorArray()} />
       {isModalOpen && modalContentType === 'messages' && (
-        <ModalWindow content={<>Сообщения</>} />
+        <ModalWindow content={<CommunicationSection />} />
       )}
     </section>
   );
