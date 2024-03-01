@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { api } from './amCrm/amCrm.api';
 import authReducer from './amCrm/authSlice';
+import modalReducer from './amCrm/modalSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
   [api.reducerPath]: api.reducer,
+  modal: modalReducer,
 });
 
 export const store = configureStore({
