@@ -1,14 +1,34 @@
 import styles from './styles.module.css';
 import { Button, Text, TextInput } from '@gravity-ui/uikit';
 import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+// import { SubmitHandler, useForm } from "react-hook-form";
 
-export default function AmbassadorData({ user }) {
+export default function AmbassadorData({
+  user,
+}: {
+  user: {
+    id: string;
+    ambassador: string;
+    Status: string;
+    promo: string;
+    telegram: string;
+    program: string;
+    date_receipt: string;
+    gender: string;
+    address: string;
+    activity: string;
+    e_mail: string;
+  };
+}) {
   const [isFormActive, setIsFormActive] = useState<boolean>(false);
-  const { handleSubmit } = useForm();
-  const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
+  // const {
+  //   // register,
+  //   handleSubmit,
+  //   // formState: { errors },
+  // } = useForm<Inputs>();
+  // const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data)
 
-  const variableInput = (value, placeholder) => {
+  const variableInput = (value: string, placeholder: string) => {
     return isFormActive ? (
       <TextInput
         view="normal"
@@ -21,7 +41,7 @@ export default function AmbassadorData({ user }) {
     );
   };
 
-  function displayData(value) {
+  function displayData(value: string) {
     if (value) {
       return value;
     } else return '';
@@ -39,7 +59,7 @@ export default function AmbassadorData({ user }) {
       </div>
       <form
         className={styles.ambassodorDataSection__form}
-        onSubmit={handleSubmit(onSubmit)}
+        // onSubmit={handleSubmit(onSubmit)}
       >
         <ul className={styles.ambassodorDataSection__list}>
           <li className={styles.ambassodorDataSection__item}>
