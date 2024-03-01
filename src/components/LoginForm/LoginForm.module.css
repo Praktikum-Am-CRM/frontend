@@ -1,0 +1,30 @@
+.error {
+  color: #e9033a;
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  margin: 0 auto 24px auto;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: 0 24px;
+  gap: 4px;
+}
+
+.label {
+  margin-bottom: 2px;
+}
+
+.input {
+  margin-bottom: 24px;
+}
+
+.buttonsContainer {
+  margin-top: 32px;
+  display: flex;
+  justify-content: flex-end;
+}

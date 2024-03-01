@@ -11,9 +11,11 @@
     "format": "prettier --write 'src/**/*.{ts,tsx,scss,css,json}'",
     "preview": "vite preview",
     "prepare": "husky",
-    "commit": "cz"
+    "commit": "cz",
+    "tsc": "tsc"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "@reduxjs/toolkit": "^2.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -44,7 +46,8 @@
     "lint-staged": "^15.2.0",
     "prettier": "^3.2.5",
     "typescript": "^5.2.2",
-    "vite": "^5.1.4"
+    "vite": "^5.1.4",
+    "vite-plugin-svgr": "^4.2.0"
   },
   "config": {
     "commitizen": {

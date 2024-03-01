@@ -7,18 +7,19 @@ import { Loader } from '@gravity-ui/uikit';
 
 export default function Layout() {
   const location = useLocation();
+  const isLoginPage = location.pathname === '/login';
   const navigate = useNavigate();
 
   useEffect(() => {
     if (location.pathname === '/') {
       navigate('/ambassadors');
     }
-  }, [location]);
+  }, [location, navigate]);
 
   return (
     <ScrollToTop>
       <div className={styles.layout}>
-        <Header />
+        {!isLoginPage && <Header />}
         <main className={styles.layout__main}>
           <Suspense fallback={<Loader size="l" />}>
             <Outlet />
