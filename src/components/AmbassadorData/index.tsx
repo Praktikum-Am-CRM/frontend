@@ -2,7 +2,11 @@
 import styles from './styles.module.css';
 import { Button, Text, TextInput } from '@gravity-ui/uikit';
 import { useState } from 'react';
-// import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from 'react-hook-form';
+
+type Inputs = {
+  country: string;
+};
 
 export default function AmbassadorData({
   user,
@@ -23,20 +27,25 @@ export default function AmbassadorData({
   // };
 }) {
   const [isFormActive, setIsFormActive] = useState<boolean>(false);
-  // const {
-  //   // register,
-  //   handleSubmit,
-  //   // formState: { errors },
-  // } = useForm<Inputs>();
-  // const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data)
+  const {
+    register,
+    handleSubmit,
+    // formState: { errors },
+  } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
 
-  const variableInput = (value: string, placeholder: string) => {
+  const variableInput = (
+    nameInput: string,
+    value: string,
+    placeholder: string,
+  ) => {
     return isFormActive ? (
       <TextInput
+        defaultValue={value}
+        {...register(nameInput)}
         view="normal"
         size="l"
         placeholder={placeholder}
-        value={value}
       ></TextInput>
     ) : (
       <Text>{value}</Text>
@@ -49,8 +58,6 @@ export default function AmbassadorData({
     } else return '';
   }
 
-  console.log(isFormActive);
-
   return (
     <section className={styles.ambassodorDataSection}>
       <div className={styles.ambassodorDataSection__promoInfo}>
@@ -61,7 +68,7 @@ export default function AmbassadorData({
       </div>
       <form
         className={styles.ambassodorDataSection__form}
-        // onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <ul className={styles.ambassodorDataSection__list}>
           <li className={styles.ambassodorDataSection__item}>
@@ -71,7 +78,7 @@ export default function AmbassadorData({
             >
               Страна
             </Text>
-            {variableInput(displayData(user.promo), '')}
+            {variableInput('country', displayData(user.promo), '')}
           </li>
           <li className={styles.ambassodorDataSection__item}>
             <Text
@@ -80,7 +87,7 @@ export default function AmbassadorData({
             >
               Город
             </Text>
-            {variableInput(displayData(user.promo), '')}
+            {variableInput('region', displayData(user.promo), '')}
           </li>
           <li className={styles.ambassodorDataSection__item}>
             <Text
@@ -89,7 +96,7 @@ export default function AmbassadorData({
             >
               Индекс
             </Text>
-            {variableInput(displayData(user.promo), '')}
+            {variableInput('index', displayData(user.promo), '')}
           </li>
           <li className={styles.ambassodorDataSection__item}>
             <Text
@@ -98,7 +105,7 @@ export default function AmbassadorData({
             >
               Адрес
             </Text>
-            {variableInput(displayData(user.promo), '')}
+            {variableInput('street', displayData(user.promo), '')}
           </li>
           <li className={styles.ambassodorDataSection__item}>
             <Text
@@ -107,7 +114,7 @@ export default function AmbassadorData({
             >
               Email
             </Text>
-            {variableInput(displayData(user.e_mail), '')}
+            {variableInput('e-mail', displayData(user.e_mail), '')}
           </li>
         </ul>
         <ul className={styles.ambassodorDataSection__list}>
@@ -118,7 +125,11 @@ export default function AmbassadorData({
             >
               Образование
             </Text>
-            {variableInput(displayData(user.e_mail), '')}
+            {variableInput(
+              'educational_institution',
+              displayData(user.e_mail),
+              '',
+            )}
           </li>
           <li className={styles.ambassodorDataSection__item}>
             <Text
@@ -127,7 +138,7 @@ export default function AmbassadorData({
             >
               Место работы
             </Text>
-            {variableInput(displayData(user.e_mail), '')}
+            {variableInput('place_work', displayData(user.e_mail), '')}
           </li>
           <li className={styles.ambassodorDataSection__item}>
             <Text
@@ -136,7 +147,7 @@ export default function AmbassadorData({
             >
               Цель учёбы в Практикум
             </Text>
-            {variableInput(displayData(user.e_mail), '')}
+            {variableInput('goal', displayData(user.e_mail), '')}
           </li>
           <li className={styles.ambassodorDataSection__item}>
             <Text
@@ -145,7 +156,7 @@ export default function AmbassadorData({
             >
               Желаемая деятельность
             </Text>
-            {variableInput(displayData(user.activity), '')}
+            {variableInput('activity', displayData(user.activity), '')}
           </li>
         </ul>
         <ul className={styles.ambassodorDataSection__list}>
@@ -156,7 +167,7 @@ export default function AmbassadorData({
             >
               Ссылка на блог
             </Text>
-            {variableInput(displayData(user.activity), '')}
+            {variableInput('blog_link', displayData(user.activity), '')}
           </li>
           <li className={styles.ambassodorDataSection__item}>
             <Text
@@ -165,7 +176,7 @@ export default function AmbassadorData({
             >
               Размер одежды
             </Text>
-            {variableInput(displayData(user.activity), '')}
+            {variableInput('clothing_size', displayData(user.activity), '')}
           </li>
           <li className={styles.ambassodorDataSection__item}>
             <Text
@@ -174,7 +185,7 @@ export default function AmbassadorData({
             >
               Размер ноги
             </Text>
-            {variableInput(displayData(user.activity), '')}
+            {variableInput('shoe_size', displayData(user.activity), '')}
           </li>
           <li className={styles.ambassodorDataSection__item}>
             <Text
@@ -183,7 +194,7 @@ export default function AmbassadorData({
             >
               Доп. информация о себе
             </Text>
-            {variableInput(displayData(user.activity), '')}
+            {variableInput('note', displayData(user.activity), '')}
           </li>
         </ul>
         <ul
@@ -194,6 +205,7 @@ export default function AmbassadorData({
           >
             <Text color="secondary">Комментарий</Text>
             {variableInput(
+              'note',
               displayData(user.e_mail),
               'Вы можете оставить здесь любые заметки, связанные с амбассадором',
             )}
@@ -204,6 +216,7 @@ export default function AmbassadorData({
               onClick={() => {
                 setIsFormActive(!isFormActive);
               }}
+              type={!isFormActive ? 'submit' : 'button'}
             >
               {isFormActive ? 'Сохранить изменения' : 'Изменить данные'}
             </Button>
