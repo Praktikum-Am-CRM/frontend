@@ -1,11 +1,11 @@
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from '@reduxjs/toolkit';
-import { setLoggedIn } from '../store/amCrm/authSlice';
+import { authActions } from '../store/amCrm/auth.slice';
 
 // import { userActions } from '../store/amCrm/user.slice';
 
 const actions = {
-  setLoggedIn,
+  ...authActions,
 };
 
 export const useActions = () => {
