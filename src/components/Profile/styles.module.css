@@ -1,0 +1,18 @@
+.profile {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile__photo {
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 50%;
+  background-color: transparent;
+}
+
+.profile__userData {
+  display: flex;
+  flex-direction: column;
+}

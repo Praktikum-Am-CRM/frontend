@@ -1,0 +1,30 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.type {
+  display: block;
+  margin-bottom: 24px;
+}
+
+.cardList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+}
+
+.cardLine {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 28px;
+}

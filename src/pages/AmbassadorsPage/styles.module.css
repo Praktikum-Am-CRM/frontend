@@ -1,0 +1,17 @@
+.ambassadorsPage {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ambassadorsPage__container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.ambassadorsPage__searchContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}

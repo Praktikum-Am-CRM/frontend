@@ -1,0 +1,30 @@
+.filters {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  gap: 12px;
+  width: 280px;
+}
+
+.filters__checkboxList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.filters__container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--Line-Generic);
+}
+
+.filters__buttons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}

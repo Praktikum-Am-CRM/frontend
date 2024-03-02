@@ -1,0 +1,56 @@
+.ambassadorCard {
+  padding: 28px;
+}
+
+.ambassadorCard__heading {
+  cursor: default;
+}
+
+.ambassadorCard__infoContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+  margin-bottom: 28px;
+}
+
+.ambassadorCard__infoList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+}
+
+.ambassadorCard__infoPoint {
+  margin: 0;
+  padding: 9px 0;
+  display: flex;
+}
+
+.ambassadorCard__infoPoint_type_achievement {
+  padding: 0;
+}
+
+.ambassadorCard__pointDescription {
+  margin: 0 12px 0 0;
+  cursor: default;
+}
+
+.ambassadorCard__course {
+  cursor: default;
+}
+
+.ambassadorCard__status {
+  cursor: default;
+}
+
+.ambassadorCard__assignButton {
+  height: 36px;
+  background-color: var(--Base-Brand);
+  color: var(--Text-Primary);
+}
+
+.ambassadorCard__tabs {
+  width: max-content;
+}

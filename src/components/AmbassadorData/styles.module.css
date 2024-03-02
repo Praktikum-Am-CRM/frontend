@@ -1,0 +1,65 @@
+.ambassodorDataSection {
+  position: relative;
+  padding-bottom: 36px;
+}
+
+.ambassodorDataSection__form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+}
+
+.ambassodorDataSection__promoInfo {
+  padding: 9px 0;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.ambassodorDataSection__promo {
+  margin-right: 12px;
+}
+
+.ambassodorDataSection__list {
+  list-style: none;
+  padding: 16px;
+  margin: 0;
+  border: 1px solid var(--Line-Generic);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+}
+
+.ambassodorDataSection__listAnother {
+  border: none;
+  padding: 0;
+}
+
+.ambassodorDataSection__item {
+  padding: 9px 0;
+  display: flex;
+  align-items: center;
+}
+
+.ambassodorDataSection__itemAnother {
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: 8px;
+  padding: 0;
+}
+
+.ambassodorDataSection__attribute {
+  margin-right: 12px;
+  flex: 0 0 auto;
+}
+
+.ambassodorDataSection__deleteButton {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 36px;
+  background-image: url(../../ui/icontrash.svg);
+  background-repeat: no-repeat;
+  background-size: 16px;
+  background-position: center;
+}

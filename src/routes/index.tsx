@@ -1,21 +1,33 @@
+import { lazy } from 'react';
 import {
   Route,
   createBrowserRouter,
   createRoutesFromElements,
 } from 'react-router-dom';
 
-import * as page from '../pages';
 import Layout from '../components/Layout';
+import ProtectedRoute from '../components/ProtectedRoute';
+
+const AmbassadorsPage = lazy(() => import('../pages/AmbassadorsPage'));
+const CandidatesPage = lazy(() => import('../pages/CandidatesPage'));
+const MerchPage = lazy(() => import('../pages/MerchPage'));
+const NotFoundPage = lazy(() => import('../pages/NotFoundPage'));
+const NotificationsPage = lazy(() => import('../pages/NotificationsPage'));
+const StatisticsPage = lazy(() => import('../pages/StatisticsPage'));
+const LoginPage = lazy(() => import('../pages/LoginPage'));
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Layout />} errorElement={<page.NotFoundPage />}>
-      <Route path="ambassodors" element={<page.AmbassodorsPage />} />
-      <Route path="candidates" element={<page.CandidatesPage />} />
-      <Route path="notifications" element={<page.NotificationsPage />} />
-      <Route path="statistics" element={<page.StatisticsPage />} />
-      <Route path="merch" element={<page.MerchPage />} />
-      <Route path="*" element={<page.NotFoundPage />} />
+    <Route path="/" element={<Layout />} errorElement={<NotFoundPage />}>
+      <Route element={<ProtectedRoute />}>
+        <Route path="ambassadors" element={<AmbassadorsPage />} />
+        <Route path="candidates" element={<CandidatesPage />} />
+        <Route path="notifications" element={<NotificationsPage />} />
+        <Route path="statistics" element={<StatisticsPage />} />
+        <Route path="merch" element={<MerchPage />} />
+      </Route>
+      <Route path="login" element={<LoginPage />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Route>,
   ),
   {
