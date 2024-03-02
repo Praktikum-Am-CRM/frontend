@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Icon, Link, Select, Table, Text } from '@gravity-ui/uikit';
+import { Button, Icon, Link, Table, Text } from '@gravity-ui/uikit';
 import { Check, Paperclip } from '@gravity-ui/icons';
 import styles from './styles.module.css';
+import RatingComponent from '../RatingComponent';
 
 type TableColumnConfig = {
   id: string;
@@ -20,7 +21,7 @@ export default function AmbassadorActivity({ user }: { user: any }) {
     { id: 'photo', name: 'Скриншот', align: 'center' },
     { id: 'date', name: 'Дата размещения', align: 'center' },
     { id: 'accept', name: 'Состояние' },
-    { id: 'rating', name: 'Оценка (1-10)', align: 'center' },
+    { id: 'rating', name: 'Оценка (1-5)', align: 'center' },
   ];
 
   const tableData = [
@@ -72,18 +73,7 @@ export default function AmbassadorActivity({ user }: { user: any }) {
           Принять
         </Button>
       ),
-      rating: (
-        <Select
-          placeholder={data.rating}
-          options={[
-            { value: '1', content: '1' },
-            { value: '2', content: '2' },
-            { value: '3', content: '3' },
-            { value: '4', content: '4' },
-            { value: '5', content: '5' },
-          ]}
-        />
-      ),
+      rating: <RatingComponent initialValue={data.rating} />,
     };
   }
 
