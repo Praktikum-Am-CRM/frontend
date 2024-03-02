@@ -1,0 +1,14 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+}
+
+.cardLine {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 28px;
+  gap: 56px;
+}

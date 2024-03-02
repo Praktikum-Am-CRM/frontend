@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styles from './styles.module.css';
 import { Button, Tabs, TextArea } from '@gravity-ui/uikit';
+import DelayedMessages from '../DelayedMessages';
 
 const Mailing = () => {
   const [activeTab, setActiveTab] = useState('newMailing');
@@ -40,7 +41,7 @@ const Mailing = () => {
       case 'newMailing':
         return <div>{newMailing()}</div>;
       case 'delayed':
-        return <div>Тут будут отложенные</div>;
+        return <DelayedMessages />;
       case 'drafts':
         return <div>Тут будут черновики</div>;
       case 'history':
