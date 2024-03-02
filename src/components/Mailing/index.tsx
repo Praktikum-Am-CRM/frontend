@@ -1,100 +1,58 @@
-import { useState } from 'react';
 import styles from './styles.module.css';
-import { Button, Tabs, TextArea } from '@gravity-ui/uikit';
+import { ReactElement, useState } from 'react';
+import { Tabs } from '@gravity-ui/uikit';
 import DelayedMessages from '../DelayedMessages';
 import useMessages from '../../hooks/useMessages';
+import NewMailing from '../NewMailing';
+
+type TabId = 'newMailing' | 'delayed' | 'drafts' | 'history';
 
 const Mailing = () => {
-  const [activeTab, setActiveTab] = useState('newMailing');
+  const [activeTab, setActiveTab] = useState<TabId>('newMailing');
   const messages = useMessages();
 
-  const newMailing = () => {
-    return (
-      <>
-        <Button className={styles.templatesButton} size="l">
-          Шаблоны
-        </Button>
-        <TextArea
-          placeholder="Начните новую рассылку"
-          size="l"
-          className={styles.textArea}
-        />
-
-        <div className={styles.actions}>
-          <Button size="l" view="action" className={styles.actionButton}>
-            Отправить выбранным
-          </Button>
-          <Button size="l" className={styles.actionButton}>
-            Отправить всем
-          </Button>
-          <Button size="l" className={styles.actionButton}>
-            Отложить рассылку
-          </Button>
-          <Button size="l" className={styles.actionButton}>
-            В черновики
-          </Button>
-        </div>
-      </>
-    );
+  const tabsContent: Record<TabId, ReactElement> = {
+    newMailing: <NewMailing />,
+    delayed: <DelayedMessages messages={messages} />,
+    drafts: <div>Тут будут черновики</div>,
+    history: <div>Тут будет история</div>,
   };
 
-  const TabContent = () => {
-    switch (activeTab) {
-      case 'newMailing':
-        return <div>{newMailing()}</div>;
-      case 'delayed':
-        return <DelayedMessages messages={messages} />;
-      case 'drafts':
-        return <div>Тут будут черновики</div>;
-      case 'history':
-        return <div>Тут будет история</div>;
-      default:
-        return null;
-    }
-  };
+  const countMessages = () =>
+    messages.bulkMessages.length + messages.personalMessages.length;
 
-  const countMessages = () => {
-    return messages.bulkMessages.length + messages.personalMessages.length;
-  };
+  const handleTabClick = (tabId: TabId) => setActiveTab(tabId);
 
   return (
     <div className={styles.mailListContainer}>
       <Tabs size="l" className={styles.tabs}>
         <Tabs.Item
           id="tabs-newMailing"
-          title={'Новая рассылка'}
+          title="Новая рассылка"
           active={activeTab === 'newMailing'}
-          onClick={() => setActiveTab('newMailing')}
-        ></Tabs.Item>
-        {
-          <Tabs.Item
-            id="tabs-delayed"
-            title={`Отложенные (${countMessages()})`}
-            active={activeTab === 'delayed'}
-            onClick={() => setActiveTab('delayed')}
-          ></Tabs.Item>
-        }
-        {
-          <Tabs.Item
-            id="tabs-drafts"
-            title="Черновики"
-            active={activeTab === 'drafts'}
-            onClick={() => setActiveTab('drafts')}
-          ></Tabs.Item>
-        }
-        {
-          <Tabs.Item
-            id="tabs-history"
-            title="История"
-            active={activeTab === 'history'}
-            onClick={() => setActiveTab('history')}
-          ></Tabs.Item>
-        }
+          onClick={() => handleTabClick('newMailing')}
+        />
+        <Tabs.Item
+          id="tabs-delayed"
+          title={`Отложенные (${countMessages()})`}
+          active={activeTab === 'delayed'}
+          onClick={() => handleTabClick('delayed')}
+        />
+        <Tabs.Item
+          id="tabs-drafts"
+          title="Черновики"
+          active={activeTab === 'drafts'}
+          onClick={() => handleTabClick('drafts')}
+        />
+        <Tabs.Item
+          id="tabs-history"
+          title="История"
+          active={activeTab === 'history'}
+          onClick={() => handleTabClick('history')}
+        />
       </Tabs>
 
-      <div className={styles.tabContent}>
-        <TabContent />
-      </div>
+      <div className={styles.tabContent}>{tabsContent[activeTab]}</div>
     </div>
   );
 };

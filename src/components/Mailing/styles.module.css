@@ -1,16 +1,3 @@
 .tabs {
   margin-bottom: 24px;
 }
-
-.templatesButton {
-  margin-bottom: 24px;
-}
-
-.textArea {
-  margin-bottom: 20px;
-}
-
-.actions {
-  display: flex;
-  gap: 12px;
-}
