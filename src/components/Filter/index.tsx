@@ -9,7 +9,7 @@ import {
   Text,
 } from '@gravity-ui/uikit';
 import { useRef, useState } from 'react';
-import VerticalSlidersIcon from '../../assets/images/VerticalSlidersIcon';
+import { SlidersVertical } from '@gravity-ui/icons';
 
 import styles from './styles.module.css';
 import { Controller, useForm } from 'react-hook-form';
@@ -58,7 +58,7 @@ export default function Filter() {
   return (
     <>
       <Button size="xl" ref={buttonRef} onClick={handleClick}>
-        <Icon data={VerticalSlidersIcon} size={18} />
+        <Icon data={SlidersVertical} size={18} />
       </Button>
       <Popup
         anchorRef={buttonRef}
