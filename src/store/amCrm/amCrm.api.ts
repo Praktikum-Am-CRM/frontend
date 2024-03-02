@@ -14,7 +14,7 @@ interface LoginResponse {
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://51.250.51.19/',
+    baseUrl: 'https://yaambcrm.zapto.org/api/v1/',
     prepareHeaders: headers => {
       const auth_token = localStorage.getItem('auth_token');
       if (auth_token) {
@@ -39,7 +39,7 @@ export const api = createApi({
     }),
     login: build.mutation<LoginResponse, LoginRequest>({
       query: credentials => ({
-        url: 'api/v1/auth/token/login',
+        url: 'auth/token/login',
         method: 'POST',
         body: credentials,
       }),

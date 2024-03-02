@@ -8,7 +8,7 @@ import {
   withTableSettings,
   withTableSorting,
 } from '@gravity-ui/uikit';
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import styles from './styles.module.css';
 import { WomanIcon } from '../../assets/images/WomanIcon';
@@ -25,6 +25,18 @@ type TableSettingsData = Array<{
   id: string;
   isSelected?: boolean;
 }>;
+
+function determineGender(gender: string) {
+  return gender === 'woman' ? <WomanIcon /> : <ManIcon />;
+}
+
+const textWithTooltip = (text: string) => (
+  <Tooltip content={text}>
+    <Text ellipsis whiteSpace="nowrap" style={{ maxWidth: '300px' }}>
+      {text}
+    </Text>
+  </Tooltip>
+);
 
 export default function TableComponent({
   tableRowData,
@@ -53,38 +65,28 @@ export default function TableComponent({
     width: 250,
   }));
 
-  function determineGender(gender: string) {
-    return gender === 'woman' ? <WomanIcon /> : <ManIcon />;
-  }
-
-  const textWithTooltip = (text: string) => (
-    <Tooltip content={text}>
-      <Text ellipsis whiteSpace="nowrap" style={{ maxWidth: '300px' }}>
-        {text}
-      </Text>
-    </Tooltip>
-  );
-
-  function prepareDataForTable(data: TableRowData) {
-    return {
-      ...data,
-      id: data.id,
-      ambassador: textWithTooltip(data.ambassador),
-      status: data.status && determineStatus(data.status),
-      promo: data.promo,
-      telegram: (
-        <Link view="normal" href={`https://t.me/${data.telegram}`}>
-          @{data.telegram}
-        </Link>
-      ),
-      program: data.program,
-      registration: data.registration,
-      gender: determineGender(data.gender),
-      address: data.address && textWithTooltip(data.address),
-      tel: data.tel,
-      email: data.email,
+  const prepareDataForTable = useMemo(() => {
+    return (data: TableRowData) => {
+      return {
+        ...data,
+        id: data.id,
+        ambassador: textWithTooltip(data.ambassador),
+        status: data.status && determineStatus(data.status),
+        promo: data.promo,
+        telegram: (
+          <Link view="normal" href={`https://t.me/${data.telegram}`}>
+            @{data.telegram}
+          </Link>
+        ),
+        program: data.program,
+        registration: data.registration,
+        gender: determineGender(data.gender),
+        address: data.address && textWithTooltip(data.address),
+        tel: data.tel,
+        email: data.email,
+      };
     };
-  }
+  }, []);
 
   const content =
     location.pathname === '/ambassadors' ? (
@@ -93,16 +95,21 @@ export default function TableComponent({
       <AmbassadorCard rowData={rowId} />
     );
 
+  const handleRowClick = useCallback(
+    (evt: any) => {
+      setRowId(evt.id);
+      setModalContentType('ambassador');
+      openModal();
+    },
+    [setRowId, setModalContentType, openModal],
+  );
+
   return (
     <>
       {tableRowData && columnsWithAddedProps && (
         <MyTable
           className={styles.table}
-          onRowClick={evt => {
-            setRowId(evt.id);
-            setModalContentType('ambassador');
-            openModal();
-          }}
+          onRowClick={evt => handleRowClick(evt)}
           emptyMessage="Ничего не найдено ¯\_(ツ)_/¯"
           data={tableRowData.map(prepareDataForTable)}
           columns={columnsWithAddedProps}
