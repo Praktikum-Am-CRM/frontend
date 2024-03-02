@@ -35,7 +35,7 @@ export default function AmbassadorData({
   const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
 
   const variableInput = (
-    nameInput: string,
+    nameInput: any,
     value: string,
     placeholder: string,
   ) => {

@@ -42,7 +42,7 @@ export default function TableComponent({
     tableHeaderData?.map(col => ({ id: col.id, isSelected: true })),
   );
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [rowId, setRowId] = useState<string>();
+  const [rowId, setRowId] = useState<string>('');
 
   const MyTable = withTableSorting(
     withTableSelection(withTableSettings({ sortable: false })(Table)),
