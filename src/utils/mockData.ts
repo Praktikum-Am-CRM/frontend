@@ -100,3 +100,49 @@ export const ambassadorArray = [
     program: 'Бэк',
   },
 ];
+
+export const mockDelayedMessages = {
+  bulkMessages: [
+    {
+      id: '1',
+      recipients: 'Все амбассадоры',
+      message: 'Амбассадоры, здравствуйте! Это пример рассылки.',
+      date: '2023-11-16T09:22:20.000Z',
+    },
+    {
+      id: '2',
+      recipients: 'Фёдор Достоевский, Николай Гоголь',
+      message:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+      date: '2022-09-26T23:12:33.000Z',
+    },
+  ],
+  personalMessages: [
+    {
+      id: '1',
+      recipient: 'Иван Иванов',
+      message: 'Иван, здравствуйте! Это пример рассылки.',
+      date: '2022-10-29T00:09:20.000Z',
+    },
+    {
+      id: '2',
+      recipient: 'Анастасия Гусева',
+      message: 'Анастасия, здравствуйте! Это пример рассылки.',
+      date: '2022-12-04T16:16:17.000Z',
+    },
+    {
+      id: '3',
+      recipient: 'Гена Букин',
+      message:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.',
+      date: '2022-09-06T05:09:53.000Z',
+    },
+    {
+      id: '4',
+      recipient: 'Ольга Сергеевна',
+      message:
+        'Предупреждение: Ваши носки устроили побег из ящика. Они последний раз были замечены на вечеринке с другими одиночными носками. Возможно, они пытаются найти свои пары.',
+      date: '2023-09-30T15:08:30.000Z',
+    },
+  ],
+};

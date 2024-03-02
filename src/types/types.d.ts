@@ -11,3 +11,22 @@ export type TableRowData = {
   program: string;
   address?: string;
 };
+
+export interface MessagesState {
+  bulkMessages: BulkMessage[];
+  personalMessages: PersonalMessage[];
+}
+
+export interface BulkMessage {
+  id: string;
+  recipients: string;
+  message: string;
+  date: string;
+}
+
+export interface PersonalMessage {
+  id: string;
+  recipient: string;
+  message: string;
+  date: string;
+}
