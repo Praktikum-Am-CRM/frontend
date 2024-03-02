@@ -1,5 +1,5 @@
 import styles from './LoginPage.module.css';
-import Logo from '../../components/Logo';
+import { Logo } from '../../assets/icons';
 import { Text } from '@gravity-ui/uikit';
 import { LoginForm } from '../../components/LoginForm';
 import { useAuthRedirect } from '../../hooks/useAuthRedirect';

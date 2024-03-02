@@ -2,11 +2,11 @@
 import styles from './styles.module.css';
 import { Text } from '@gravity-ui/uikit';
 import CardMessage from '../CardMessage';
-import useMessages from '../../hooks/useMessages';
+import { MessagesState } from '../../types/types';
 
-const DelayedMessages: React.FC = () => {
-  const messages = useMessages();
-
+const DelayedMessages: React.FC<{ messages: MessagesState }> = ({
+  messages,
+}) => {
   return (
     <div className={styles.root}>
       <div>

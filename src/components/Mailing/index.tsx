@@ -2,9 +2,11 @@ import { useState } from 'react';
 import styles from './styles.module.css';
 import { Button, Tabs, TextArea } from '@gravity-ui/uikit';
 import DelayedMessages from '../DelayedMessages';
+import useMessages from '../../hooks/useMessages';
 
 const Mailing = () => {
   const [activeTab, setActiveTab] = useState('newMailing');
+  const messages = useMessages();
 
   const newMailing = () => {
     return (
@@ -41,7 +43,7 @@ const Mailing = () => {
       case 'newMailing':
         return <div>{newMailing()}</div>;
       case 'delayed':
-        return <DelayedMessages />;
+        return <DelayedMessages messages={messages} />;
       case 'drafts':
         return <div>Тут будут черновики</div>;
       case 'history':
@@ -49,6 +51,10 @@ const Mailing = () => {
       default:
         return null;
     }
+  };
+
+  const countMessages = () => {
+    return messages.bulkMessages.length + messages.personalMessages.length;
   };
 
   return (
@@ -63,7 +69,7 @@ const Mailing = () => {
         {
           <Tabs.Item
             id="tabs-delayed"
-            title="Отложенные"
+            title={`Отложенные (${countMessages()})`}
             active={activeTab === 'delayed'}
             onClick={() => setActiveTab('delayed')}
           ></Tabs.Item>

@@ -1,9 +1,9 @@
-import logo from '../../assets/loginLogo.svg';
+import ava from '../../assets/images/ava.png';
 import styles from './styles.module.css';
 import { Text } from '@gravity-ui/uikit';
 
 const data = {
-  urlPhoto: logo,
+  urlPhoto: ava,
   username: 'КоммунитиМенеджер',
   usermail: 'user_mail@ya.ru',
 };
