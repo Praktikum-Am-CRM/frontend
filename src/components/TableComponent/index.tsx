@@ -16,6 +16,10 @@ import { ManIcon } from '../../images/ManIcon';
 import { TableRowData } from '../../types/types';
 import ModalWindow from '../ModalWindow';
 import determineStatus from '../../utils/DetermineStatus';
+import { useActions } from '../../hooks/actions';
+import { useAppSelector } from '../../hooks/redux';
+import { useLocation } from 'react-router-dom';
+import AmbassadorCard from '../AmbassadorCard';
 
 type TableSettingsData = Array<{
   id: string;
@@ -29,11 +33,15 @@ export default function TableComponent({
   tableRowData: TableRowData[];
   tableHeaderData: any[];
 }) {
+  const { setModalContentType, openModal } = useActions();
+  const isModalOpen = useAppSelector(state => state.modal.isModalOpen);
+  const modalContentType = useAppSelector(state => state.modal.contentType);
+  const location = useLocation();
+
   const [settings, setSettings] = useState<TableSettingsData>(
     tableHeaderData?.map(col => ({ id: col.id, isSelected: true })),
   );
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
   const [rowId, setRowId] = useState<string>();
 
   const MyTable = withTableSorting(
@@ -78,9 +86,12 @@ export default function TableComponent({
     };
   }
 
-  function closeModal() {
-    setIsModalOpened(false);
-  }
+  const content =
+    location.pathname === '/ambassadors' ? (
+      <AmbassadorCard rowData={rowId} isAmbassador />
+    ) : (
+      <AmbassadorCard rowData={rowId} />
+    );
 
   return (
     <>
@@ -89,7 +100,8 @@ export default function TableComponent({
           className={styles.table}
           onRowClick={evt => {
             setRowId(evt.id);
-            setIsModalOpened(true);
+            setModalContentType('ambassador');
+            openModal();
           }}
           emptyMessage="Ничего не найдено ¯\_(ツ)_/¯"
           data={tableRowData.map(prepareDataForTable)}
@@ -103,12 +115,8 @@ export default function TableComponent({
           }}
         />
       )}
-      {isModalOpened && (
-        <ModalWindow
-          isModalOpened={isModalOpened}
-          closeModal={closeModal}
-          rowData={rowId}
-        />
+      {isModalOpen && modalContentType === 'ambassador' && (
+        <ModalWindow content={content} />
       )}
     </>
   );

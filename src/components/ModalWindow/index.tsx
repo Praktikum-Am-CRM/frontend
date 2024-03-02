@@ -1,41 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import styles from './styles.module.css';
-import { useLocation } from 'react-router-dom';
-import AmbassadorCard from '../AmbassadorCard';
+import { useActions } from '../../hooks/actions';
+import { useAppSelector } from '../../hooks/redux';
 
-export default function ModalWindow({
-  isModalOpened,
-  closeModal,
-  rowData,
-}: {
-  isModalOpened: boolean;
-  closeModal: () => void;
-  rowData: any;
-}) {
-  const location = useLocation();
+export default function ModalWindow({ content }: { content: JSX.Element }) {
+  const isModalOpen = useAppSelector(state => state.modal.isModalOpen);
+  const { closeModal } = useActions();
 
-  // console.log(rowData)
-
-  const defineContent = () => {
-    if (location.pathname === '/ambassadors') {
-      return <AmbassadorCard rowData={rowData} isAmbassador />;
-    }
-    if (location.pathname === '/candidates') {
-      return <AmbassadorCard rowData={rowData} />;
-    }
-    return null;
-  };
+  function handleCloseModal() {
+    closeModal();
+  }
 
   return (
     <div
-      className={`${styles.modal} ${isModalOpened === true && `${styles.modal_active}`}`}
+      className={`${styles.modal} ${isModalOpen === true && `${styles.modal_active}`}`}
     >
       <div className={styles.modal__container}>
         <button
           className={styles.modal__closeIcon}
-          onClick={closeModal}
+          onClick={handleCloseModal}
         ></button>
-        <div className={styles.modal__content}>{defineContent()}</div>
+        <div className={styles.modal__content}>{content}</div>
       </div>
     </div>
   );
