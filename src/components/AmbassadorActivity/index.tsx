@@ -20,7 +20,7 @@ export default function AmbassadorActivity({ user }: { user: any }) {
     { id: 'place', name: 'Площадка', width: 500 },
     { id: 'photo', name: 'Скриншот', align: 'center' },
     { id: 'date', name: 'Дата размещения', align: 'center' },
-    { id: 'accept', name: 'Состояние' },
+    { id: 'accept', name: 'Состояние', align: 'center' },
     { id: 'rating', name: 'Оценка (1-5)', align: 'center' },
   ];
 
@@ -69,9 +69,14 @@ export default function AmbassadorActivity({ user }: { user: any }) {
       accept: data.accept ? (
         <Icon data={Check} size="16" />
       ) : (
-        <Button view="action" size="m">
-          Принять
-        </Button>
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <Button view="action" size="m">
+            Принять
+          </Button>
+          <Button view="normal" size="m">
+            Отказать
+          </Button>
+        </div>
       ),
       rating: <RatingComponent initialValue={data.rating} />,
     };
