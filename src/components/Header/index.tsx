@@ -8,7 +8,11 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.header__container}>
-        <Link className={styles.header__link} to="/">
+        <Link
+          className={styles.header__link}
+          to="/"
+          aria-label="Ссылка на главную страницу"
+        >
           <Logo width={168} />
         </Link>
         <Navigation />

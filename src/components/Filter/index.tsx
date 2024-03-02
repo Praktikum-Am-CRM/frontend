@@ -57,7 +57,7 @@ export default function Filter() {
 
   return (
     <>
-      <Button size="xl" ref={buttonRef} onClick={handleClick}>
+      <Button size="xl" ref={buttonRef} onClick={handleClick} title="Фильтры">
         <Icon data={SlidersVertical} size={18} />
       </Button>
       <Popup
