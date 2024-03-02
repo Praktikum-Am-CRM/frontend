@@ -1,9 +1,10 @@
+import logo from '../../assets/loginLogo.svg';
 import styles from './styles.module.css';
 import { Text } from '@gravity-ui/uikit';
 
 const data = {
-  urlPhoto: 'http://www.coffeeambassador.ru/photo/photo63.jpeg',
-  username: 'UserName',
+  urlPhoto: logo,
+  username: 'КоммунитиМенеджер',
   usermail: 'user_mail@ya.ru',
 };
 

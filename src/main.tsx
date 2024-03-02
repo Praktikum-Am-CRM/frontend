@@ -5,9 +5,13 @@ import App from './components/App';
 import './index.css';
 import '@gravity-ui/uikit/styles/fonts.css';
 import '@gravity-ui/uikit/styles/styles.css';
-import { ThemeProvider } from '@gravity-ui/uikit';
+import { ThemeProvider, configure } from '@gravity-ui/uikit';
 import { Provider } from 'react-redux';
 import { store } from './store';
+
+configure({
+  lang: 'ru',
+});
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 ReactDOM.createRoot(document.getElementById('root')!).render(

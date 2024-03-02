@@ -11,8 +11,8 @@ import {
 import { useState } from 'react';
 
 import styles from './styles.module.css';
-import { WomanIcon } from '../../images/WomanIcon';
-import { ManIcon } from '../../images/ManIcon';
+import { WomanIcon } from '../../assets/images/WomanIcon';
+import { ManIcon } from '../../assets/images/ManIcon';
 import { TableRowData } from '../../types/types';
 import ModalWindow from '../ModalWindow';
 import determineStatus from '../../utils/DetermineStatus';

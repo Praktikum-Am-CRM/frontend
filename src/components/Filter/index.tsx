@@ -7,7 +7,7 @@ import {
   Text,
 } from '@gravity-ui/uikit';
 import { useRef, useState } from 'react';
-import VerticalSlidersIcon from '../../images/VerticalSlidersIcon';
+import VerticalSlidersIcon from '../../assets/images/VerticalSlidersIcon';
 
 import styles from './styles.module.css';
 
