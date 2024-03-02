@@ -6,7 +6,20 @@ import useMessages from '../../hooks/useMessages';
 
 const Mailing = () => {
   const [activeTab, setActiveTab] = useState('newMailing');
+  const [textAreaValue, setTextAreaValue] = useState('');
   const messages = useMessages();
+
+  const handleTextAreaChange = event => {
+    setTextAreaValue(event.target.value);
+  };
+
+  const handleSendClick = () => {
+    console.log('Отправка текста:', textAreaValue);
+  };
+
+  const isButtonActive = () => {
+    return textAreaValue.trim() === '';
+  };
 
   const newMailing = () => {
     return (
@@ -18,19 +31,39 @@ const Mailing = () => {
           placeholder="Начните новую рассылку"
           size="l"
           className={styles.textArea}
+          value={textAreaValue}
+          onChange={handleTextAreaChange}
         />
 
         <div className={styles.actions}>
-          <Button size="l" view="action" className={styles.actionButton}>
+          <Button
+            size="l"
+            view="action"
+            className={styles.actionButton}
+            onClick={handleSendClick}
+            disabled={isButtonActive()}
+          >
             Отправить выбранным
           </Button>
-          <Button size="l" className={styles.actionButton}>
+          <Button
+            size="l"
+            className={styles.actionButton}
+            disabled={isButtonActive()}
+          >
             Отправить всем
           </Button>
-          <Button size="l" className={styles.actionButton}>
+          <Button
+            size="l"
+            className={styles.actionButton}
+            disabled={isButtonActive()}
+          >
             Отложить рассылку
           </Button>
-          <Button size="l" className={styles.actionButton}>
+          <Button
+            size="l"
+            className={styles.actionButton}
+            disabled={isButtonActive()}
+          >
             В черновики
           </Button>
         </div>
