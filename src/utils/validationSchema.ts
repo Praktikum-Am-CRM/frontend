@@ -6,6 +6,9 @@ export const loginSchema = yup
       .string()
       .email('Неправильный формат почты')
       .required('Необходимо указать почту'),
-    password: yup.string().required('Требуется ввести пароль'),
+    password: yup
+      .string()
+      .min(4, 'Пароль дожен содержать минимум 4 символа')
+      .required('Требуется ввести пароль'),
   })
   .required();

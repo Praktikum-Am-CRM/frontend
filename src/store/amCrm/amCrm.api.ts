@@ -14,7 +14,7 @@ interface LoginResponse {
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://yaambcrm.zapto.org/api/v1/',
+    baseUrl: 'https://ambassadorsyapractice.ru/api/v1/',
     prepareHeaders: headers => {
       const auth_token = localStorage.getItem('auth_token');
       if (auth_token) {
