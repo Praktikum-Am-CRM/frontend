@@ -9,12 +9,6 @@
   margin-bottom: 24px;
 }
 
-.cardList {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
 .card {
   display: flex;
   flex-direction: column;

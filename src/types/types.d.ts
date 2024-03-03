@@ -22,6 +22,7 @@ export interface BulkMessage {
   recipients: string;
   message: string;
   date: string;
+  pinned?: boolean;
 }
 
 export interface PersonalMessage {
@@ -29,4 +30,9 @@ export interface PersonalMessage {
   recipient: string;
   message: string;
   date: string;
+  pinned?: boolean;
 }
+
+export type Message = BulkMessage | PersonalMessage;
+
+export type CardType = 'delayed' | 'chats';

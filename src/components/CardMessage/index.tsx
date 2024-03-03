@@ -1,14 +1,26 @@
 import styles from './styles.module.css';
 import { Card, Text } from '@gravity-ui/uikit';
-import DropdownMenuButton from '../DropdownMenuButton';
+import DropdownMenuButtonDelayed from '../DropdownMenuButtonDelayed';
+import DropdownMenuButtonChats from '../DropdownMenuButtonChats';
 import { formatDate } from '../../utils/formatDate';
-import { BulkMessage, PersonalMessage } from '../../types/types';
+import { CardType, Message } from '../../types/types';
+import { PinIcon } from '../../assets/icons';
 
 interface CardMessageProps {
-  message: BulkMessage | PersonalMessage;
+  message: Message;
+  cardType: CardType;
 }
 
-const CardMessage: React.FC<CardMessageProps> = ({ message }) => (
+function defineDropdown(cardType: CardType) {
+  const dropdownMap = {
+    delayed: <DropdownMenuButtonDelayed />,
+    chats: <DropdownMenuButtonChats />,
+  };
+
+  return dropdownMap[cardType] || null;
+}
+
+const CardMessage: React.FC<CardMessageProps> = ({ message, cardType }) => (
   <Card
     view="outlined"
     type="action"
@@ -20,12 +32,17 @@ const CardMessage: React.FC<CardMessageProps> = ({ message }) => (
   >
     <div className={styles.cardLine}>
       <div>
-        <Text variant="body-1" color="secondary">
-          {'Кому: '}
-        </Text>
+        {cardType !== 'chats' && (
+          <Text variant="body-1" color="secondary">
+            {'Кому: '}
+          </Text>
+        )}
         <Text>
           {'recipients' in message ? message.recipients : message.recipient}
         </Text>
+        {cardType === 'chats' && message.pinned && (
+          <PinIcon className={styles.pin} />
+        )}
       </div>
       <Text variant="body-1" color="secondary">
         {formatDate(message.date)}
@@ -35,9 +52,7 @@ const CardMessage: React.FC<CardMessageProps> = ({ message }) => (
       <Text variant="body-1" color="secondary">
         {message.message}
       </Text>
-      <Text>
-        <DropdownMenuButton />
-      </Text>
+      {defineDropdown(cardType)}
     </div>
   </Card>
 );

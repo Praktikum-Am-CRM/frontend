@@ -1,6 +1,7 @@
 import styles from './styles.module.css';
 import { useState } from 'react';
 import Mailing from '../Mailing';
+import Chats from '../Chats';
 import { RadioButton, Text } from '@gravity-ui/uikit';
 
 const CommunicationSection = () => {
@@ -21,7 +22,7 @@ const CommunicationSection = () => {
           </div>
         );
       case 'chats':
-        return <div>тут чаты</div>;
+        return <Chats />;
       case 'faq':
         return <div>Тут фак</div>;
       default:

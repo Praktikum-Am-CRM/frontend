@@ -123,6 +123,7 @@ export const mockDelayedMessages = {
       recipient: 'Иван Иванов',
       message: 'Иван, здравствуйте! Это пример рассылки.',
       date: '2022-10-29T00:09:20.000Z',
+      pinned: true,
     },
     {
       id: '2',
@@ -136,6 +137,7 @@ export const mockDelayedMessages = {
       message:
         'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.',
       date: '2022-09-06T05:09:53.000Z',
+      pinned: true,
     },
     {
       id: '4',
