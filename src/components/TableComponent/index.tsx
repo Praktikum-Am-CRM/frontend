@@ -45,16 +45,16 @@ export default function TableComponent({
   tableRowData: TableRowData[];
   tableHeaderData: any[];
 }) {
-  const { setModalContentType, openModal } = useActions();
+  const { setModalContentType, openModal, setRowId } = useActions();
   const isModalOpen = useAppSelector(state => state.modal.isModalOpen);
   const modalContentType = useAppSelector(state => state.modal.contentType);
+  const rowId = useAppSelector(state => state.table.rowId);
   const location = useLocation();
 
   const [settings, setSettings] = useState<TableSettingsData>(
     tableHeaderData?.map(col => ({ id: col.id, isSelected: true })),
   );
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [rowId, setRowId] = useState<string>('');
 
   const MyTable = withTableSorting(
     withTableSelection(withTableSettings({ sortable: false })(Table)),
@@ -98,10 +98,12 @@ export default function TableComponent({
   const handleRowClick = useCallback(
     (evt: any) => {
       setRowId(evt.id);
-      setModalContentType('ambassador');
-      openModal();
+      if (!(isModalOpen && modalContentType === 'messages')) {
+        setModalContentType('ambassador');
+        openModal();
+      }
     },
-    [setRowId, setModalContentType, openModal],
+    [setRowId, setModalContentType, openModal, isModalOpen, modalContentType],
   );
 
   return (
