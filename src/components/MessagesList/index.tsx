@@ -5,7 +5,7 @@ import { CardType, Message } from '../../types/types';
 interface MessagesListProps {
   messages: Message[];
   cardType: CardType;
-  onClick?: () => void;
+  onClick: (message?: string, id?: string) => void;
 }
 
 const MessagesList: React.FC<MessagesListProps> = ({

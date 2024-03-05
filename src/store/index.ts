@@ -3,6 +3,7 @@ import { api } from './amCrm/amCrm.api';
 import { authReducer } from './amCrm/auth.slice';
 import { modalReducer } from './amCrm/modal.slice';
 import { tableReducer } from './amCrm/table.slice';
+import { mailingReducer } from './amCrm/mailing.slice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     auth: authReducer,
     modal: modalReducer,
     table: tableReducer,
+    mailing: mailingReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(api.middleware),

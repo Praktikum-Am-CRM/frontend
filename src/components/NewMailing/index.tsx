@@ -1,11 +1,12 @@
 /* eslint-disable no-console */
 import styles from './styles.module.css';
 import { Button, ButtonView, TextArea } from '@gravity-ui/uikit';
-import { useState } from 'react';
 import { useAppSelector } from '../../hooks/redux';
+import { useActions } from '../../hooks/actions';
 
 const NewMailing = () => {
-  const [textAreaValue, setTextAreaValue] = useState('');
+  const textAreaValue = useAppSelector(state => state.mailing.textAreaValue);
+  const { setTextAreaValue } = useActions();
   const selectedUsersIds = useAppSelector(
     state => state.table.selectedUsersIds,
   );
@@ -60,7 +61,11 @@ const NewMailing = () => {
       />
 
       <div className={styles.actions}>
-        {createButton('Отправить выбранным', handleSendToSelected, 'action')}
+        {createButton(
+          `Отправить выбранным (${selectedUsersIds.length > 0 ? selectedUsersIds.length : 0})`,
+          handleSendToSelected,
+          'action',
+        )}
         {createButton('Отправить всем', handleSendClick)}
         {createButton('Отложить рассылку', handleSendClick)}
         {createButton('В черновики', handleSendClick)}

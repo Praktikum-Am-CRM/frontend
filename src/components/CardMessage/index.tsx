@@ -9,7 +9,7 @@ import { PinIcon } from '../../assets/icons';
 interface CardMessageProps {
   message: Message;
   cardType: CardType;
-  onClick?: () => void;
+  onClick: (message?: string, id?: string) => void;
 }
 
 function defineDropdown(cardType: CardType) {
@@ -25,41 +25,47 @@ const CardMessage: React.FC<CardMessageProps> = ({
   message,
   cardType,
   onClick,
-}) => (
-  <Card
-    view="outlined"
-    type="action"
-    size="l"
-    key={message.id}
-    className={styles.card}
-    // eslint-disable-next-line no-console
-    onClick={onClick}
-  >
-    <div className={styles.cardLine}>
-      <div>
-        {cardType !== 'chats' && (
-          <Text variant="body-1" color="secondary">
-            {'Кому: '}
+}) => {
+  const handleEditClick = (msg: string, id: string) => {
+    onClick(msg, id);
+  };
+
+  return (
+    <Card
+      view="outlined"
+      type="action"
+      size="l"
+      key={message.id}
+      className={styles.card}
+      // eslint-disable-next-line no-console
+      onClick={() => handleEditClick(message.message, message.id)}
+    >
+      <div className={styles.cardLine}>
+        <div>
+          {cardType !== 'chats' && (
+            <Text variant="body-1" color="secondary">
+              {'Кому: '}
+            </Text>
+          )}
+          <Text>
+            {'recipients' in message ? message.recipients : message.recipient}
           </Text>
-        )}
-        <Text>
-          {'recipients' in message ? message.recipients : message.recipient}
+          {cardType === 'chats' && message.pinned && (
+            <PinIcon className={styles.pin} />
+          )}
+        </div>
+        <Text variant="body-1" color="secondary">
+          {formatDate(message.date)}
         </Text>
-        {cardType === 'chats' && message.pinned && (
-          <PinIcon className={styles.pin} />
-        )}
       </div>
-      <Text variant="body-1" color="secondary">
-        {formatDate(message.date)}
-      </Text>
-    </div>
-    <div className={styles.cardLine}>
-      <Text variant="body-1" color="secondary">
-        {message.message}
-      </Text>
-      {defineDropdown(cardType)}
-    </div>
-  </Card>
-);
+      <div className={styles.cardLine}>
+        <Text variant="body-1" color="secondary">
+          {message.message}
+        </Text>
+        {defineDropdown(cardType)}
+      </div>
+    </Card>
+  );
+};
 
 export default CardMessage;
