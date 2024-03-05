@@ -3,29 +3,34 @@ import styles from './styles.module.css';
 import { DropdownMenu, Icon } from '@gravity-ui/uikit';
 import { PenIcon, TrashBinIcon } from '../../assets/icons';
 
-const DropdownMenuButtonDelayed: React.FC = () => (
-  <DropdownMenu
-    items={[
-      {
-        iconStart: <Icon data={TrashBinIcon} className={styles.icon} />,
-        action: event => {
-          event.stopPropagation();
-          console.log('Нажали отменить');
+const DropdownMenuButtonDelayed: React.FC<{ onClick: () => void }> = ({
+  onClick,
+}) => {
+  return (
+    <DropdownMenu
+      items={[
+        {
+          iconStart: <Icon data={TrashBinIcon} className={styles.icon} />,
+          action: event => {
+            event.stopPropagation();
+            console.log('Нажали отменить');
+          },
+          text: 'Отменить рассылку',
+          theme: 'danger',
         },
-        text: 'Отменить рассылку',
-        theme: 'danger',
-      },
-      {
-        iconStart: <Icon data={PenIcon} className={styles.icon} />,
-        action: event => {
-          event.stopPropagation();
-          console.log('Нажали редактировать');
+        {
+          iconStart: <Icon data={PenIcon} className={styles.icon} />,
+          action: event => {
+            event.stopPropagation();
+            console.log('Нажали редактировать');
+            onClick();
+          },
+          text: 'Редактировать',
         },
-        text: 'Редактировать',
-      },
-    ]}
-    onSwitcherClick={e => e.stopPropagation()}
-  />
-);
+      ]}
+      onSwitcherClick={e => e.stopPropagation()}
+    />
+  );
+};
 
 export default DropdownMenuButtonDelayed;

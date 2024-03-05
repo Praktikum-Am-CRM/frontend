@@ -12,23 +12,23 @@ interface CardMessageProps {
   onClick: (message?: string, id?: string) => void;
 }
 
-function defineDropdown(cardType: CardType) {
-  const dropdownMap = {
-    delayed: <DropdownMenuButtonDelayed />,
-    chats: <DropdownMenuButtonChats />,
-  };
-
-  return dropdownMap[cardType] || null;
-}
-
 const CardMessage: React.FC<CardMessageProps> = ({
   message,
   cardType,
   onClick,
 }) => {
-  const handleEditClick = (msg: string, id: string) => {
-    onClick(msg, id);
+  const handleEditClick = () => {
+    onClick(message.message, message.id);
   };
+
+  function defineDropdown() {
+    const dropdownMap = {
+      delayed: <DropdownMenuButtonDelayed onClick={handleEditClick} />,
+      chats: <DropdownMenuButtonChats />,
+    };
+
+    return dropdownMap[cardType] || null;
+  }
 
   return (
     <Card
@@ -38,7 +38,7 @@ const CardMessage: React.FC<CardMessageProps> = ({
       key={message.id}
       className={styles.card}
       // eslint-disable-next-line no-console
-      onClick={() => handleEditClick(message.message, message.id)}
+      onClick={() => handleEditClick()}
     >
       <div className={styles.cardLine}>
         <div>
@@ -62,7 +62,7 @@ const CardMessage: React.FC<CardMessageProps> = ({
         <Text variant="body-1" color="secondary">
           {message.message}
         </Text>
-        {defineDropdown(cardType)}
+        {defineDropdown()}
       </div>
     </Card>
   );
