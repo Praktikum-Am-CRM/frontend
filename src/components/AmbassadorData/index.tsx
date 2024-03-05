@@ -296,6 +296,7 @@ export default function AmbassadorData({
             <li className={styles.ambassodorDataSection__item}>
               <Button
                 size="l"
+                view={isFormActive ? 'action' : 'normal'}
                 onClick={() => {
                   setIsFormActive(!isFormActive);
                 }}
@@ -303,6 +304,18 @@ export default function AmbassadorData({
               >
                 {isFormActive ? 'Сохранить изменения' : 'Изменить данные'}
               </Button>
+              {isFormActive && (
+                <Button
+                  className={styles.ambassodorDataSection__resetButton}
+                  size="l"
+                  onClick={() => {
+                    setIsFormActive(false);
+                  }}
+                  type="button"
+                >
+                  Не сохранять
+                </Button>
+              )}
             </li>
           )}
           {isMerchDelivery && (
