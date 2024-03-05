@@ -72,12 +72,24 @@
 }
 
 .ambassadorCard__merchSettingContainer {
-  flex-basis: 224px;
+  width: 224px;
   padding: 8px;
   display: flex;
+  flex-direction: column;
 }
 
 .ambassadorCard__merchSetting {
   display: flex;
   flex-direction: column;
+}
+
+.ambassadorCard__merchButtons {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 8px;
+  border-top: 1px solid var(--Line-Generic);
+}
+
+.ambassadorCard__merchButton {
+  width: 100px;
 }

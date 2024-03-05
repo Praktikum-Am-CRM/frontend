@@ -98,7 +98,7 @@ export default function AmbassadorData({
       >
         {isMerchDelivery && (
           <div className={styles.ambassadorCard__merchSettings}>
-            <div
+            <form
               className={styles.ambassadorCard__merchSettingContainer}
               onClick={() => setIsFormActive(true)}
             >
@@ -109,7 +109,19 @@ export default function AmbassadorData({
                 itemsHeight={isFormActive ? 260 : 0}
                 renderItem={item => <Checkbox content={item} />}
               ></List>
-            </div>
+              <div className={styles.ambassadorCard__merchButtons}>
+                <Button size="l" className={styles.ambassadorCard__merchButton}>
+                  Сбросить
+                </Button>
+                <Button
+                  size="l"
+                  view="action"
+                  className={styles.ambassadorCard__merchButton}
+                >
+                  Выбрать
+                </Button>
+              </div>
+            </form>
             <div
               className={styles.ambassadorCard__merchSettingContainer}
               onClick={() => setIsFormActive(true)}
@@ -121,6 +133,18 @@ export default function AmbassadorData({
                 itemsHeight={isFormActive ? 78 : 0}
                 renderItem={item => <Checkbox content={item} />}
               ></List>
+              <div className={styles.ambassadorCard__merchButtons}>
+                <Button size="l" className={styles.ambassadorCard__merchButton}>
+                  Сбросить
+                </Button>
+                <Button
+                  size="l"
+                  view="action"
+                  className={styles.ambassadorCard__merchButton}
+                >
+                  Выбрать
+                </Button>
+              </div>
             </div>
           </div>
         )}
