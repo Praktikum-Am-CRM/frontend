@@ -9,17 +9,18 @@ type TabId = 'newMailing' | 'delayed' | 'drafts' | 'history';
 
 const Mailing = () => {
   const [activeTab, setActiveTab] = useState<TabId>('newMailing');
-  const messages = useMessages();
+  const { messagesDelayed } = useMessages();
 
   const tabsContent: Record<TabId, ReactElement> = {
     newMailing: <NewMailing />,
-    delayed: <DelayedMessages messages={messages} />,
+    delayed: <DelayedMessages messages={messagesDelayed} />,
     drafts: <div>Тут будут черновики</div>,
     history: <div>Тут будет история</div>,
   };
 
   const countMessages = () =>
-    messages.bulkMessages.length + messages.personalMessages.length;
+    messagesDelayed.bulkMessages.length +
+    messagesDelayed.personalMessages.length;
 
   const handleTabClick = (tabId: TabId) => setActiveTab(tabId);
 

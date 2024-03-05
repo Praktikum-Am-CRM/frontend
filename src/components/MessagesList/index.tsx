@@ -5,9 +5,14 @@ import { CardType, Message } from '../../types/types';
 interface MessagesListProps {
   messages: Message[];
   cardType: CardType;
+  onClick?: () => void;
 }
 
-const MessagesList: React.FC<MessagesListProps> = ({ messages, cardType }) => {
+const MessagesList: React.FC<MessagesListProps> = ({
+  messages,
+  cardType,
+  onClick,
+}) => {
   const sortedMessages =
     cardType === 'chats'
       ? [...messages].sort((a, b) => {
@@ -24,7 +29,12 @@ const MessagesList: React.FC<MessagesListProps> = ({ messages, cardType }) => {
   return (
     <div className={styles.cardList}>
       {sortedMessages.map(msg => (
-        <CardMessage key={msg.id} message={msg} cardType={cardType} />
+        <CardMessage
+          key={msg.id}
+          message={msg}
+          cardType={cardType}
+          onClick={onClick}
+        />
       ))}
     </div>
   );

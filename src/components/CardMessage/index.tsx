@@ -9,6 +9,7 @@ import { PinIcon } from '../../assets/icons';
 interface CardMessageProps {
   message: Message;
   cardType: CardType;
+  onClick?: () => void;
 }
 
 function defineDropdown(cardType: CardType) {
@@ -20,7 +21,11 @@ function defineDropdown(cardType: CardType) {
   return dropdownMap[cardType] || null;
 }
 
-const CardMessage: React.FC<CardMessageProps> = ({ message, cardType }) => (
+const CardMessage: React.FC<CardMessageProps> = ({
+  message,
+  cardType,
+  onClick,
+}) => (
   <Card
     view="outlined"
     type="action"
@@ -28,7 +33,7 @@ const CardMessage: React.FC<CardMessageProps> = ({ message, cardType }) => (
     key={message.id}
     className={styles.card}
     // eslint-disable-next-line no-console
-    onClick={() => console.log('Card clicked')}
+    onClick={onClick}
   >
     <div className={styles.cardLine}>
       <div>

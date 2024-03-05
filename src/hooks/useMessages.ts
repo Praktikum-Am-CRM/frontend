@@ -3,7 +3,7 @@ import { MessagesState } from '../types/types';
 import { mockDelayedMessages } from '../utils/mockData';
 
 const useMessages = () => {
-  const [messages, setMessages] = useState<MessagesState>({
+  const [messagesDelayed, setMessages] = useState<MessagesState>({
     bulkMessages: [],
     personalMessages: [],
   });
@@ -14,7 +14,7 @@ const useMessages = () => {
     }, 100);
   }, []);
 
-  return messages;
+  return { messagesDelayed };
 };
 
 export default useMessages;
