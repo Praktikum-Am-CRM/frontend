@@ -13,9 +13,13 @@ import { ambassadorArray } from '../../utils/mockData';
 export default function AmbassadorCard({
   rowData,
   isAmbassador,
+  setIsMerchDelivery,
+  isMerchDelivery,
 }: {
   rowData: string;
   isAmbassador?: boolean;
+  setIsMerchDelivery: (value: boolean) => void;
+  isMerchDelivery: boolean;
 }) {
   const [activeTab, setActiveTab] = useState<string>('tabs-data');
 
@@ -26,7 +30,7 @@ export default function AmbassadorCard({
 
   function determineContent(id: string) {
     if (id === 'tabs-data') {
-      return <AmbassadorData user={user} />;
+      return <AmbassadorData user={user} isMerchDelivery={isMerchDelivery} />;
     }
     if (id === 'tabs-activity') {
       return <AmbassadorActivity user={user} />;
@@ -53,112 +57,124 @@ export default function AmbassadorCard({
             color="primary"
             variant="header-2"
           >
-            {user.ambassador}
+            {isMerchDelivery ? 'Отправка мерча' : user.ambassador}
           </Text>
-          <div className={styles.ambassadorCard__infoContainer}>
-            <ul className={styles.ambassadorCard__infoList}>
-              <li className={styles.ambassadorCard__infoPoint}>
-                <Text
-                  className={styles.ambassadorCard__pointDescription}
-                  color="secondary"
-                >
-                  Телеграм/whatsapp
-                </Text>
-                <Link view="normal" href={`https://t.me/${user.telegram}`}>
-                  @{user.telegram}
-                </Link>
-              </li>
-              {user.status !== 'candidate' && (
+          {!isMerchDelivery && (
+            <div className={styles.ambassadorCard__infoContainer}>
+              <ul className={styles.ambassadorCard__infoList}>
                 <li className={styles.ambassadorCard__infoPoint}>
                   <Text
                     className={styles.ambassadorCard__pointDescription}
                     color="secondary"
                   >
-                    Статус
+                    Телеграм/whatsapp
                   </Text>
-                  <div className={styles.ambassadorCard__status}>
-                    {user.status && determineStatus(user.status)}
-                  </div>
+                  <Link view="normal" href={`https://t.me/${user.telegram}`}>
+                    @{user.telegram}
+                  </Link>
                 </li>
-              )}
-              {user.status !== 'candidate' && (
-                <li
-                  className={`${styles.ambassadorCard__infoPoint} ${styles.ambassadorCard__infoPoint_type_achievement}`}
-                >
+                {user.status !== 'candidate' && (
+                  <li className={styles.ambassadorCard__infoPoint}>
+                    <Text
+                      className={styles.ambassadorCard__pointDescription}
+                      color="secondary"
+                    >
+                      Статус
+                    </Text>
+                    <div className={styles.ambassadorCard__status}>
+                      {user.status && determineStatus(user.status)}
+                    </div>
+                  </li>
+                )}
+                {user.status !== 'candidate' && (
+                  <li
+                    className={`${styles.ambassadorCard__infoPoint} ${styles.ambassadorCard__infoPoint_type_achievement}`}
+                  >
+                    <Text
+                      className={styles.ambassadorCard__pointDescription}
+                      color="secondary"
+                    >
+                      Ачивка
+                    </Text>
+                  </li>
+                )}
+                <li className={styles.ambassadorCard__infoPoint}>
                   <Text
                     className={styles.ambassadorCard__pointDescription}
                     color="secondary"
                   >
-                    Ачивка
+                    Направление
+                  </Text>
+                  <Text
+                    className={styles.ambassadorCard__course}
+                    color="primary"
+                  >
+                    {user.program}
                   </Text>
                 </li>
-              )}
-              <li className={styles.ambassadorCard__infoPoint}>
-                <Text
-                  className={styles.ambassadorCard__pointDescription}
-                  color="secondary"
+              </ul>
+              {isAmbassador ? (
+                <Button
+                  className={styles.ambassadorCard__assignButton}
+                  onClick={() => setIsMerchDelivery(true)}
                 >
-                  Направление
-                </Text>
-                <Text className={styles.ambassadorCard__course} color="primary">
-                  {user.program}
-                </Text>
-              </li>
-            </ul>
-            {isAmbassador ? (
-              <Button className={styles.ambassadorCard__assignButton}>
-                Присвоить мерч
-              </Button>
-            ) : (
-              <Button
-                className={styles.ambassadorCard__assignButton}
-                onClick={() => {
-                  user.status = 'active';
-                }}
-              >
-                Сделать амбассадором
-              </Button>
-            )}
-          </div>
-          <Tabs
-            activeTab={activeTab}
-            size="l"
-            className={styles.ambassadorCard__tabs}
-          >
-            <Tabs.Item
-              id="tabs-data"
-              title="Данные"
-              onClick={id => {
-                handleTabClick(id);
-              }}
-            ></Tabs.Item>
-            {isAmbassador && (
+                  Присвоить мерч
+                </Button>
+              ) : (
+                <Button
+                  className={styles.ambassadorCard__assignButton}
+                  onClick={() => {
+                    user.status = 'active';
+                  }}
+                >
+                  Сделать амбассадором
+                </Button>
+              )}
+            </div>
+          )}
+          {!isMerchDelivery && (
+            <Tabs
+              activeTab={activeTab}
+              size="l"
+              className={styles.ambassadorCard__tabs}
+            >
               <Tabs.Item
-                id="tabs-activity"
-                title="Деятельность"
+                id="tabs-data"
+                title="Данные"
                 onClick={id => {
                   handleTabClick(id);
                 }}
               ></Tabs.Item>
-            )}
-            {isAmbassador && (
+              {isAmbassador && (
+                <Tabs.Item
+                  id="tabs-activity"
+                  title="Деятельность"
+                  onClick={id => {
+                    handleTabClick(id);
+                  }}
+                ></Tabs.Item>
+              )}
+              {isAmbassador && (
+                <Tabs.Item
+                  id="tabs-merch"
+                  title="Мерч"
+                  onClick={id => {
+                    handleTabClick(id);
+                  }}
+                ></Tabs.Item>
+              )}
               <Tabs.Item
-                id="tabs-merch"
-                title="Мерч"
+                id="tabs-history"
+                title="История"
                 onClick={id => {
                   handleTabClick(id);
                 }}
               ></Tabs.Item>
-            )}
-            <Tabs.Item
-              id="tabs-history"
-              title="История"
-              onClick={id => {
-                handleTabClick(id);
-              }}
-            ></Tabs.Item>
-          </Tabs>
-          {determineContent(activeTab)}
+            </Tabs>
+          )}
+          {isMerchDelivery
+            ? determineContent('tabs-data')
+            : determineContent(activeTab)}
         </div>
       )}
     </>

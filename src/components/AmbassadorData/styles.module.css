@@ -63,3 +63,21 @@
   background-size: 16px;
   background-position: center;
 }
+
+.ambassadorCard__merchSettings {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 28px;
+  margin-bottom: 12px;
+}
+
+.ambassadorCard__merchSettingContainer {
+  flex-basis: 224px;
+  padding: 8px;
+  display: flex;
+}
+
+.ambassadorCard__merchSetting {
+  display: flex;
+  flex-direction: column;
+}
