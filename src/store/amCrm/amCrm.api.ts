@@ -11,6 +11,15 @@ interface LoginResponse {
   auth_token: string;
 }
 
+// interface AmbassadorsResponse {
+//   auth_token: string;
+// }
+
+// interface AmbassadorsRequest {
+//   email: string;
+//   password: string;
+// }
+
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -26,17 +35,17 @@ export const api = createApi({
   tagTypes: ['Comments', 'Ambassadors', 'Auth'],
   endpoints: build => ({
     // Список сотрудников команды
-    getAmbassadors: build.query<unknown, unknown>({
-      query: ({ gender, programm, sort_by, order }) => ({
-        url: `users`,
-        params: {
-          gender,
-          sort_by,
-          order,
-          programm,
-        },
-      }),
-    }),
+    // getAmbassadors: build.query<AmbassadorsResponse, AmbassadorsRequest>({
+    //   query: ({ gender, programm, sort_by, order }) => ({
+    //     url: `users`,
+    //     params: {
+    //       gender,
+    //       sort_by,
+    //       order,
+    //       programm,
+    //     },
+    //   }),
+    // }),
     login: build.mutation<LoginResponse, LoginRequest>({
       query: credentials => ({
         url: 'auth/token/login',
@@ -48,4 +57,5 @@ export const api = createApi({
   }),
 });
 
-export const { useGetAmbassadorsQuery, useLoginMutation } = api;
+// export const { useGetAmbassadorsQuery, useLoginMutation } = api;
+export const { useLoginMutation } = api;
