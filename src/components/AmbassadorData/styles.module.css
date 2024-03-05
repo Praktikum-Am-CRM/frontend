@@ -63,3 +63,37 @@
   background-size: 16px;
   background-position: center;
 }
+
+.ambassadorCard__merchSettings {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 28px;
+  margin-bottom: 12px;
+}
+
+.ambassadorCard__merchSettingContainer {
+  width: 224px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ambassadorCard__merchSetting {
+  display: flex;
+  flex-direction: column;
+}
+
+.ambassadorCard__merchButtons {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 8px;
+  border-top: 1px solid var(--Line-Generic);
+}
+
+.ambassadorCard__merchButton {
+  width: 100px;
+}
+
+.ambassodorDataSection__resetButton {
+  margin-left: 10px;
+}
