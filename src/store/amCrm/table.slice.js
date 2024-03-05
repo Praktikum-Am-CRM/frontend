@@ -3,14 +3,18 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   rowId: '',
+  selectedUsersIds: [],
 };
 
 export const tableSlice = createSlice({
   name: 'row',
   initialState,
   reducers: {
-    setRowId: (state, action) => {
+    setClickedRowId: (state, action) => {
       state.rowId = action.payload;
+    },
+    setSelectedUsersIds: (state, action) => {
+      state.selectedUsersIds = action.payload;
     },
   },
 });

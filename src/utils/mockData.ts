@@ -1,6 +1,6 @@
 export const ambassadorArray = [
   {
-    id: '1',
+    id: 'adsf',
     ambassador:
       'Константин Константинопольский Константинопольский Константинопольский Константинопольский',
     status: 'active',
@@ -15,7 +15,7 @@ export const ambassadorArray = [
   },
 
   {
-    id: '2',
+    id: 'cxvgzxcv',
     ambassador: 'Амбассадор',
     status: 'active',
     promo: '44334',
@@ -28,7 +28,7 @@ export const ambassadorArray = [
   },
 
   {
-    id: '3',
+    id: 'mklaijv',
     ambassador: 'Амба22ссадор',
     status: 'pending',
     promo: '444',
@@ -39,7 +39,7 @@ export const ambassadorArray = [
     address: 'Москва, ул. Пушкина, д. 17',
   },
   {
-    id: '4',
+    id: 'iasdkml',
     ambassador: 'Амбассадор',
     status: 'candidate',
     tel: '343234234',
@@ -51,7 +51,7 @@ export const ambassadorArray = [
     program: 'Фронт',
   },
   {
-    id: '5',
+    id: 'opbvam',
     ambassador: 'Амбассадор',
     status: 'pending',
     tel: '343234234',
@@ -64,7 +64,7 @@ export const ambassadorArray = [
   },
 
   {
-    id: '6',
+    id: 'mmlfdaff',
     ambassador: 'Амбассадор',
     status: 'candidate',
     tel: '343234234',
@@ -76,7 +76,7 @@ export const ambassadorArray = [
     program: 'Бэк',
   },
   {
-    id: '7',
+    id: 'mkkdi',
     ambassador: 'Архив Амбассадор',
     status: 'deleted',
     tel: '343234234',
@@ -88,7 +88,7 @@ export const ambassadorArray = [
     program: 'Фронт',
   },
   {
-    id: '8',
+    id: 'bvyixha',
     ambassador: 'Амбассадор',
     status: 'deleted',
     tel: '343234234',

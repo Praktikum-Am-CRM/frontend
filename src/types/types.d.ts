@@ -1,5 +1,5 @@
 export type TableRowData = {
-  id: number;
+  id: string;
   ambassador: string;
   tel?: string;
   status?: string;
