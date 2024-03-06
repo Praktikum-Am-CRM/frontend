@@ -1,5 +1,6 @@
 import MessagesList from '../MessagesList';
 import { useState } from 'react';
+import { ArrowToggle, Button } from '@gravity-ui/uikit';
 import CommunicationHistory from '../CommunicationHistory';
 import { mockChatsMessages } from '../../utils/mockData';
 
@@ -16,7 +17,14 @@ const Chats = () => {
 
   function defineContent() {
     if (historyIsOpen) {
-      return <CommunicationHistory onClick={handleClickBack} />;
+      return (
+        <>
+          <Button onClick={handleClickBack} view="flat">
+            <ArrowToggle direction="left" />
+          </Button>
+          <CommunicationHistory />
+        </>
+      );
     } else {
       return (
         <MessagesList

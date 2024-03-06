@@ -5,7 +5,7 @@ import { useState } from 'react';
 import AmbassadorData from '../AmbassadorData';
 import AmbassadorActivity from '../AmbassadorActivity';
 import AmbassadorMerch from '../AmbassadorMerch';
-import AmbassadorHistory from '../AmbassadorHistory';
+import CommunicationHistory from '../CommunicationHistory';
 import determineStatus from '../../utils/DetermineStatus';
 import { ambassadorArray } from '../../utils/mockData';
 
@@ -39,7 +39,7 @@ export default function AmbassadorCard({
       return <AmbassadorMerch user={user} />;
     }
     if (id === 'tabs-history') {
-      return <AmbassadorHistory user={user} />;
+      return <CommunicationHistory />;
     }
     return null;
   }

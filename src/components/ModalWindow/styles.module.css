@@ -1,13 +1,14 @@
 .modal {
   max-width: calc(714px + 19px + 24px);
   width: 52.56vw;
-  height: calc(100vh - 66px);
+  height: calc(100vh - 86px);
   position: absolute;
   top: -16px;
   right: 0;
   z-index: 2;
   background-color: var(--Branding-Base-Background);
   display: none;
+  overflow-y: auto;
 }
 
 .modal_active {
@@ -17,7 +18,7 @@
 .modal__container {
   max-width: 714px;
   width: 49.58vw;
-  position: absolute;
+  position: relative;
   top: 0;
   left: 24px;
   border-radius: 10px;
