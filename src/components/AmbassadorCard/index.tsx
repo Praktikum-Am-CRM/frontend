@@ -8,7 +8,7 @@ import AmbassadorMerch from '../AmbassadorMerch';
 import AmbassadorHistory from '../AmbassadorHistory';
 
 import { useGetAmbassadorInfoQuery } from '../../store/amCrm/amCrm.api';
-import determineStatus from '../../utils/determineStatus';
+import defineStatus from '../../utils/defineStatus';
 
 // eslint-disable-next-line no-console
 export default function AmbassadorCard({
@@ -89,7 +89,7 @@ export default function AmbassadorCard({
                     </Text>
                     <div className={styles.ambassadorCard__status}>
                       {ambassadorInfo.status &&
-                        determineStatus(ambassadorInfo.status)}
+                        defineStatus(ambassadorInfo.status)}
                     </div>
                   </li>
                 )}

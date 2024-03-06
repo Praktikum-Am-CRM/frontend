@@ -1,7 +1,7 @@
 import { Label } from '@gravity-ui/uikit';
 import { STATUSES } from './constants';
 
-export default function determineStatus(status: string) {
+export default function defineStatus(status: string) {
   switch (status) {
     case STATUSES.ACTIVE:
       return <Label theme="success">Активный</Label>;

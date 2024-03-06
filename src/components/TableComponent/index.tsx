@@ -21,7 +21,7 @@ import { useActions } from '../../hooks/actions';
 import { useAppSelector } from '../../hooks/redux';
 import { useLocation } from 'react-router-dom';
 import AmbassadorCard from '../AmbassadorCard';
-import determineStatus from '../../utils/determineStatus';
+import defineStatus from '../../utils/defineStatus';
 
 type TableSettingsData = Array<{
   id: string;
@@ -74,7 +74,7 @@ export default function TableComponent({
         ...data,
         id: data.id,
         ambassador: textWithTooltip(`${data.first_name} ${data.last_name}`),
-        status: determineStatus(data.status),
+        status: defineStatus(data.status),
         promo: data.promocode,
         telegram: (
           <Link
