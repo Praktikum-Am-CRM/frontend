@@ -16,11 +16,12 @@ import { WomanIcon } from '../../assets/images/WomanIcon';
 import { ManIcon } from '../../assets/images/ManIcon';
 import { AmbassadorDataType } from '../../types/types';
 import ModalWindow from '../ModalWindow';
-import determineStatus from '../../utils/determineStatus';
+
 import { useActions } from '../../hooks/actions';
 import { useAppSelector } from '../../hooks/redux';
 import { useLocation } from 'react-router-dom';
 import AmbassadorCard from '../AmbassadorCard';
+import determineStatus from '../../utils/determineStatus';
 
 type TableSettingsData = Array<{
   id: string;

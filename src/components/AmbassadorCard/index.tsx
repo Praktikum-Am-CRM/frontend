@@ -6,8 +6,9 @@ import AmbassadorData from '../AmbassadorData';
 import AmbassadorActivity from '../AmbassadorActivity';
 import AmbassadorMerch from '../AmbassadorMerch';
 import AmbassadorHistory from '../AmbassadorHistory';
-import determineStatus from '../../utils/determineStatus';
+
 import { useGetAmbassadorInfoQuery } from '../../store/amCrm/amCrm.api';
+import determineStatus from '../../utils/determineStatus';
 
 // eslint-disable-next-line no-console
 export default function AmbassadorCard({
