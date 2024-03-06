@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import styles from './styles.module.css';
 
-export default function AmbassadorMerch({
+export default function Merch({
   user,
 }: {
   user: any;
@@ -18,7 +18,5 @@ export default function AmbassadorMerch({
   //   activity: string;
   // };
 }) {
-  return (
-    <section className={styles.ambassodorMerchSection}>{user.id}Merch</section>
-  );
+  return <section className={styles.merch}>{user.id}Merch</section>;
 }

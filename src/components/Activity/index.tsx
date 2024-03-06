@@ -51,7 +51,7 @@ const tableData = [
   },
 ];
 
-export default function AmbassadorActivity({ user }: { user: any }) {
+export default function Activity({ user }: { user: any }) {
   console.log(user.id);
 
   const prepareDataForTable = useCallback((data: any) => {
@@ -90,7 +90,7 @@ export default function AmbassadorActivity({ user }: { user: any }) {
   );
 
   return (
-    <section className={styles.ambassodorActivity}>
+    <section className={styles.activity}>
       <Text variant="body-2">Первый этап</Text>
       <Table
         className={styles.table}

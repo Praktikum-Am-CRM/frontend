@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import styles from './styles.module.css';
 
-export default function AmbassadorHistory({
+export default function History({
   user,
 }: {
   user: any;
@@ -18,9 +18,5 @@ export default function AmbassadorHistory({
   //   activity: string;
   // };
 }) {
-  return (
-    <section className={styles.ambassodorMerchSection}>
-      {user.id}History
-    </section>
-  );
+  return <section className={styles.history}>{user.id}History</section>;
 }

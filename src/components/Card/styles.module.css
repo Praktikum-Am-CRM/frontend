@@ -1,19 +1,19 @@
-.ambassadorCard {
+.card {
   padding: 28px;
 }
 
-.ambassadorCard__heading {
+.card__heading {
   cursor: default;
 }
 
-.ambassadorCard__infoContainer {
+.card__infoContainer {
   display: flex;
   justify-content: space-between;
   margin-top: 24px;
   margin-bottom: 28px;
 }
 
-.ambassadorCard__infoList {
+.card__infoList {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -22,35 +22,35 @@
   row-gap: 12px;
 }
 
-.ambassadorCard__infoPoint {
+.card__infoPoint {
   margin: 0;
   padding: 9px 0;
   display: flex;
 }
 
-.ambassadorCard__infoPoint_type_achievement {
+.card__infoPoint_type_achievement {
   padding: 0;
 }
 
-.ambassadorCard__pointDescription {
+.card__pointDescription {
   margin: 0 12px 0 0;
   cursor: default;
 }
 
-.ambassadorCard__course {
+.card__course {
   cursor: default;
 }
 
-.ambassadorCard__status {
+.card__status {
   cursor: default;
 }
 
-.ambassadorCard__assignButton {
+.card__assignButton {
   height: 36px;
   background-color: var(--Base-Brand);
   color: var(--Text-Primary);
 }
 
-.ambassadorCard__tabs {
+.card__tabs {
   width: max-content;
 }

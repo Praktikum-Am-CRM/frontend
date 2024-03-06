@@ -20,7 +20,7 @@ import ModalWindow from '../ModalWindow';
 import { useActions } from '../../hooks/actions';
 import { useAppSelector } from '../../hooks/redux';
 import { useLocation } from 'react-router-dom';
-import AmbassadorCard from '../AmbassadorCard';
+import Card from '../Card';
 import defineStatus from '../../utils/defineStatus';
 
 type TableSettingsData = Array<{
@@ -103,14 +103,14 @@ export default function TableComponent({
 
   const content =
     location.pathname === '/ambassadors' ? (
-      <AmbassadorCard
+      <Card
         rowId={rowId}
         isAmbassador
         setIsMerchDelivery={setIsMerchDelivery}
         isMerchDelivery={isMerchDelivery}
       />
     ) : (
-      <AmbassadorCard
+      <Card
         rowId={rowId}
         setIsMerchDelivery={setIsMerchDelivery}
         isMerchDelivery={isMerchDelivery}

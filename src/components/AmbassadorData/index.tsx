@@ -75,6 +75,17 @@ export default function AmbassadorData({
     } else return '';
   }
 
+  const standartTextInput = (text: string) => {
+    return (
+      <Text
+        color="secondary"
+        className={styles.ambassodorDataSection__attribute}
+      >
+        {text}
+      </Text>
+    );
+  };
+
   return (
     <section className={styles.ambassodorDataSection}>
       {!isMerchDelivery && (
@@ -146,60 +157,30 @@ export default function AmbassadorData({
         )}
         <ul className={styles.ambassodorDataSection__list}>
           <li className={styles.ambassodorDataSection__item}>
-            <Text
-              color="secondary"
-              className={styles.ambassodorDataSection__attribute}
-            >
-              Страна
-            </Text>
+            {standartTextInput('Страна')}
             {variableInput('country', displayData(user.promocode), '')}
           </li>
           <li className={styles.ambassodorDataSection__item}>
-            <Text
-              color="secondary"
-              className={styles.ambassodorDataSection__attribute}
-            >
-              Город
-            </Text>
+            {standartTextInput('Город')}
             {variableInput('region', displayData(user.promocode), '')}
           </li>
           <li className={styles.ambassodorDataSection__item}>
-            <Text
-              color="secondary"
-              className={styles.ambassodorDataSection__attribute}
-            >
-              Индекс
-            </Text>
+            {standartTextInput('Индекс')}
             {variableInput('index', displayData(user.promocode), '')}
           </li>
           <li className={styles.ambassodorDataSection__item}>
-            <Text
-              color="secondary"
-              className={styles.ambassodorDataSection__attribute}
-            >
-              Адрес
-            </Text>
+            {standartTextInput('Адрес')}
             {variableInput('street', displayData(user.promocode), '')}
           </li>
           <li className={styles.ambassodorDataSection__item}>
-            <Text
-              color="secondary"
-              className={styles.ambassodorDataSection__attribute}
-            >
-              Email
-            </Text>
+            {standartTextInput('Email')}
             {variableInput('e-mail', displayData(user.email), '')}
           </li>
         </ul>
         {!isMerchDelivery && (
           <ul className={styles.ambassodorDataSection__list}>
             <li className={styles.ambassodorDataSection__item}>
-              <Text
-                color="secondary"
-                className={styles.ambassodorDataSection__attribute}
-              >
-                Образование
-              </Text>
+              {standartTextInput('Образование')}
               {variableInput(
                 'educational_institution',
                 displayData(user.email),
@@ -207,51 +188,26 @@ export default function AmbassadorData({
               )}
             </li>
             <li className={styles.ambassodorDataSection__item}>
-              <Text
-                color="secondary"
-                className={styles.ambassodorDataSection__attribute}
-              >
-                Место работы
-              </Text>
+              {standartTextInput('Место работы')}
               {variableInput('place_work', displayData(user.email), '')}
             </li>
             <li className={styles.ambassodorDataSection__item}>
-              <Text
-                color="secondary"
-                className={styles.ambassodorDataSection__attribute}
-              >
-                Цель учёбы в Практикум
-              </Text>
+              {standartTextInput('Цель учебы в Практикуме')}
               {variableInput('goal', displayData(user.email), '')}
             </li>
             <li className={styles.ambassodorDataSection__item}>
-              <Text
-                color="secondary"
-                className={styles.ambassodorDataSection__attribute}
-              >
-                Желаемая деятельность
-              </Text>
+              {standartTextInput('Желаемая деятельность')}
               {variableInput('activity', displayData(user.specialty_work), '')}
             </li>
           </ul>
         )}
         <ul className={styles.ambassodorDataSection__list}>
           <li className={styles.ambassodorDataSection__item}>
-            <Text
-              color="secondary"
-              className={styles.ambassodorDataSection__attribute}
-            >
-              Ссылка на блог
-            </Text>
+            {standartTextInput('Ссылка на блог')}
             {variableInput('blog_link', displayData(user.blog_link), '')}
           </li>
           <li className={styles.ambassodorDataSection__item}>
-            <Text
-              color="secondary"
-              className={styles.ambassodorDataSection__attribute}
-            >
-              Размер одежды
-            </Text>
+            {standartTextInput('Размер одежды')}
             {variableInput(
               'clothing_size',
               displayData(user.size_clothing),
@@ -259,21 +215,11 @@ export default function AmbassadorData({
             )}
           </li>
           <li className={styles.ambassodorDataSection__item}>
-            <Text
-              color="secondary"
-              className={styles.ambassodorDataSection__attribute}
-            >
-              Размер ноги
-            </Text>
+            {standartTextInput('Размер обуви')}
             {variableInput('shoe_size', displayData(user.size_clothing), '')}
           </li>
           <li className={styles.ambassodorDataSection__item}>
-            <Text
-              color="secondary"
-              className={styles.ambassodorDataSection__attribute}
-            >
-              Доп. информация о себе
-            </Text>
+            {standartTextInput('Дополнительная информация о себе')}
             {variableInput('note', displayData(user.place_work), '')}
           </li>
         </ul>
@@ -300,7 +246,7 @@ export default function AmbassadorData({
                 onClick={() => {
                   setIsFormActive(!isFormActive);
                 }}
-                type={!isFormActive ? 'submit' : 'button'}
+                type={isFormActive ? 'button' : 'submit'}
               >
                 {isFormActive ? 'Сохранить изменения' : 'Изменить данные'}
               </Button>
@@ -332,21 +278,11 @@ export default function AmbassadorData({
           className={`${styles.ambassodorDataSection__list} ${styles.ambassodorDataSection__listAnother}`}
         >
           <li className={styles.ambassodorDataSection__item}>
-            <Text
-              color="secondary"
-              className={styles.ambassodorDataSection__attribute}
-            >
-              Счётчик напоминалок
-            </Text>
-            <Text>2</Text>
+            {standartTextInput('Количество напоминаний')}
+            <Text>{user.reminder_counter}</Text>
           </li>
           <li className={styles.ambassodorDataSection__item}>
-            <Text
-              color="secondary"
-              className={styles.ambassodorDataSection__attribute}
-            >
-              Дата добавления
-            </Text>
+            {standartTextInput('Дата принятия в Амбассадоры')}
             <Text>{user.receipt_date}</Text>
           </li>
         </ul>
