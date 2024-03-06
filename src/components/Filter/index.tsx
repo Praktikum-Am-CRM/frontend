@@ -99,20 +99,24 @@ export default function Filter() {
           <div className={styles.filters__container}>
             <FilterText>Программа</FilterText>
 
-            <Select
-              placeholder="Программа"
-              className={styles.filters__checkboxList}
-              size="m"
-              filterable
-              multiple
-              {...register('program')}
-            >
-              {programOptions.map(({ value, content }) => (
-                <Select.Option key={value} value={value}>
-                  {content}
-                </Select.Option>
-              ))}
-            </Select>
+            <Controller
+              name="program"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  placeholder="Программа"
+                  className={styles.filters__checkboxList}
+                  size="m"
+                  filterable
+                  multiple
+                  options={programOptions}
+                  onUpdate={e => {
+                    field.onChange(e);
+                  }}
+                />
+              )}
+            />
           </div>
           <div className={styles.filters__buttons}>
             {/* <Button view="normal" type="reset">

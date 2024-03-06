@@ -61,6 +61,7 @@ export default function TableComponent({
   );
 
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
+  const [isMerchDelivery, setIsMerchDelivery] = useState<boolean>(false);
 
   const MyTable = withTableSorting(
     withTableSelection(withTableSettings({ sortable: false })(Table)),
@@ -96,9 +97,18 @@ export default function TableComponent({
 
   const content =
     location.pathname === '/ambassadors' ? (
-      <AmbassadorCard rowData={rowId} isAmbassador />
+      <AmbassadorCard
+        rowData={rowId}
+        isAmbassador
+        setIsMerchDelivery={setIsMerchDelivery}
+        isMerchDelivery={isMerchDelivery}
+      />
     ) : (
-      <AmbassadorCard rowData={rowId} />
+      <AmbassadorCard
+        rowData={rowId}
+        setIsMerchDelivery={setIsMerchDelivery}
+        isMerchDelivery={isMerchDelivery}
+      />
     );
 
   const handleRowClick = useCallback(
