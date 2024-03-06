@@ -8,6 +8,7 @@ import { useAppSelector } from '../../hooks/redux';
 import ModalWindow from '../../components/ModalWindow';
 import CommunicationSection from '../../components/CommunicationSection';
 import { useGetAmbassadorsListQuery } from '../../store/amCrm/amCrm.api';
+import { STATUSES } from '../../utils/constants';
 
 export default function AmbassadorsPage() {
   const { setModalContentType, openModal } = useActions();
@@ -20,7 +21,12 @@ export default function AmbassadorsPage() {
   }
 
   const { data: ambList } = useGetAmbassadorsListQuery({
-    status: 'Кандидат',
+    status: [
+      STATUSES.ACTIVE,
+      STATUSES.PENDING,
+      STATUSES.PAUSE,
+      STATUSES.DELETED,
+    ],
   });
 
   return (

@@ -1,7 +1,8 @@
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { AmbassadorDataType } from '../../types/types';
+import { AmbassadorInfoType } from '../../types/types';
+// import { AmbassadorDataType } from '../../types/types';
 
 interface LoginRequest {
   email: string;
@@ -28,7 +29,7 @@ export const api = createApi({
     prepareHeaders: headers => {
       const auth_token = localStorage.getItem('auth_token');
       if (auth_token) {
-        headers.set('authorization', `Bearer ${auth_token}`);
+        headers.set('authorization', `Token ${auth_token}`);
       }
       return headers;
     },
@@ -43,13 +44,31 @@ export const api = createApi({
       }),
       invalidatesTags: ['Auth'],
     }),
-    getAmbassadorsList: build.query<AmbassadorDataType[], { status: string }>({
-      query: ({ status }) => ({
-        url: 'ambassador/',
-        params: {
-          status,
-        },
-      }),
+    getAmbassadorsList: build.query<
+      any,
+      { status: string | string[]; limit?: number }
+    >({
+      query: ({ status, limit = 50 }) => {
+        const searchParams = new URLSearchParams();
+
+        // Если 'status' - массив, добавляем все его значения.
+        // В противном случае просто добавляем 'status' как строку.
+        if (Array.isArray(status)) {
+          status.forEach(s => {
+            searchParams.append('status', s);
+          });
+        } else {
+          searchParams.set('status', status);
+        }
+
+        searchParams.set('limit', limit.toString());
+        return {
+          url: 'ambassador/',
+          params: searchParams,
+        };
+      },
+      providesTags: ['Ambassadors'],
+      transformResponse: (response: any) => response.results,
     }),
     getPrograms: build.query<any, void>({
       query: () => ({
@@ -61,7 +80,7 @@ export const api = createApi({
         url: 'utility/ambassador_statuses',
       }),
     }),
-    getAmbassadorInfo: build.query<any, { id: string }>({
+    getAmbassadorInfo: build.query<AmbassadorInfoType, { id: string }>({
       query: ({ id }) => ({
         url: `ambassador/${id}/`,
       }),

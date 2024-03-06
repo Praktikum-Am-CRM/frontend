@@ -8,11 +8,7 @@ interface MessagesListProps {
   onClick: (message?: string, id?: string) => void;
 }
 
-const MessagesList: React.FC<MessagesListProps> = ({
-  messages,
-  cardType,
-  onClick,
-}) => {
+const MessagesList = ({ messages, cardType, onClick }: MessagesListProps) => {
   const sortedMessages =
     cardType === 'chats'
       ? [...messages].sort((a, b) => {

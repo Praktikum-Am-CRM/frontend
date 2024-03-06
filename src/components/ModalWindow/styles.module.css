@@ -16,6 +16,8 @@
 }
 
 .modal__container {
+  display: flex;
+  flex-direction: column;
   max-width: 714px;
   width: 49.58vw;
   min-height: calc(100vh - 86px);
@@ -29,16 +31,6 @@
 
 .modal__closeIcon {
   position: absolute;
-  cursor: pointer;
-  right: 28px;
-  top: 26px;
-  background-color: transparent;
-  border: none;
-  padding: 0;
-  width: 24px;
-  height: 24px;
-  background-image: url(../../ui/closeIcon.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 10px;
+  top: 2em;
+  right: 2em;
 }

@@ -131,3 +131,44 @@ export type MessageHistoryItemType = {
   message_telegram_id: string;
   reaction: number | null;
 };
+
+export type AmbassadorInfoType = {
+  id: string;
+  telegram_bot: TelegramBot;
+  status: string;
+  manager: string;
+  promocode: string;
+  receipt_date: string;
+  reminder_counter: number;
+  address_country: string;
+  address_index: string;
+  address_region: string;
+  address_district: string;
+  address_settlement: string;
+  address_street: string;
+  address_house: number;
+  address_building: string;
+  address_apartment: string;
+  size_clothing: string;
+  email: string;
+  note: string;
+  blog_link: string;
+  place_work: string;
+  specialty_work: string;
+  educational_institution: string;
+  first_name: string;
+  last_name: string;
+  middle_name: string;
+  gender: string;
+  birthday: string;
+  programs: ProgramType[];
+  goals: GoalType[];
+  activity: ActivityType[];
+  achieves: AchieveType[];
+};
+
+export type AchieveType = {
+  id: string;
+  achieve_name: string;
+  available: boolean;
+};

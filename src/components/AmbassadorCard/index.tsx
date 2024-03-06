@@ -28,10 +28,14 @@ export default function AmbassadorCard({
   function determineContent(id: string) {
     if (id === 'tabs-data') {
       return (
-        <AmbassadorData
-          user={ambassadorInfo}
-          isMerchDelivery={isMerchDelivery}
-        />
+        <>
+          {ambassadorInfo && (
+            <AmbassadorData
+              user={ambassadorInfo}
+              isMerchDelivery={isMerchDelivery}
+            />
+          )}
+        </>
       );
     }
     if (id === 'tabs-activity') {
@@ -59,7 +63,7 @@ export default function AmbassadorCard({
             color="primary"
             variant="header-2"
           >
-            {isMerchDelivery ? 'Отправка мерча' : ambassadorInfo.ambassador}
+            {isMerchDelivery ? 'Отправка мерча' : ambassadorInfo.first_name}
           </Text>
           {!isMerchDelivery && (
             <div className={styles.ambassadorCard__infoContainer}>
@@ -73,9 +77,9 @@ export default function AmbassadorCard({
                   </Text>
                   <Link
                     view="normal"
-                    href={`https://t.me/${ambassadorInfo.telegram}`}
+                    href={`https://t.me/${ambassadorInfo.telegram_bot.nickname}`}
                   >
-                    @{ambassadorInfo.telegram}
+                    @{ambassadorInfo.telegram_bot.nickname}
                   </Link>
                 </li>
                 {ambassadorInfo.status !== 'candidate' && (
@@ -115,7 +119,7 @@ export default function AmbassadorCard({
                     className={styles.ambassadorCard__course}
                     color="primary"
                   >
-                    {ambassadorInfo.program}
+                    {ambassadorInfo.programs[0].program_name}
                   </Text>
                 </li>
               </ul>
