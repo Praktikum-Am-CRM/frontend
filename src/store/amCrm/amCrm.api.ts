@@ -54,8 +54,19 @@ export const api = createApi({
       }),
       invalidatesTags: ['Auth'],
     }),
+    getPrograms: build.query<any, any>({
+      query: () => ({
+        url: 'utility/programs',
+      }),
+    }),
+    getStatuses: build.query<any, any>({
+      query: () => ({
+        url: 'utility/ambassador_statuses',
+      }),
+    }),
   }),
 });
 
 // export const { useGetAmbassadorsQuery, useLoginMutation } = api;
-export const { useLoginMutation } = api;
+export const { useLoginMutation, useGetProgramsQuery, useGetStatusesQuery } =
+  api;

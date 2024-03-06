@@ -36,3 +36,15 @@ export interface PersonalMessage {
 export type Message = BulkMessage | PersonalMessage;
 
 export type CardType = 'delayed' | 'chats';
+
+export type FilterType = {
+  id: string;
+};
+
+export type StatusType = FilterType & {
+  status_name: string;
+};
+
+export type ProgramType = FilterType & {
+  program_name: string;
+};
