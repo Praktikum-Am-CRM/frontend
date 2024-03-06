@@ -11,3 +11,10 @@
   flex-wrap: wrap;
   gap: 12px;
 }
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+}

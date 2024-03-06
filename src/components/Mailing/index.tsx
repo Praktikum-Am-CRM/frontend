@@ -1,25 +1,30 @@
 import styles from './styles.module.css';
-import { ReactElement, useState } from 'react';
+import { ReactElement } from 'react';
 import { Tabs } from '@gravity-ui/uikit';
 import DelayedMessages from '../DelayedMessages';
 import useMessages from '../../hooks/useMessages';
 import NewMailing from '../NewMailing';
+import { useAppSelector } from '../../hooks/redux';
+import { useActions } from '../../hooks/actions';
 
 type TabId = 'newMailing' | 'delayed' | 'drafts' | 'history';
 
 const Mailing = () => {
-  const [activeTab, setActiveTab] = useState<TabId>('newMailing');
-  const messages = useMessages();
+  const activeTab = useAppSelector(state => state.mailing.activeTab);
+  const { setActiveTab } = useActions();
+
+  const { messagesDelayed } = useMessages();
 
   const tabsContent: Record<TabId, ReactElement> = {
     newMailing: <NewMailing />,
-    delayed: <DelayedMessages messages={messages} />,
+    delayed: <DelayedMessages messages={messagesDelayed} />,
     drafts: <div>Тут будут черновики</div>,
     history: <div>Тут будет история</div>,
   };
 
   const countMessages = () =>
-    messages.bulkMessages.length + messages.personalMessages.length;
+    messagesDelayed.bulkMessages.length +
+    messagesDelayed.personalMessages.length;
 
   const handleTabClick = (tabId: TabId) => setActiveTab(tabId);
 

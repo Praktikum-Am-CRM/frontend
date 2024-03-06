@@ -5,8 +5,7 @@ import { useState } from 'react';
 import AmbassadorData from '../AmbassadorData';
 import AmbassadorActivity from '../AmbassadorActivity';
 import AmbassadorMerch from '../AmbassadorMerch';
-import AmbassadorHistory from '../AmbassadorHistory';
-
+import CommunicationHistory from '../CommunicationHistory';
 import { useGetAmbassadorInfoQuery } from '../../store/amCrm/amCrm.api';
 import defineStatus from '../../utils/defineStatus';
 
@@ -42,7 +41,7 @@ export default function AmbassadorCard({
       return <AmbassadorMerch user={ambassadorInfo} />;
     }
     if (id === 'tabs-history') {
-      return <AmbassadorHistory user={ambassadorInfo} />;
+      return <CommunicationHistory />;
     }
     return null;
   }

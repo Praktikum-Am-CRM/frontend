@@ -47,7 +47,12 @@ export default function TableComponent({
   tableRowData: AmbassadorDataType[];
   tableHeaderData: TableColumnConfig<TableDataItem>[];
 }) {
-  const { setModalContentType, openModal, setRowId } = useActions();
+  const {
+    setModalContentType,
+    openModal,
+    setClickedRowId,
+    setSelectedUsersIds,
+  } = useActions();
   const isModalOpen = useAppSelector(state => state.modal.isModalOpen);
   const modalContentType = useAppSelector(state => state.modal.contentType);
   const rowId = useAppSelector(state => state.table.rowId);
@@ -56,7 +61,8 @@ export default function TableComponent({
   const [settings, setSettings] = useState<TableSettingsData>(
     tableHeaderData?.map(col => ({ id: col.id, isSelected: true })),
   );
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+
+  const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
   const [isMerchDelivery, setIsMerchDelivery] = useState<boolean>(false);
 
   const MyTable = withTableSorting(
@@ -113,14 +119,31 @@ export default function TableComponent({
 
   const handleRowClick = useCallback(
     (evt: TableDataItem) => {
-      setRowId(evt.id);
+      setClickedRowId(evt.id);
       if (!(isModalOpen && modalContentType === 'messages')) {
         setModalContentType('ambassador');
         openModal();
       }
     },
-    [setRowId, setModalContentType, openModal, isModalOpen, modalContentType],
+    [
+      setClickedRowId,
+      setModalContentType,
+      openModal,
+      isModalOpen,
+      modalContentType,
+    ],
   );
+
+  const handleSelectRow = (evt: string[]) => {
+    setSelectedRowIds(evt);
+
+    const res: string[] = [];
+    evt.forEach((rowID: string) => {
+      res.push(tableRowData[Number(rowID)].id);
+    });
+
+    setSelectedUsersIds(res);
+  };
 
   return (
     <>
@@ -132,8 +155,8 @@ export default function TableComponent({
           data={tableRowData.map(prepareDataForTable)}
           columns={columnsWithAddedProps}
           settings={settings}
-          selectedIds={selectedIds}
-          onSelectionChange={setSelectedIds}
+          selectedIds={selectedRowIds}
+          onSelectionChange={handleSelectRow}
           updateSettings={checked => {
             setSettings(checked);
             return Promise.resolve();
