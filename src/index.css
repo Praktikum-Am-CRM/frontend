@@ -1,6 +1,7 @@
 @import url(./vendor/normalize.css);
 
 :root {
+  overflow: hidden;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.4;

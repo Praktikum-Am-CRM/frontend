@@ -1,7 +1,7 @@
 .modal {
   max-width: calc(714px + 19px + 24px);
   width: 52.56vw;
-  height: calc(100vh - 86px);
+  max-height: calc(100vh - 68px);
   position: absolute;
   top: -16px;
   right: 0;
@@ -18,6 +18,7 @@
 .modal__container {
   max-width: 714px;
   width: 49.58vw;
+  min-height: calc(100vh - 86px);
   position: relative;
   top: 0;
   left: 24px;
