@@ -6,6 +6,7 @@ import { DatePicker } from '@gravity-ui/date-components';
 import { useAppSelector } from '../../hooks/redux';
 import { useActions } from '../../hooks/actions';
 import { useState } from 'react';
+import { formatDate } from '../../utils/formatDate';
 
 const NewMailing = () => {
   const textAreaValue = useAppSelector(state => state.mailing.textAreaValue);
@@ -54,17 +55,6 @@ const NewMailing = () => {
     setDatePickerOpened(false);
   };
 
-  function formatDate(dateISO: string) {
-    const dateObj = new Date(dateISO);
-    const options: Intl.DateTimeFormatOptions = {
-      month: 'long',
-      year: 'numeric',
-      day: '2-digit',
-    };
-    const formattedDate = dateObj.toLocaleDateString('ru-RU', options);
-    return formattedDate;
-  }
-
   const createButton = (
     content: React.ReactNode,
     onClick: React.MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>,
@@ -97,7 +87,9 @@ const NewMailing = () => {
             onClick={() => handleSendButtonClicked(pickedDate)}
           >
             {`Отправить ${
-              Object.keys(pickedDate).length > 0 ? formatDate(pickedDate) : ''
+              Object.keys(pickedDate).length > 0
+                ? formatDate(pickedDate, 'long')
+                : ''
             }`}
           </Button>
         </div>
@@ -116,12 +108,11 @@ const NewMailing = () => {
 
         <div className={styles.actions}>
           {createButton(
-            `Отправить выбранным (${selectedUsersIds.length > 0 ? selectedUsersIds.length : 0})`,
+            `Отправить выбранным (${selectedUsersIds.length})`,
             handleSendToSelected,
             'action',
           )}
           {createButton('Отправить всем', handleSendClick)}
-
           {createButton('Отложить рассылку', handlePostponedClick)}
           {createButton('В черновики', handleSendClick)}
         </div>
