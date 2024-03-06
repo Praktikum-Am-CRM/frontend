@@ -3,11 +3,11 @@ import AmbassadorTable from '../../components/AmbassadorTable';
 import Search from '../../components/Search';
 import styles from './styles.module.css';
 import Filter from '../../components/Filter';
-import { ambassadorArray } from '../../utils/mockData';
 import { useActions } from '../../hooks/actions';
 import { useAppSelector } from '../../hooks/redux';
 import ModalWindow from '../../components/ModalWindow';
 import CommunicationSection from '../../components/CommunicationSection';
+import { useGetAmbassadorsListQuery } from '../../store/amCrm/amCrm.api';
 
 export default function AmbassadorsPage() {
   const { setModalContentType, openModal } = useActions();
@@ -19,11 +19,9 @@ export default function AmbassadorsPage() {
     openModal();
   }
 
-  function determineAmbassadorArray() {
-    return ambassadorArray.filter(ambassador => {
-      return ambassador.status === 'pending' || ambassador.status === 'active';
-    });
-  }
+  const { data: ambList } = useGetAmbassadorsListQuery({
+    status: 'Кандидат',
+  });
 
   return (
     <section className={styles.ambassadorsPage}>
@@ -36,7 +34,7 @@ export default function AmbassadorsPage() {
           Сообщения
         </Button>
       </div>
-      <AmbassadorTable tableRowData={determineAmbassadorArray()} />
+      {ambList && <AmbassadorTable tableRowData={ambList} />}
       {isModalOpen && modalContentType === 'messages' && (
         <ModalWindow content={<CommunicationSection />} />
       )}

@@ -6,40 +6,42 @@ import AmbassadorData from '../AmbassadorData';
 import AmbassadorActivity from '../AmbassadorActivity';
 import AmbassadorMerch from '../AmbassadorMerch';
 import AmbassadorHistory from '../AmbassadorHistory';
-import determineStatus from '../../utils/DetermineStatus';
-import { ambassadorArray } from '../../utils/mockData';
+import determineStatus from '../../utils/determineStatus';
+import { useGetAmbassadorInfoQuery } from '../../store/amCrm/amCrm.api';
 
 // eslint-disable-next-line no-console
 export default function AmbassadorCard({
-  rowData,
+  rowId,
   isAmbassador,
   setIsMerchDelivery,
   isMerchDelivery,
 }: {
-  rowData: string;
+  rowId: string;
   isAmbassador?: boolean;
   setIsMerchDelivery: (value: boolean) => void;
   isMerchDelivery: boolean;
 }) {
   const [activeTab, setActiveTab] = useState<string>('tabs-data');
 
-  function findUserById(id: string) {
-    return ambassadorArray.find(candidate => candidate.id === id);
-  }
-  const user = findUserById(rowData);
+  const { data: ambassadorInfo } = useGetAmbassadorInfoQuery({ id: rowId });
 
   function determineContent(id: string) {
     if (id === 'tabs-data') {
-      return <AmbassadorData user={user} isMerchDelivery={isMerchDelivery} />;
+      return (
+        <AmbassadorData
+          user={ambassadorInfo}
+          isMerchDelivery={isMerchDelivery}
+        />
+      );
     }
     if (id === 'tabs-activity') {
-      return <AmbassadorActivity user={user} />;
+      return <AmbassadorActivity user={ambassadorInfo} />;
     }
     if (id === 'tabs-merch') {
-      return <AmbassadorMerch user={user} />;
+      return <AmbassadorMerch user={ambassadorInfo} />;
     }
     if (id === 'tabs-history') {
-      return <AmbassadorHistory user={user} />;
+      return <AmbassadorHistory user={ambassadorInfo} />;
     }
     return null;
   }
@@ -50,14 +52,14 @@ export default function AmbassadorCard({
 
   return (
     <>
-      {user && (
+      {ambassadorInfo && (
         <div className={styles.ambassadorCard}>
           <Text
             className={styles.ambassadorCard__heading}
             color="primary"
             variant="header-2"
           >
-            {isMerchDelivery ? 'Отправка мерча' : user.ambassador}
+            {isMerchDelivery ? 'Отправка мерча' : ambassadorInfo.ambassador}
           </Text>
           {!isMerchDelivery && (
             <div className={styles.ambassadorCard__infoContainer}>
@@ -69,11 +71,14 @@ export default function AmbassadorCard({
                   >
                     Телеграм/whatsapp
                   </Text>
-                  <Link view="normal" href={`https://t.me/${user.telegram}`}>
-                    @{user.telegram}
+                  <Link
+                    view="normal"
+                    href={`https://t.me/${ambassadorInfo.telegram}`}
+                  >
+                    @{ambassadorInfo.telegram}
                   </Link>
                 </li>
-                {user.status !== 'candidate' && (
+                {ambassadorInfo.status !== 'candidate' && (
                   <li className={styles.ambassadorCard__infoPoint}>
                     <Text
                       className={styles.ambassadorCard__pointDescription}
@@ -82,11 +87,12 @@ export default function AmbassadorCard({
                       Статус
                     </Text>
                     <div className={styles.ambassadorCard__status}>
-                      {user.status && determineStatus(user.status)}
+                      {ambassadorInfo.status &&
+                        determineStatus(ambassadorInfo.status)}
                     </div>
                   </li>
                 )}
-                {user.status !== 'candidate' && (
+                {ambassadorInfo.status !== 'candidate' && (
                   <li
                     className={`${styles.ambassadorCard__infoPoint} ${styles.ambassadorCard__infoPoint_type_achievement}`}
                   >
@@ -109,7 +115,7 @@ export default function AmbassadorCard({
                     className={styles.ambassadorCard__course}
                     color="primary"
                   >
-                    {user.program}
+                    {ambassadorInfo.program}
                   </Text>
                 </li>
               </ul>
@@ -124,7 +130,7 @@ export default function AmbassadorCard({
                 <Button
                   className={styles.ambassadorCard__assignButton}
                   onClick={() => {
-                    user.status = 'active';
+                    ambassadorInfo.status = 'active';
                   }}
                 >
                   Сделать амбассадором

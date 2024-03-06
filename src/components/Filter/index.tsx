@@ -29,8 +29,8 @@ export default function Filter() {
   const buttonRef = useRef(null);
   const [open, setOpen] = useState(false);
 
-  const { data: programs } = useGetProgramsQuery({});
-  const { data: statuses } = useGetStatusesQuery({});
+  const { data: programs } = useGetProgramsQuery();
+  const { data: statuses } = useGetStatusesQuery();
 
   const { register, control, handleSubmit } = useForm<FormData>();
 
