@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { AmbassadorDataType } from '../../types/types';
 
 interface LoginRequest {
   email: string;
@@ -34,18 +35,6 @@ export const api = createApi({
   }),
   tagTypes: ['Comments', 'Ambassadors', 'Auth'],
   endpoints: build => ({
-    // Список сотрудников команды
-    // getAmbassadors: build.query<AmbassadorsResponse, AmbassadorsRequest>({
-    //   query: ({ gender, programm, sort_by, order }) => ({
-    //     url: `users`,
-    //     params: {
-    //       gender,
-    //       sort_by,
-    //       order,
-    //       programm,
-    //     },
-    //   }),
-    // }),
     login: build.mutation<LoginResponse, LoginRequest>({
       query: credentials => ({
         url: 'auth/token/login',
@@ -54,8 +43,36 @@ export const api = createApi({
       }),
       invalidatesTags: ['Auth'],
     }),
+    getAmbassadorsList: build.query<AmbassadorDataType[], { status: string }>({
+      query: ({ status }) => ({
+        url: 'ambassador/',
+        params: {
+          status,
+        },
+      }),
+    }),
+    getPrograms: build.query<any, void>({
+      query: () => ({
+        url: 'utility/programs',
+      }),
+    }),
+    getStatuses: build.query<any, void>({
+      query: () => ({
+        url: 'utility/ambassador_statuses',
+      }),
+    }),
+    getAmbassadorInfo: build.query<any, { id: string }>({
+      query: ({ id }) => ({
+        url: `ambassador/${id}/`,
+      }),
+    }),
   }),
 });
 
-// export const { useGetAmbassadorsQuery, useLoginMutation } = api;
-export const { useLoginMutation } = api;
+export const {
+  useLoginMutation,
+  useGetProgramsQuery,
+  useGetStatusesQuery,
+  useGetAmbassadorsListQuery,
+  useGetAmbassadorInfoQuery,
+} = api;

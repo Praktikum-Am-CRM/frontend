@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Button,
@@ -13,6 +14,11 @@ import { SlidersVertical } from '@gravity-ui/icons';
 
 import styles from './styles.module.css';
 import { Controller, useForm } from 'react-hook-form';
+import {
+  useGetProgramsQuery,
+  useGetStatusesQuery,
+} from '../../store/amCrm/amCrm.api';
+import { ProgramType, StatusType } from '../../types/types';
 
 type FormData = {
   status: string[];
@@ -22,6 +28,9 @@ type FormData = {
 export default function Filter() {
   const buttonRef = useRef(null);
   const [open, setOpen] = useState(false);
+
+  const { data: programs } = useGetProgramsQuery();
+  const { data: statuses } = useGetStatusesQuery();
 
   const { register, control, handleSubmit } = useForm<FormData>();
 
@@ -36,18 +45,14 @@ export default function Filter() {
     { value: 'women', content: 'Женщины' },
   ];
 
-  const amStatusOptions = [
-    { value: 'active', content: 'Активный' },
-    { value: 'pending', content: 'Уточняется' },
-    { value: 'paused', content: 'На паузе' },
-    { value: 'notamb', content: 'Не амбассадор' },
-  ];
+  const preparePrograms = (data: ProgramType[]) =>
+    data.map((item: any) => ({
+      value: item.id,
+      content: item.program_name,
+    }));
 
-  const programOptions = [
-    { value: 'program1', content: 'Программа 1' },
-    { value: 'program2', content: 'Программа 2' },
-    { value: 'program3', content: 'Программа 3' },
-  ];
+  const prepareStatuses = (data: StatusType[]) =>
+    data.filter((item: any) => item.status_name !== 'Кандидат');
 
   const FilterText = ({ children }: { children: string }) => (
     <Text variant="body-1" color="secondary">
@@ -70,15 +75,16 @@ export default function Filter() {
           <div className={styles.filters__container}>
             <FilterText>Статус</FilterText>
             <ul className={styles.filters__checkboxList}>
-              {amStatusOptions.map(({ value, content }) => (
-                <li key={value} className={styles.filters__checkboxItem}>
-                  <Checkbox
-                    value={value}
-                    content={content}
-                    {...register('status')}
-                  />
-                </li>
-              ))}
+              {statuses &&
+                prepareStatuses(statuses).map(({ id, status_name }) => (
+                  <li key={id} className={styles.filters__checkboxItem}>
+                    <Checkbox
+                      value={id}
+                      content={status_name}
+                      {...register('status')}
+                    />
+                  </li>
+                ))}
             </ul>
           </div>
           <div className={styles.filters__container}>
@@ -98,25 +104,26 @@ export default function Filter() {
           </div>
           <div className={styles.filters__container}>
             <FilterText>Программа</FilterText>
-
-            <Controller
-              name="program"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  placeholder="Программа"
-                  className={styles.filters__checkboxList}
-                  size="m"
-                  filterable
-                  multiple
-                  options={programOptions}
-                  onUpdate={e => {
-                    field.onChange(e);
-                  }}
-                />
-              )}
-            />
+            {programs && (
+              <Controller
+                name="program"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    placeholder="Программа"
+                    className={styles.filters__checkboxList}
+                    size="m"
+                    filterable
+                    multiple
+                    options={preparePrograms(programs)}
+                    onUpdate={e => {
+                      field.onChange(e);
+                    }}
+                  />
+                )}
+              />
+            )}
           </div>
           <div className={styles.filters__buttons}>
             {/* <Button view="normal" type="reset">

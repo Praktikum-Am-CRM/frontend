@@ -1,7 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Link,
   Table,
+  TableColumnConfig,
+  TableDataItem,
   Text,
   Tooltip,
   withTableSelection,
@@ -13,13 +14,14 @@ import { useCallback, useMemo, useState } from 'react';
 import styles from './styles.module.css';
 import { WomanIcon } from '../../assets/images/WomanIcon';
 import { ManIcon } from '../../assets/images/ManIcon';
-import { TableRowData } from '../../types/types';
+import { AmbassadorDataType } from '../../types/types';
 import ModalWindow from '../ModalWindow';
-import determineStatus from '../../utils/DetermineStatus';
+
 import { useActions } from '../../hooks/actions';
 import { useAppSelector } from '../../hooks/redux';
 import { useLocation } from 'react-router-dom';
 import AmbassadorCard from '../AmbassadorCard';
+import defineStatus from '../../utils/defineStatus';
 
 type TableSettingsData = Array<{
   id: string;
@@ -27,7 +29,7 @@ type TableSettingsData = Array<{
 }>;
 
 function determineGender(gender: string) {
-  return gender === 'woman' ? <WomanIcon /> : <ManIcon />;
+  return gender === 'ж' ? <WomanIcon /> : <ManIcon />;
 }
 
 const textWithTooltip = (text: string) => (
@@ -42,8 +44,8 @@ export default function TableComponent({
   tableRowData,
   tableHeaderData,
 }: {
-  tableRowData: TableRowData[];
-  tableHeaderData: any[];
+  tableRowData: AmbassadorDataType[];
+  tableHeaderData: TableColumnConfig<TableDataItem>[];
 }) {
   const {
     setModalContentType,
@@ -73,23 +75,27 @@ export default function TableComponent({
   }));
 
   const prepareDataForTable = useMemo(() => {
-    return (data: TableRowData) => {
+    return (data: AmbassadorDataType) => {
       return {
         ...data,
         id: data.id,
-        ambassador: textWithTooltip(data.ambassador),
-        status: data.status && determineStatus(data.status),
-        promo: data.promo,
+        ambassador: textWithTooltip(`${data.first_name} ${data.last_name}`),
+        status: defineStatus(data.status),
+        promo: data.promocode,
         telegram: (
-          <Link view="normal" href={`https://t.me/${data.telegram}`}>
-            @{data.telegram}
+          <Link
+            view="normal"
+            href={`https://t.me/${data.telegram_bot.nickname}`}
+          >
+            @{data.telegram_bot.nickname}
           </Link>
         ),
-        program: data.program,
-        registration: data.registration,
+        program: data.programs[0].program_name,
+        registration: data.receipt_date,
         gender: determineGender(data.gender),
-        address: data.address && textWithTooltip(data.address),
-        tel: data.tel,
+        address: textWithTooltip(
+          ` ${data.address_country}, ${data.address_settlement}, ${data.address_street}, д.${data.address_house}, ${data.address_building !== null && ` к${data.address_building}`}, кв.${data.address_apartment}`,
+        ),
         email: data.email,
       };
     };
@@ -98,21 +104,21 @@ export default function TableComponent({
   const content =
     location.pathname === '/ambassadors' ? (
       <AmbassadorCard
-        rowData={rowId}
+        rowId={rowId}
         isAmbassador
         setIsMerchDelivery={setIsMerchDelivery}
         isMerchDelivery={isMerchDelivery}
       />
     ) : (
       <AmbassadorCard
-        rowData={rowId}
+        rowId={rowId}
         setIsMerchDelivery={setIsMerchDelivery}
         isMerchDelivery={isMerchDelivery}
       />
     );
 
   const handleRowClick = useCallback(
-    (evt: any) => {
+    (evt: TableDataItem) => {
       setClickedRowId(evt.id);
       if (!(isModalOpen && modalContentType === 'messages')) {
         setModalContentType('ambassador');
@@ -128,7 +134,7 @@ export default function TableComponent({
     ],
   );
 
-  const handleSelectRow = (evt: any) => {
+  const handleSelectRow = (evt: string[]) => {
     setSelectedRowIds(evt);
 
     const res: string[] = [];

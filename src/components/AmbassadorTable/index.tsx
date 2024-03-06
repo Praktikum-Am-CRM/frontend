@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { AmbassadorDataType } from '../../types/types';
 import TableComponent from '../TableComponent';
 
 export default function AmbassadorTable({
   tableRowData,
 }: {
-  tableRowData: any;
+  tableRowData: AmbassadorDataType[];
 }) {
   const columns = [
     { id: 'ambassador', name: 'Амбассадор', meta: { sort: true } },
