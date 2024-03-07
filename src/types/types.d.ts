@@ -35,8 +35,6 @@ export interface PersonalMessage {
 
 export type Message = BulkMessage | PersonalMessage;
 
-export type CardType = 'delayed' | 'chats';
-
 export type AmbassadorDataType = {
   id: string;
   telegram_bot: TelegramBot;
