@@ -1,5 +1,6 @@
 import {
   Link,
+  Skeleton,
   Table,
   TableColumnConfig,
   TableDataItem,
@@ -9,7 +10,7 @@ import {
   withTableSettings,
   withTableSorting,
 } from '@gravity-ui/uikit';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import styles from './styles.module.css';
 import { WomanIcon } from '../../assets/images/WomanIcon';
@@ -64,6 +65,7 @@ export default function TableComponent({
 
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
   const [isMerchDelivery, setIsMerchDelivery] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const MyTable = withTableSorting(
     withTableSelection(withTableSettings({ sortable: false })(Table)),
@@ -73,6 +75,14 @@ export default function TableComponent({
     ...col,
     width: 250,
   }));
+
+  // setTimeout(() => {
+  //   setIsLoading(false);
+  // }, 400);
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, [tableRowData]);
 
   const prepareDataForTable = useMemo(() => {
     return (data: AmbassadorDataType) => {
@@ -147,21 +157,26 @@ export default function TableComponent({
 
   return (
     <>
-      {tableRowData && columnsWithAddedProps && (
-        <MyTable
-          className={styles.table}
-          onRowClick={evt => handleRowClick(evt)}
-          emptyMessage="Ничего не найдено ¯\_(ツ)_/¯"
-          data={tableRowData.map(prepareDataForTable)}
-          columns={columnsWithAddedProps}
-          settings={settings}
-          selectedIds={selectedRowIds}
-          onSelectionChange={handleSelectRow}
-          updateSettings={checked => {
-            setSettings(checked);
-            return Promise.resolve();
-          }}
-        />
+      {isLoading ? (
+        <Skeleton style={{ height: '75vh', width: '95vw' }} />
+      ) : (
+        tableRowData &&
+        columnsWithAddedProps && (
+          <MyTable
+            className={styles.table}
+            onRowClick={evt => handleRowClick(evt)}
+            emptyMessage="Ничего не найдено ¯\_(ツ)_/¯"
+            data={tableRowData.map(prepareDataForTable)}
+            columns={columnsWithAddedProps}
+            settings={settings}
+            selectedIds={selectedRowIds}
+            onSelectionChange={handleSelectRow}
+            updateSettings={checked => {
+              setSettings(checked);
+              return Promise.resolve();
+            }}
+          />
+        )
       )}
       {isModalOpen && modalContentType === 'ambassador' && (
         <ModalWindow content={content} />
