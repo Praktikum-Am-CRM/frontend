@@ -28,10 +28,12 @@ const NewMailing = () => {
     console.log(
       `Выбранным ID пользователям: ${selectedUsersIds} Отправка текста:  ${textAreaValue} `,
     );
+    setTextAreaValue('');
   };
 
   const handleSendClick = () => {
     console.log(`Отправка текста : ${textAreaValue} `);
+    setTextAreaValue('');
   };
 
   const handlePostponedClick = () => {
@@ -40,6 +42,7 @@ const NewMailing = () => {
 
   const handleDraftClick = () => {
     console.log(`Отправка в черновик текста : ${textAreaValue} `);
+    setTextAreaValue('');
   };
 
   const isButtonActive = () => {
@@ -58,6 +61,7 @@ const NewMailing = () => {
     console.log(
       `Send text: ${value} on: ${textAreaValue} выбранным ID пользователям: ${selectedUsersIds}`,
     );
+    setTextAreaValue('');
     setDatePickerOpened(false);
   };
 

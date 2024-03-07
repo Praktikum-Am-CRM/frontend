@@ -9,6 +9,7 @@ const PersonalMessage = () => {
 
   const handleSendButtonClick = () => {
     console.log(`Send to: ${pickedRowUserId} with text: ${textInput}`);
+    setTextInput('');
   };
 
   const handleTextAreaChange = (
