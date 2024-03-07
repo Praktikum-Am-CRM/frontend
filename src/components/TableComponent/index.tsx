@@ -57,15 +57,19 @@ export default function TableComponent({
   const isModalOpen = useAppSelector(state => state.modal.isModalOpen);
   const modalContentType = useAppSelector(state => state.modal.contentType);
   const pickedRowUserId = useAppSelector(state => state.table.pickedRowUserId);
+  const selectedUsersIds = useAppSelector(
+    state => state.table.selectedUsersIds,
+  );
   const location = useLocation();
 
   const [settings, setSettings] = useState<TableSettingsData>(
     tableHeaderData?.map(col => ({ id: col.id, isSelected: true })),
   );
 
-  const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
   const [isMerchDelivery, setIsMerchDelivery] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const getRowId = 'id';
 
   const MyTable = withTableSorting(
     withTableSelection(withTableSettings({ sortable: false })(Table)),
@@ -145,14 +149,8 @@ export default function TableComponent({
   );
 
   const handleSelectRow = (evt: string[]) => {
-    setSelectedRowIds(evt);
-
-    const res: string[] = [];
-    evt.forEach((rowID: string) => {
-      res.push(tableRowData[Number(rowID)].id);
-    });
-
-    setSelectedUsersIds(res);
+    setSelectedUsersIds(evt);
+    setSelectedUsersIds(evt);
   };
 
   return (
@@ -169,7 +167,8 @@ export default function TableComponent({
             data={tableRowData.map(prepareDataForTable)}
             columns={columnsWithAddedProps}
             settings={settings}
-            selectedIds={selectedRowIds}
+            getRowId={getRowId}
+            selectedIds={selectedUsersIds}
             onSelectionChange={handleSelectRow}
             updateSettings={checked => {
               setSettings(checked);
