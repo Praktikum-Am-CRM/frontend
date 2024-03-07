@@ -1,4 +1,4 @@
-import ava from '../../assets/images/avatar.jpg';
+import ava from '../../assets/images/avatar.webp';
 import styles from './styles.module.css';
 import { Text } from '@gravity-ui/uikit';
 
