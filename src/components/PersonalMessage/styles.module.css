@@ -1,0 +1,9 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sendButton {
+  align-self: flex-start;
+}

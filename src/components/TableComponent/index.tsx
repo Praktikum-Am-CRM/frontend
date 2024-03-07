@@ -51,12 +51,12 @@ export default function TableComponent({
   const {
     setModalContentType,
     openModal,
-    setClickedRowId,
+    setPickedRowUserId,
     setSelectedUsersIds,
   } = useActions();
   const isModalOpen = useAppSelector(state => state.modal.isModalOpen);
   const modalContentType = useAppSelector(state => state.modal.contentType);
-  const rowId = useAppSelector(state => state.table.rowId);
+  const pickedRowUserId = useAppSelector(state => state.table.pickedRowUserId);
   const location = useLocation();
 
   const [settings, setSettings] = useState<TableSettingsData>(
@@ -114,14 +114,14 @@ export default function TableComponent({
   const content =
     location.pathname === '/ambassadors' ? (
       <Card
-        rowId={rowId}
+        rowId={pickedRowUserId}
         isAmbassador
         setIsMerchDelivery={setIsMerchDelivery}
         isMerchDelivery={isMerchDelivery}
       />
     ) : (
       <Card
-        rowId={rowId}
+        rowId={pickedRowUserId}
         setIsMerchDelivery={setIsMerchDelivery}
         isMerchDelivery={isMerchDelivery}
       />
@@ -129,14 +129,14 @@ export default function TableComponent({
 
   const handleRowClick = useCallback(
     (evt: TableDataItem) => {
-      setClickedRowId(evt.id);
+      setPickedRowUserId(evt.id);
       if (!(isModalOpen && modalContentType === 'messages')) {
         setModalContentType('ambassador');
         openModal();
       }
     },
     [
-      setClickedRowId,
+      setPickedRowUserId,
       setModalContentType,
       openModal,
       isModalOpen,
