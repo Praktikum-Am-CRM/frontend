@@ -1,16 +1,14 @@
 import styles from './styles.module.css';
 import { useState } from 'react';
 import Mailing from '../Mailing';
-import Chats from '../Chats';
 import { RadioButton, Text } from '@gravity-ui/uikit';
 
 const CommunicationSection = () => {
   const [activeTab, setActiveTab] = useState('mailing');
 
   const options = [
-    { value: 'mailing', content: <Text variant="display-1">Рассылка</Text> },
-    { value: 'chats', content: <Text variant="display-1">Чаты</Text> },
-    { value: 'faq', content: <Text variant="display-1">FAQ</Text> },
+    { value: 'mailing', content: <Text variant="header-1">Рассылка</Text> },
+    { value: 'faq', content: <Text variant="header-1">FAQ</Text> },
   ];
 
   const TabContent = () => {
@@ -21,8 +19,6 @@ const CommunicationSection = () => {
             <Mailing />
           </div>
         );
-      case 'chats':
-        return <Chats />;
       case 'faq':
         return <div>Тут фак</div>;
       default:

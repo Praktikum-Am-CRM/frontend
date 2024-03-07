@@ -25,7 +25,6 @@ const DelayedMessages: React.FC<{ messages: MessagesState }> = ({
         </Text>
         <MessagesList
           messages={messages.bulkMessages}
-          cardType="delayed"
           onClick={handleEditClick}
         />
       </div>
@@ -36,7 +35,6 @@ const DelayedMessages: React.FC<{ messages: MessagesState }> = ({
         </Text>
         <MessagesList
           messages={messages.personalMessages}
-          cardType="delayed"
           onClick={handleEditClick}
         />
       </div>

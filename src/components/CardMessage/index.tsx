@@ -1,34 +1,18 @@
 import styles from './styles.module.css';
 import { Card, Text } from '@gravity-ui/uikit';
-import DropdownMenuButtonDelayed from '../DropdownMenuButtonDelayed';
-import DropdownMenuButtonChats from '../DropdownMenuButtonChats';
+import DropdownMenuButton from '../DropdownMenuButton';
 import { formatDate } from '../../utils/formatDate';
-import { CardType, Message } from '../../types/types';
-import { PinIcon } from '../../assets/icons';
+import { Message } from '../../types/types';
 
 interface CardMessageProps {
   message: Message;
-  cardType: CardType;
   onClick: (message?: string, id?: string) => void;
 }
 
-const CardMessage: React.FC<CardMessageProps> = ({
-  message,
-  cardType,
-  onClick,
-}) => {
+const CardMessage: React.FC<CardMessageProps> = ({ message, onClick }) => {
   const handleEditClick = () => {
     onClick(message.message, message.id);
   };
-
-  function defineDropdown() {
-    const dropdownMap = {
-      delayed: <DropdownMenuButtonDelayed onClick={handleEditClick} />,
-      chats: <DropdownMenuButtonChats />,
-    };
-
-    return dropdownMap[cardType] || null;
-  }
 
   return (
     <Card
@@ -42,17 +26,12 @@ const CardMessage: React.FC<CardMessageProps> = ({
     >
       <div className={styles.cardLine}>
         <div>
-          {cardType !== 'chats' && (
-            <Text variant="body-1" color="secondary">
-              {'Кому: '}
-            </Text>
-          )}
+          <Text variant="body-1" color="secondary">
+            {'Кому: '}
+          </Text>
           <Text>
             {'recipients' in message ? message.recipients : message.recipient}
           </Text>
-          {cardType === 'chats' && message.pinned && (
-            <PinIcon className={styles.pin} />
-          )}
         </div>
         <Text variant="body-1" color="secondary">
           {formatDate(message.date, '2-digit')}
@@ -62,7 +41,7 @@ const CardMessage: React.FC<CardMessageProps> = ({
         <Text variant="body-1" color="secondary">
           {message.message}
         </Text>
-        {defineDropdown()}
+        <DropdownMenuButton onClick={handleEditClick} />
       </div>
     </Card>
   );

@@ -3,9 +3,7 @@ import styles from './styles.module.css';
 import { DropdownMenu, Icon } from '@gravity-ui/uikit';
 import { PenIcon, TrashBinIcon } from '../../assets/icons';
 
-const DropdownMenuButtonDelayed: React.FC<{ onClick: () => void }> = ({
-  onClick,
-}) => {
+const DropdownMenuButton: React.FC<{ onClick: () => void }> = ({ onClick }) => {
   return (
     <DropdownMenu
       items={[
@@ -33,4 +31,4 @@ const DropdownMenuButtonDelayed: React.FC<{ onClick: () => void }> = ({
   );
 };
 
-export default DropdownMenuButtonDelayed;
+export default DropdownMenuButton;
