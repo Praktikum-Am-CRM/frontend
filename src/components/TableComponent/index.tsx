@@ -130,22 +130,30 @@ export default function TableComponent({
   const handleRowClick = useCallback(
     (evt: TableDataItem) => {
       setPickedRowUserId(evt.id);
-      if (!(isModalOpen && modalContentType === 'messages')) {
+      if (!isModalOpen || modalContentType !== 'messages') {
         setModalContentType('ambassador');
         openModal();
+      } else {
+        const idExists = selectedUsersIds.includes(evt.id);
+        if (idExists) {
+          setSelectedUsersIds(selectedUsersIds.filter(id => id !== evt.id));
+        } else {
+          setSelectedUsersIds([...selectedUsersIds, evt.id]);
+        }
       }
     },
     [
       setPickedRowUserId,
-      setModalContentType,
-      openModal,
       isModalOpen,
       modalContentType,
+      setModalContentType,
+      openModal,
+      setSelectedUsersIds,
+      selectedUsersIds,
     ],
   );
 
   const handleSelectRow = (evt: string[]) => {
-    setSelectedUsersIds(evt);
     setSelectedUsersIds(evt);
   };
 
@@ -158,7 +166,10 @@ export default function TableComponent({
         columnsWithAddedProps && (
           <MyTable
             className={styles.table}
-            onRowClick={evt => handleRowClick(evt)}
+            onRowClick={evt => {
+              handleRowClick(evt);
+              console.log(evt);
+            }}
             emptyMessage="Ничего не найдено ¯\_(ツ)_/¯"
             data={tableRowData.map(prepareDataForTable)}
             columns={columnsWithAddedProps}

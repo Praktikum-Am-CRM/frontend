@@ -158,19 +158,25 @@ export default function AmbassadorData({
         <ul className={styles.ambassodorDataSection__list}>
           <li className={styles.ambassodorDataSection__item}>
             {standartTextInput('Страна')}
-            {variableInput('country', displayData(user.promocode), '')}
+            {variableInput('country', displayData(user.address_country), '')}
           </li>
           <li className={styles.ambassodorDataSection__item}>
             {standartTextInput('Город')}
-            {variableInput('region', displayData(user.promocode), '')}
+            {variableInput('region', displayData(user.address_settlement), '')}
           </li>
           <li className={styles.ambassodorDataSection__item}>
             {standartTextInput('Индекс')}
-            {variableInput('index', displayData(user.promocode), '')}
+            {variableInput('index', displayData(user.address_index), '')}
           </li>
           <li className={styles.ambassodorDataSection__item}>
             {standartTextInput('Адрес')}
-            {variableInput('street', displayData(user.promocode), '')}
+            {variableInput(
+              'street',
+              displayData(
+                `${user.address_street} дом ${user.address_house} ${user.address_building ? `строение ${user.address_building}` : ''} квартира ${user.address_apartment}`,
+              ),
+              '',
+            )}
           </li>
           <li className={styles.ambassodorDataSection__item}>
             {standartTextInput('Email')}
@@ -183,17 +189,17 @@ export default function AmbassadorData({
               {standartTextInput('Образование')}
               {variableInput(
                 'educational_institution',
-                displayData(user.email),
+                displayData(user.educational_institution),
                 '',
               )}
             </li>
             <li className={styles.ambassodorDataSection__item}>
               {standartTextInput('Место работы')}
-              {variableInput('place_work', displayData(user.email), '')}
+              {variableInput('place_work', displayData(user.place_work), '')}
             </li>
             <li className={styles.ambassodorDataSection__item}>
               {standartTextInput('Цель учебы в Практикуме')}
-              {variableInput('goal', displayData(user.email), '')}
+              {variableInput('goal', displayData(user.goals[0].goal_name), '')}
             </li>
             <li className={styles.ambassodorDataSection__item}>
               {standartTextInput('Желаемая деятельность')}
@@ -220,7 +226,7 @@ export default function AmbassadorData({
           </li>
           <li className={styles.ambassodorDataSection__item}>
             {standartTextInput('Дополнительная информация о себе')}
-            {variableInput('note', displayData(user.place_work), '')}
+            {variableInput('note', displayData(user.note), '')}
           </li>
         </ul>
         <ul
@@ -288,7 +294,11 @@ export default function AmbassadorData({
         </ul>
       )}
       {!isMerchDelivery && (
-        <Button size="l" view="outlined">
+        <Button
+          size="l"
+          view="outlined"
+          className={styles.ambassodorDataSection__deleteButton}
+        >
           <Icon data={TrashBin} size={18} />
         </Button>
       )}

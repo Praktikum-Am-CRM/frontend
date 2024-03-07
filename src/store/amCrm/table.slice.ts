@@ -1,7 +1,12 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+interface TableState {
+  pickedRowUserId: string;
+  selectedUsersIds: string[];
+}
+
+const initialState: TableState = {
   pickedRowUserId: '',
   selectedUsersIds: [],
 };

@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { AmbassadorDataResponse, AmbassadorInfoType } from '../../types/types';
-// import { AmbassadorDataType } from '../../types/types';
 
 interface LoginRequest {
   email: string;
@@ -12,15 +11,6 @@ interface LoginRequest {
 interface LoginResponse {
   auth_token: string;
 }
-
-// interface AmbassadorsResponse {
-//   auth_token: string;
-// }
-
-// interface AmbassadorsRequest {
-//   email: string;
-//   password: string;
-// }
 
 export const api = createApi({
   reducerPath: 'api',
