@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import styles from './styles.module.css';
-import { Button, Link, Tabs, Text } from '@gravity-ui/uikit';
+import { Button, Label, Link, Tabs, Text } from '@gravity-ui/uikit';
 import { useState } from 'react';
 import AmbassadorData from '../AmbassadorData';
 import Activity from '../Activity';
@@ -8,6 +8,7 @@ import Merch from '../Merch';
 import Chat from '../Chat';
 import { useGetAmbassadorInfoQuery } from '../../store/amCrm/amCrm.api';
 import defineStatus from '../../utils/defineStatus';
+import { AchieveType, AmbassadorDataType } from '../../types/types';
 
 // eslint-disable-next-line no-console
 export default function Card({
@@ -54,6 +55,16 @@ export default function Card({
     setActiveTab(id);
   }
 
+  function renderAchives(ambassador: AmbassadorDataType) {
+    return ambassador.achieves.map((achieve: AchieveType) => {
+      return (
+        <li className={styles.card__achieve}>
+          <Label theme="success">{achieve.achieve_name}</Label>
+        </li>
+      );
+    });
+  }
+
   return (
     <>
       {ambassadorInfo && (
@@ -63,7 +74,9 @@ export default function Card({
             color="primary"
             variant="header-2"
           >
-            {isMerchDelivery ? 'Отправка мерча' : ambassadorInfo.first_name}
+            {isMerchDelivery
+              ? 'Отправка мерча'
+              : `${ambassadorInfo.first_name} ${ambassadorInfo.last_name}`}
           </Text>
           {!isMerchDelivery && (
             <div className={styles.card__infoContainer}>
@@ -106,6 +119,9 @@ export default function Card({
                     >
                       Ачивка
                     </Text>
+                    <ul className={styles.card__achives}>
+                      {renderAchives(ambassadorInfo)}
+                    </ul>
                   </li>
                 )}
                 <li className={styles.card__infoPoint}>

@@ -54,3 +54,8 @@
 .card__tabs {
   width: max-content;
 }
+
+.card__achives {
+  list-style: none;
+  padding-left: 0;
+}

@@ -1,6 +1,6 @@
 .ambassodorDataSection {
-  position: relative;
-  padding-bottom: 36px;
+  display: flex;
+  flex-direction: column;
 }
 
 .ambassodorDataSection__form {
@@ -53,16 +53,9 @@
   flex: 0 0 auto;
 }
 
-/* .ambassodorDataSection__deleteButton {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 36px;
-  background-image: url(../../ui/icontrash.svg);
-  background-repeat: no-repeat;
-  background-size: 16px;
-  background-position: center;
-} */
+.ambassodorDataSection__deleteButton {
+  align-self: end;
+}
 
 .ambassadorCard__merchSettings {
   display: flex;
