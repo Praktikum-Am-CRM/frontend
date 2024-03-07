@@ -1,4 +1,4 @@
-import styles from './index.module.css';
+import styles from './styles.module.css';
 import { Logo } from '../../assets/icons';
 import { Link, Text } from '@gravity-ui/uikit';
 import { LoginForm } from '../../components/LoginForm';

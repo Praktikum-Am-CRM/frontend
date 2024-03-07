@@ -23,6 +23,7 @@ import { useAppSelector } from '../../hooks/redux';
 import { useLocation } from 'react-router-dom';
 import Card from '../Card';
 import defineStatus from '../../utils/defineStatus';
+import { formatDate } from '../../utils/formatDate';
 
 type TableSettingsData = Array<{
   id: string;
@@ -101,7 +102,7 @@ export default function TableComponent({
           </Link>
         ),
         program: textWithTooltip(data.programs[0].program_name),
-        registration: data.receipt_date,
+        registration: formatDate(data.receipt_date, '2-digit'),
         gender: determineGender(data.gender),
         address: textWithTooltip(
           ` ${data.address_country}, ${data.address_settlement}, ${data.address_street}, д.${data.address_house}, ${data.address_building === null ? '' : `к${data.address_building}`}, кв.${data.address_apartment}`,
