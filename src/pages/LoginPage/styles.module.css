@@ -1,15 +1,22 @@
+.loginPage {
+  background-color: #dde0e4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+}
+
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100vw;
-  height: 100vh;
-  background-color: #dde0e4;
+  justify-content: space-between;
+  flex-grow: 1;
 }
 
 .logo {
   margin-top: 11vh;
-  margin-bottom: 12vh;
   height: 54px;
 }
 
@@ -32,8 +39,7 @@
   margin: 0;
   padding: 0;
   width: 474px;
-  position: absolute;
-  bottom: 28px;
+  margin-bottom: 10vh;
 }
 
 .items {
