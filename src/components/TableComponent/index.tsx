@@ -77,7 +77,9 @@ export default function TableComponent({
   }));
 
   useEffect(() => {
-    setIsLoading(false);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
   }, [tableRowData]);
 
   const prepareDataForTable = useMemo(() => {

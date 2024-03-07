@@ -3,7 +3,7 @@ import Header from '../Header';
 import ScrollToTop from '../../utils/ScrollToTop';
 import styles from './styles.module.css';
 import { Suspense, useEffect } from 'react';
-import { Loader } from '@gravity-ui/uikit';
+import { Skeleton } from '@gravity-ui/uikit';
 
 export default function Layout() {
   const location = useLocation();
@@ -21,7 +21,9 @@ export default function Layout() {
       <div className={styles.layout}>
         {!isLoginPage && <Header />}
         <main className={styles.layout__main}>
-          <Suspense fallback={<Loader size="l" />}>
+          <Suspense
+            fallback={<Skeleton style={{ height: '75vh', width: '95vw' }} />}
+          >
             <Outlet />
           </Suspense>
         </main>
