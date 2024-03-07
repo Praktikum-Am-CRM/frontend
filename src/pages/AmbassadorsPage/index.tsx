@@ -1,4 +1,5 @@
-import { Button } from '@gravity-ui/uikit';
+import { Button, Pagination, PaginationProps } from '@gravity-ui/uikit';
+
 import AmbassadorTable from '../../components/AmbassadorTable';
 import Search from '../../components/Search';
 import styles from './styles.module.css';
@@ -7,10 +8,15 @@ import { useActions } from '../../hooks/actions';
 import { useAppSelector } from '../../hooks/redux';
 import ModalWindow from '../../components/ModalWindow';
 import CommunicationSection from '../../components/CommunicationSection';
-import { useGetAmbassadorsListQuery } from '../../store/amCrm/amCrm.api';
+import { useLazyGetAmbassadorsListQuery } from '../../store/amCrm/amCrm.api';
 import { STATUSES } from '../../utils/constants';
+import { useEffect, useState } from 'react';
 
 export default function AmbassadorsPage() {
+  const [paginationState, setPaginationState] = useState({
+    page: 1,
+    pageSize: 15,
+  });
   const { setModalContentType, openModal } = useActions();
   const isModalOpen = useAppSelector(state => state.modal.isModalOpen);
   const modalContentType = useAppSelector(state => state.modal.contentType);
@@ -20,14 +26,33 @@ export default function AmbassadorsPage() {
     openModal();
   }
 
-  const { data: ambList } = useGetAmbassadorsListQuery({
-    status: [
-      STATUSES.ACTIVE,
-      STATUSES.PENDING,
-      STATUSES.PAUSE,
-      STATUSES.DELETED,
-    ],
-  });
+  const [triggerAmbQuery, { data: ambListResponse }] =
+    useLazyGetAmbassadorsListQuery();
+
+  useEffect(() => {
+    triggerAmbQuery({
+      status: [
+        STATUSES.ACTIVE,
+        STATUSES.PENDING,
+        STATUSES.PAUSE,
+        STATUSES.DELETED,
+      ],
+      page: 1,
+    });
+  }, []);
+
+  const handleUpdate: PaginationProps['onUpdate'] = (page, pageSize) => {
+    setPaginationState(prevState => ({ ...prevState, page, pageSize }));
+    triggerAmbQuery({
+      status: [
+        STATUSES.ACTIVE,
+        STATUSES.PENDING,
+        STATUSES.PAUSE,
+        STATUSES.DELETED,
+      ],
+      page,
+    });
+  };
 
   return (
     <section className={styles.ambassadorsPage}>
@@ -40,7 +65,15 @@ export default function AmbassadorsPage() {
           Сообщения
         </Button>
       </div>
-      {ambList && <AmbassadorTable tableRowData={ambList} />}
+      {ambListResponse && (
+        <AmbassadorTable tableRowData={ambListResponse.results} />
+      )}
+      <Pagination
+        page={paginationState.page}
+        pageSize={paginationState.pageSize}
+        total={ambListResponse?.count}
+        onUpdate={handleUpdate}
+      />
       {isModalOpen && modalContentType === 'messages' && (
         <ModalWindow content={<CommunicationSection />} />
       )}

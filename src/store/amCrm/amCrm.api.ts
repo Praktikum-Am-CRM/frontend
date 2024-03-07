@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { AmbassadorInfoType } from '../../types/types';
+import { AmbassadorDataResponse, AmbassadorInfoType } from '../../types/types';
 // import { AmbassadorDataType } from '../../types/types';
 
 interface LoginRequest {
@@ -45,10 +45,10 @@ export const api = createApi({
       invalidatesTags: ['Auth'],
     }),
     getAmbassadorsList: build.query<
-      any,
-      { status: string | string[]; limit?: number }
+      AmbassadorDataResponse,
+      { status: string | string[]; limit?: number; page?: number }
     >({
-      query: ({ status, limit = 50 }) => {
+      query: ({ status, limit = 15, page }) => {
         const searchParams = new URLSearchParams();
 
         // Если 'status' - массив, добавляем все его значения.
@@ -62,13 +62,13 @@ export const api = createApi({
         }
 
         searchParams.set('limit', limit.toString());
+        if (page) searchParams.set('page', page.toString());
         return {
           url: 'ambassador/',
           params: searchParams,
         };
       },
       providesTags: ['Ambassadors'],
-      transformResponse: (response: any) => response.results,
     }),
     getPrograms: build.query<any, void>({
       query: () => ({
@@ -94,4 +94,5 @@ export const {
   useGetStatusesQuery,
   useGetAmbassadorsListQuery,
   useGetAmbassadorInfoQuery,
+  useLazyGetAmbassadorsListQuery,
 } = api;

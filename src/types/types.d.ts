@@ -172,3 +172,10 @@ export type AchieveType = {
   achieve_name: string;
   available: boolean;
 };
+
+export interface AmbassadorDataResponse {
+  count: number;
+  next: string;
+  previous: string;
+  results: AmbassadorDataType[];
+}
