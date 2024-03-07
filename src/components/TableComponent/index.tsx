@@ -81,9 +81,7 @@ export default function TableComponent({
   }));
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
+    setIsLoading(false);
   }, [tableRowData]);
 
   const prepareDataForTable = useMemo(() => {
@@ -154,7 +152,7 @@ export default function TableComponent({
   return (
     <>
       {isLoading ? (
-        <Skeleton style={{ height: '75vh', width: '95vw' }} />
+        <Skeleton style={{ height: '75vh', width: '100%' }} />
       ) : (
         tableRowData &&
         columnsWithAddedProps && (
