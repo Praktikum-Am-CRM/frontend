@@ -35,7 +35,7 @@ function determineGender(gender: string) {
 
 const textWithTooltip = (text: string) => (
   <Tooltip content={text}>
-    <Text ellipsis whiteSpace="nowrap" style={{ maxWidth: '300px' }}>
+    <Text ellipsis whiteSpace="nowrap" style={{ maxWidth: '200px' }}>
       {text}
     </Text>
   </Tooltip>
@@ -73,12 +73,8 @@ export default function TableComponent({
 
   const columnsWithAddedProps = tableHeaderData?.map(col => ({
     ...col,
-    width: 250,
+    width: 200,
   }));
-
-  // setTimeout(() => {
-  //   setIsLoading(false);
-  // }, 400);
 
   useEffect(() => {
     setIsLoading(false);
@@ -100,11 +96,11 @@ export default function TableComponent({
             @{data.telegram_bot.nickname}
           </Link>
         ),
-        program: data.programs[0].program_name,
+        program: textWithTooltip(data.programs[0].program_name),
         registration: data.receipt_date,
         gender: determineGender(data.gender),
         address: textWithTooltip(
-          ` ${data.address_country}, ${data.address_settlement}, ${data.address_street}, д.${data.address_house}, ${data.address_building !== null && ` к${data.address_building}`}, кв.${data.address_apartment}`,
+          ` ${data.address_country}, ${data.address_settlement}, ${data.address_street}, д.${data.address_house}, ${data.address_building === null ? '' : `к${data.address_building}`}, кв.${data.address_apartment}`,
         ),
         email: data.email,
       };

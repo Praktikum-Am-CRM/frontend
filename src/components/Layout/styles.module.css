@@ -6,9 +6,12 @@
 }
 
 .layout__main {
-  margin: 0 1.5em 5em;
+  box-sizing: border-box;
+  padding: 20px;
   gap: 20px;
   display: flex;
   flex-direction: column;
   position: relative;
+  max-width: var(--max-desktop-width);
+  height: 100%;
 }
