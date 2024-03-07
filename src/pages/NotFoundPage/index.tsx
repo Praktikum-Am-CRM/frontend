@@ -1,3 +1,4 @@
+import { Button, Text } from '@gravity-ui/uikit';
 import { useNavigate } from 'react-router-dom';
 
 export default function NotFoundPage() {
@@ -13,7 +14,8 @@ export default function NotFoundPage() {
         gap: '20px',
       }}
     >
-      <button onClick={() => navigate('/')}> На главную </button>
+      <Text variant="body-2"> Данной страницы не существует </Text>
+      <Button onClick={() => navigate('/')}> На главную </Button>
     </div>
   );
 }
