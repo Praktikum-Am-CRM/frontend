@@ -1,7 +1,7 @@
 import MessagesList from '../MessagesList';
 import { useState } from 'react';
 import { ArrowToggle, Button } from '@gravity-ui/uikit';
-import CommunicationHistory from '../CommunicationHistory';
+import Chat from '../Chat';
 import { mockChatsMessages } from '../../utils/mockData';
 
 const Chats = () => {
@@ -22,7 +22,7 @@ const Chats = () => {
           <Button onClick={handleClickBack} view="flat">
             <ArrowToggle direction="left" />
           </Button>
-          <CommunicationHistory />
+          <Chat />
         </>
       );
     } else {

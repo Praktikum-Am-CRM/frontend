@@ -38,6 +38,10 @@ const NewMailing = () => {
     setDatePickerOpened(true);
   };
 
+  const handleDraftClick = () => {
+    console.log(`Отправка в черновик текста : ${textAreaValue} `);
+  };
+
   const isButtonActive = () => {
     return textAreaValue.trim() === '';
   };
@@ -51,7 +55,9 @@ const NewMailing = () => {
   };
 
   const handleSendButtonClicked = (value: string) => {
-    console.log(value);
+    console.log(
+      `Send text: ${value} on: ${textAreaValue} выбранным ID пользователям: ${selectedUsersIds}`,
+    );
     setDatePickerOpened(false);
   };
 
@@ -114,7 +120,7 @@ const NewMailing = () => {
           )}
           {createButton('Отправить всем', handleSendClick)}
           {createButton('Отложить рассылку', handlePostponedClick)}
-          {createButton('В черновики', handleSendClick)}
+          {createButton('В черновики', handleDraftClick)}
         </div>
       </>
     </>

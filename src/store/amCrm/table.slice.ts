@@ -2,7 +2,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  rowId: '',
+  pickedRowUserId: '',
   selectedUsersIds: [],
 };
 
@@ -10,8 +10,8 @@ export const tableSlice = createSlice({
   name: 'row',
   initialState,
   reducers: {
-    setClickedRowId: (state, action) => {
-      state.rowId = action.payload;
+    setPickedRowUserId: (state, action) => {
+      state.pickedRowUserId = action.payload;
     },
     setSelectedUsersIds: (state, action) => {
       state.selectedUsersIds = action.payload;
