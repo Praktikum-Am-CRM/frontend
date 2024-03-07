@@ -166,7 +166,10 @@ export default function TableComponent({
         columnsWithAddedProps && (
           <MyTable
             className={styles.table}
-            onRowClick={evt => handleRowClick(evt)}
+            onRowClick={evt => {
+              handleRowClick(evt);
+              console.log(evt);
+            }}
             emptyMessage="Ничего не найдено ¯\_(ツ)_/¯"
             data={tableRowData.map(prepareDataForTable)}
             columns={columnsWithAddedProps}

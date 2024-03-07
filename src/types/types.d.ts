@@ -67,6 +67,7 @@ export type AmbassadorDataType = {
   programs: Program[];
   goals: Goal[];
   activity: Activity[];
+  achieves: AchieveType[];
 };
 
 export type TelegramBotType = {
