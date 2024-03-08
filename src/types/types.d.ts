@@ -12,6 +12,11 @@ export type TableRowData = {
   address?: string;
 };
 
+export interface ILoginForm {
+  email: string;
+  password: string;
+}
+
 export interface MessagesState {
   bulkMessages: BulkMessage[];
   personalMessages: PersonalMessage[];

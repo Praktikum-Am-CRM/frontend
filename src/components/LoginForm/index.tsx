@@ -4,8 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { useFormLogic } from '../../hooks/useFormLogic';
 import { useActions } from '../../hooks/actions';
 import { useLoginMutation } from '../../store/amCrm/amCrm.api';
-import { ILoginForm } from '../../types/ILoginForm';
+
 import { TEXTS } from '../../utils/constants';
+import { ILoginForm } from '../../types/types';
 
 export const LoginForm = () => {
   const { setLoggedIn } = useActions();
