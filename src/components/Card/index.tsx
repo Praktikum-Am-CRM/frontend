@@ -40,7 +40,7 @@ export default function Card({
       );
     }
     if (id === 'tabs-activity') {
-      return <Activity user={ambassadorInfo} />;
+      return ambassadorInfo && <Activity user={ambassadorInfo} />;
     }
     if (id === 'tabs-merch') {
       return <Merch user={ambassadorInfo} />;
@@ -58,7 +58,7 @@ export default function Card({
   function renderAchives(ambassador: AmbassadorDataType) {
     return ambassador.achieves.map((achieve: AchieveType) => {
       return (
-        <li className={styles.card__achieve}>
+        <li className={styles.card__achieve} key={achieve.id}>
           <Label theme="success">{achieve.achieve_name}</Label>
         </li>
       );

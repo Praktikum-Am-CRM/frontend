@@ -1,7 +1,11 @@
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { AmbassadorDataResponse, AmbassadorInfoType } from '../../types/types';
+import {
+  AmbassadorDataResponse,
+  AmbassadorInfoType,
+  ReportQueryType,
+} from '../../types/types';
 
 interface LoginRequest {
   email: string;
@@ -70,9 +74,32 @@ export const api = createApi({
         url: 'utility/ambassador_statuses',
       }),
     }),
+    getReportStatuses: build.query<any, void>({
+      query: () => ({
+        url: 'utility/report_statuses',
+      }),
+    }),
     getAmbassadorInfo: build.query<AmbassadorInfoType, { id: string }>({
       query: ({ id }) => ({
         url: `ambassador/${id}/`,
+      }),
+    }),
+    getAmbassadorReports: build.query<ReportQueryType[], { id: string }>({
+      query: ({ id }) => ({
+        url: `ambassador/${id}/reports/`,
+      }),
+    }),
+    patchReport: build.mutation<
+      any,
+      { report_id: string; grade?: number; status?: string }
+    >({
+      query: ({ report_id, grade, status }) => ({
+        url: `report/${report_id}/`,
+        method: 'PATCH',
+        body: {
+          grade: grade,
+          status: status,
+        },
       }),
     }),
   }),
@@ -85,4 +112,7 @@ export const {
   useGetAmbassadorsListQuery,
   useGetAmbassadorInfoQuery,
   useLazyGetAmbassadorsListQuery,
+  useGetAmbassadorReportsQuery,
+  usePatchReportMutation,
+  useGetReportStatusesQuery,
 } = api;

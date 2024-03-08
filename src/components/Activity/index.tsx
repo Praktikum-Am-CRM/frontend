@@ -1,9 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Icon, Link, Table, Text } from '@gravity-ui/uikit';
+import { Button, Icon, Link, Skeleton, Table } from '@gravity-ui/uikit';
 import { Check, Paperclip } from '@gravity-ui/icons';
 import styles from './styles.module.css';
 import RatingComponent from '../RatingComponent';
 import { useCallback, useMemo } from 'react';
+import {
+  useGetAmbassadorReportsQuery,
+  usePatchReportMutation,
+} from '../../store/amCrm/amCrm.api';
+import { AmbassadorInfoType, ReportQueryType } from '../../types/types';
+import { REPORT_STATUSES } from '../../utils/constants';
 
 type TableColumnConfig = {
   id: string;
@@ -16,93 +22,85 @@ type TableColumnConfig = {
 };
 
 const columns = [
-  { id: 'place', name: 'Площадка', width: 500 },
-  { id: 'photo', name: 'Скриншот', align: 'center' },
+  { id: 'placement', name: 'Площадка', width: 150 },
+  { id: 'photo', name: 'Скриншот', align: 'center', width: 30 },
   { id: 'date', name: 'Дата размещения', align: 'center' },
   { id: 'accept', name: 'Состояние', align: 'center' },
-  { id: 'rating', name: 'Оценка (1-5)', align: 'center' },
+  { id: 'rating', name: 'Оценка', align: 'center', width: 120 },
 ];
 
-const tableData = [
-  {
-    place: 'Площадка 1',
-    photo: 'https://placehold.it/300x300',
-    date: '01.01.2022',
-    rating: 2,
-  },
-  {
-    place: 'Площадка 2',
-    photo: 'https://placehold.it/300x300',
-    date: '01.01.2022',
-    rating: 5,
-    accept: true,
-  },
-  {
-    place: 'Площадка 1',
-    photo: 'https://placehold.it/300x300',
-    date: '01.01.2022',
-    rating: 2,
-  },
-  {
-    place: 'Площадка 2',
-    photo: 'https://placehold.it/300x300',
-    date: '01.01.2022',
-    rating: 5,
-  },
-];
+export default function Activity({ user }: { user: AmbassadorInfoType }) {
+  const { data: reports, isFetching } = useGetAmbassadorReportsQuery({
+    id: user.id,
+  });
+  const [patchReportStatus] = usePatchReportMutation();
 
-export default function Activity({ user }: { user: any }) {
-  console.log(user.id);
+  const handleReportStatusChange = (status: string) => {
+    patchReportStatus({ report_id: user.id, status: status });
+  };
 
-  const prepareDataForTable = useCallback((data: any) => {
+  const prepareDataForTable = useCallback((data: ReportQueryType) => {
     return {
       id: data.id,
-      place: (
-        <Link view="normal" href={data.place}>
-          {data.place}
+      placement: (
+        <Link view="normal" href={data.content_link}>
+          {data.placement.site}
         </Link>
       ),
-      photo: (
-        <Link view="secondary" href={data.photo}>
+      photo: data.screen ? (
+        <Link view="secondary" href={data.screen}>
           <Icon data={Paperclip} size="16" />
         </Link>
+      ) : null,
+      date: data.report_date,
+      accept:
+        data.report_status.status_name === 'Принят' ? (
+          <Icon data={Check} size="16" />
+        ) : (
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <Button
+              view="action"
+              size="m"
+              onClick={() => handleReportStatusChange(REPORT_STATUSES.ACCEPT)}
+            >
+              Принять
+            </Button>
+            <Button
+              view="normal"
+              size="m"
+              onClick={() => handleReportStatusChange(REPORT_STATUSES.REJECT)}
+            >
+              Отказать
+            </Button>
+          </div>
+        ),
+      rating: (
+        <RatingComponent
+          initialValue={Math.round(data.grade / 2)}
+          reportId={data.id}
+        />
       ),
-      date: data.date,
-      accept: data.accept ? (
-        <Icon data={Check} size="16" />
-      ) : (
-        <div style={{ display: 'flex', gap: '8px' }}>
-          <Button view="action" size="m">
-            Принять
-          </Button>
-          <Button view="normal" size="m">
-            Отказать
-          </Button>
-        </div>
-      ),
-      rating: <RatingComponent initialValue={data.rating} />,
     };
   }, []);
 
   const preparedTableData = useMemo(
-    () => tableData.map(prepareDataForTable),
-    [prepareDataForTable],
+    () => reports && reports.map(prepareDataForTable),
+    [prepareDataForTable, reports],
   );
 
   return (
     <section className={styles.activity}>
-      <Text variant="body-2">Первый этап</Text>
-      <Table
-        className={styles.table}
-        data={preparedTableData}
-        columns={columns as TableColumnConfig[]}
-      />
-      <Text variant="body-2">Прохождение гайда</Text>
-      <Table
-        className={styles.table}
-        data={preparedTableData}
-        columns={columns as TableColumnConfig[]}
-      />
+      {isFetching ? (
+        <Skeleton style={{ height: '100px', width: '100%' }} />
+      ) : (
+        preparedTableData && (
+          <Table
+            className={styles.table}
+            data={preparedTableData}
+            columns={columns as TableColumnConfig[]}
+          />
+        )
+      )}
     </section>
   );
 }

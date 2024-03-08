@@ -178,3 +178,33 @@ export interface AmbassadorDataResponse {
   previous: string;
   results: AmbassadorDataType[];
 }
+
+export type ReportQueryType = {
+  id: string;
+  report_date: string;
+  content_link: string;
+  screen: string;
+  placement: Placement;
+  report_status: ReportStatus;
+  sign_junior: boolean;
+  grade: number;
+  report_type: ReportType;
+};
+
+export type PlacementType = {
+  id: string;
+  site: string;
+  available: boolean;
+};
+
+export type ReportStatusType = {
+  id: string;
+  status_name: string;
+  available: boolean;
+};
+
+export type ReportType = {
+  id: string;
+  type_name: string;
+  available: boolean;
+};
