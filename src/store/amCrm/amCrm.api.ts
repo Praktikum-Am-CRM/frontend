@@ -3,7 +3,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
   AmbassadorDataResponse,
-  AmbassadorInfoType,
+  AmbassadorDataType,
   MerchRequestListType,
   ReportQueryType,
 } from '../../types/types';
@@ -80,7 +80,7 @@ export const api = createApi({
         url: 'utility/report_statuses',
       }),
     }),
-    getAmbassadorInfo: build.query<AmbassadorInfoType, { id: string }>({
+    getAmbassadorInfo: build.query<AmbassadorDataType, { id: string }>({
       query: ({ id }) => ({
         url: `ambassador/${id}/`,
       }),
@@ -113,6 +113,11 @@ export const api = createApi({
         url: 'merch_request/',
       }),
     }),
+    getAllReports: build.query<ReportQueryType[], void>({
+      query: () => ({
+        url: 'report/',
+      }),
+    }),
   }),
 });
 
@@ -128,4 +133,5 @@ export const {
   useGetReportStatusesQuery,
   useGetMerchRequestsQuery,
   useGetMerchStatusesQuery,
+  useGetAllReportsQuery,
 } = api;

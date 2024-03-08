@@ -11,7 +11,7 @@ import {
 } from '@gravity-ui/uikit';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { AmbassadorInfoType } from '../../types/types';
+import { AmbassadorDataType } from '../../types/types';
 import { formatDate } from '../../utils/formatDate';
 
 type Inputs = {
@@ -41,7 +41,7 @@ export default function AmbassadorData({
   user,
   isMerchDelivery,
 }: {
-  user: AmbassadorInfoType;
+  user: AmbassadorDataType;
   isMerchDelivery: boolean;
 }) {
   const [isFormActive, setIsFormActive] = useState<boolean>(false);

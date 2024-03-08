@@ -8,7 +8,7 @@ import {
   useGetAmbassadorReportsQuery,
   usePatchReportMutation,
 } from '../../store/amCrm/amCrm.api';
-import { AmbassadorInfoType, ReportQueryType } from '../../types/types';
+import { AmbassadorDataType, ReportQueryType } from '../../types/types';
 import { REPORT_STATUSES } from '../../utils/constants';
 
 type TableColumnConfig = {
@@ -29,7 +29,7 @@ const columns = [
   { id: 'rating', name: 'Оценка', align: 'center', width: 120 },
 ];
 
-export default function Activity({ user }: { user: AmbassadorInfoType }) {
+export default function Activity({ user }: { user: AmbassadorDataType }) {
   const { data: reports, isFetching } = useGetAmbassadorReportsQuery({
     id: user.id,
   });
