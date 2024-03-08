@@ -14,15 +14,12 @@ import { AchieveType, AmbassadorDataType } from '../../types/types';
 export default function Card({
   rowId,
   isAmbassador,
-  setIsMerchDelivery,
-  isMerchDelivery,
 }: {
   rowId: string;
   isAmbassador?: boolean;
-  setIsMerchDelivery: (value: boolean) => void;
-  isMerchDelivery: boolean;
 }) {
   const [activeTab, setActiveTab] = useState<string>('tabs-data');
+  const [isMerchDelivery, setIsMerchDelivery] = useState<boolean>(false);
 
   const { data: ambassadorInfo } = useGetAmbassadorInfoQuery({ id: rowId });
 

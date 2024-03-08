@@ -58,7 +58,6 @@ export default function TableComponent({
     tableHeaderData?.map(col => ({ id: col.id, isSelected: true })),
   );
 
-  const [isMerchDelivery, setIsMerchDelivery] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const getRowId = 'id';
@@ -109,18 +108,9 @@ export default function TableComponent({
 
   const content =
     location.pathname === '/ambassadors' ? (
-      <Card
-        rowId={pickedRowUserId}
-        isAmbassador
-        setIsMerchDelivery={setIsMerchDelivery}
-        isMerchDelivery={isMerchDelivery}
-      />
+      <Card rowId={pickedRowUserId} isAmbassador />
     ) : (
-      <Card
-        rowId={pickedRowUserId}
-        setIsMerchDelivery={setIsMerchDelivery}
-        isMerchDelivery={isMerchDelivery}
-      />
+      <Card rowId={pickedRowUserId} />
     );
 
   const handleRowClick = useCallback(
@@ -164,7 +154,6 @@ export default function TableComponent({
             className={styles.table}
             onRowClick={evt => {
               handleRowClick(evt);
-              console.log(evt);
             }}
             emptyMessage="Ничего не найдено ¯\_(ツ)_/¯"
             data={tableRowData.map(prepareDataForTable)}
