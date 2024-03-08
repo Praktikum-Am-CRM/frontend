@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import styles from './styles.module.css';
-import { Button, ButtonView, Modal, TextArea } from '@gravity-ui/uikit';
+import { Button, ButtonView, Modal, Text, TextArea } from '@gravity-ui/uikit';
 import { dateTime } from '@gravity-ui/date-utils';
 import type { DateTime } from '@gravity-ui/date-utils';
 import { DatePicker } from '@gravity-ui/date-components';
@@ -8,6 +8,12 @@ import { useAppSelector } from '../../hooks/redux';
 import { useActions } from '../../hooks/actions';
 import { useState } from 'react';
 import { formatDate } from '../../utils/formatDate';
+import TimeInput from '../TimeInput';
+
+export type Time = {
+  hours: string;
+  minutes: string;
+};
 
 const TOMORROW = dateTime().add(1, 'day');
 
@@ -21,6 +27,7 @@ const NewMailing = () => {
   const [datePickerOpened, setDatePickerOpened] = useState(false);
   const [datePickedManually, setDatePickedManually] = useState(false);
   const [pickedDate, setPickedDate] = useState(TOMORROW);
+  const [time, setTime] = useState<Time>({ hours: '12', minutes: '00' });
 
   const handleTextAreaChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>,
@@ -58,9 +65,9 @@ const NewMailing = () => {
     }
   };
 
-  const handleDelayedSendButtonClicked = (date: DateTime | string) => {
+  const handleDelayedSendButtonClicked = () => {
     console.log(
-      `Send text: ${textAreaValue} on: ${date} выбранным ID пользователям: ${selectedUsersIds}`,
+      `Send text: ${textAreaValue} on: ${pickedDate} at ${time.hours} : ${time.minutes} выбранным ID пользователям: ${selectedUsersIds}`,
     );
     setTextAreaValue('');
     handleModalClosed();
@@ -68,6 +75,7 @@ const NewMailing = () => {
 
   function handleModalClosed() {
     setDatePickerOpened(false);
+    setTime({ hours: '00', minutes: '00' });
     setDatePickedManually(false);
   }
 
@@ -99,19 +107,26 @@ const NewMailing = () => {
     <>
       <Modal open={datePickerOpened} onClose={handleModalClosed}>
         <div className={styles.modal}>
-          <DatePicker
-            placeholder="Выберите дату отправки"
-            size="xl"
-            style={{ width: '300px' }}
-            onUpdate={handlePickDate}
-            defaultValue={TOMORROW}
-          />
+          <div className={styles.date}>
+            <Text variant="subheader-3">Выберите дату</Text>
+            <DatePicker
+              placeholder="Выберите дату"
+              size="xl"
+              style={{ width: '300px' }}
+              onUpdate={handlePickDate}
+              defaultValue={TOMORROW}
+            />
+          </div>
+          <div className={styles.time}>
+            <Text variant="subheader-3">Выберите время</Text>
+            <TimeInput time={time} setTime={setTime} />
+          </div>
           <Button
             size="xl"
             view={datePickedManually ? 'action' : 'normal'}
-            onClick={() => handleDelayedSendButtonClicked(pickedDate)}
+            onClick={() => handleDelayedSendButtonClicked()}
           >
-            {`Отправить ${formatDate(pickedDate.toISOString(), 'long')}`}
+            {`Отправить ${formatDate(pickedDate.toISOString(), 'long')} в ${time.hours}:${time.minutes}`}
           </Button>
         </div>
       </Modal>
