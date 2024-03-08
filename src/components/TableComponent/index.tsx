@@ -4,8 +4,6 @@ import {
   Table,
   TableColumnConfig,
   TableDataItem,
-  Text,
-  Tooltip,
   withTableSelection,
   withTableSettings,
   withTableSorting,
@@ -23,6 +21,8 @@ import { useAppSelector } from '../../hooks/redux';
 import { useLocation } from 'react-router-dom';
 import Card from '../Card';
 import defineStatus from '../../utils/defineStatus';
+import { formatDate } from '../../utils/formatDate';
+import { TextWithTooltip } from '../TextWithTooltip';
 
 type TableSettingsData = Array<{
   id: string;
@@ -32,14 +32,6 @@ type TableSettingsData = Array<{
 function determineGender(gender: string) {
   return gender === 'ж' ? <WomanIcon /> : <ManIcon />;
 }
-
-const textWithTooltip = (text: string) => (
-  <Tooltip content={text}>
-    <Text ellipsis whiteSpace="nowrap" style={{ maxWidth: '200px' }}>
-      {text}
-    </Text>
-  </Tooltip>
-);
 
 export default function TableComponent({
   tableRowData,
@@ -66,7 +58,6 @@ export default function TableComponent({
     tableHeaderData?.map(col => ({ id: col.id, isSelected: true })),
   );
 
-  const [isMerchDelivery, setIsMerchDelivery] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const getRowId = 'id';
@@ -89,7 +80,9 @@ export default function TableComponent({
       return {
         ...data,
         id: data.id,
-        ambassador: textWithTooltip(`${data.first_name} ${data.last_name}`),
+        ambassador: (
+          <TextWithTooltip text={`${data.first_name} ${data.last_name}`} />
+        ),
         status: defineStatus(data.status),
         promo: data.promocode,
         telegram: (
@@ -100,11 +93,13 @@ export default function TableComponent({
             @{data.telegram_bot.nickname}
           </Link>
         ),
-        program: textWithTooltip(data.programs[0].program_name),
-        registration: data.receipt_date,
+        program: <TextWithTooltip text={data.programs[0].program_name} />,
+        registration: formatDate(data.receipt_date, '2-digit'),
         gender: determineGender(data.gender),
-        address: textWithTooltip(
-          ` ${data.address_country}, ${data.address_settlement}, ${data.address_street}, д.${data.address_house}, ${data.address_building === null ? '' : `к${data.address_building}`}, кв.${data.address_apartment}`,
+        address: (
+          <TextWithTooltip
+            text={`${data.address_country}, ${data.address_settlement}, ${data.address_street}, д.${data.address_house}, ${data.address_building === null ? '' : `к${data.address_building}`}, кв.${data.address_apartment}`}
+          />
         ),
         email: data.email,
       };
@@ -113,18 +108,9 @@ export default function TableComponent({
 
   const content =
     location.pathname === '/ambassadors' ? (
-      <Card
-        rowId={pickedRowUserId}
-        isAmbassador
-        setIsMerchDelivery={setIsMerchDelivery}
-        isMerchDelivery={isMerchDelivery}
-      />
+      <Card rowId={pickedRowUserId} isAmbassador />
     ) : (
-      <Card
-        rowId={pickedRowUserId}
-        setIsMerchDelivery={setIsMerchDelivery}
-        isMerchDelivery={isMerchDelivery}
-      />
+      <Card rowId={pickedRowUserId} />
     );
 
   const handleRowClick = useCallback(

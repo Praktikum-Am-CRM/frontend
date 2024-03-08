@@ -34,7 +34,7 @@ const CardMessage: React.FC<CardMessageProps> = ({ message, onClick }) => {
           </Text>
         </div>
         <Text variant="body-1" color="secondary">
-          {formatDate(message.date, '2-digit')}
+          {formatDate(message.date, '2-digit', true)}
         </Text>
       </div>
       <div className={styles.cardLine}>

@@ -1,11 +1,12 @@
-import styles from './LoginForm.module.css';
+import styles from './styles.module.css';
 import { Button, TextInput } from '@gravity-ui/uikit';
 import { useNavigate } from 'react-router-dom';
 import { useFormLogic } from '../../hooks/useFormLogic';
 import { useActions } from '../../hooks/actions';
 import { useLoginMutation } from '../../store/amCrm/amCrm.api';
-import { ILoginForm } from '../../types/ILoginForm';
+
 import { TEXTS } from '../../utils/constants';
+import { ILoginForm } from '../../types/types';
 
 export const LoginForm = () => {
   const { setLoggedIn } = useActions();
@@ -47,6 +48,7 @@ export const LoginForm = () => {
         errorMessage={errors.email?.message}
         size="l"
         disabled={isLoading}
+        autoComplete
       />
       <label className={styles.label} htmlFor="password">
         {TEXTS.LOGIN_PAGE.PASSWORD_LABEL}
@@ -59,6 +61,7 @@ export const LoginForm = () => {
         errorMessage={errors.password?.message}
         size="l"
         disabled={isLoading}
+        autoComplete
       />
       <div className={styles.buttonsContainer}>
         <Button loading={isLoading} type="submit" view="action" size="xl">

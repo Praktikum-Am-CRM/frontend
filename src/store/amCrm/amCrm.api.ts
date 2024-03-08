@@ -1,7 +1,12 @@
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { AmbassadorDataResponse, AmbassadorInfoType } from '../../types/types';
+import {
+  AmbassadorDataResponse,
+  AmbassadorDataType,
+  MerchRequestListType,
+  ReportQueryType,
+} from '../../types/types';
 
 interface LoginRequest {
   email: string;
@@ -70,7 +75,12 @@ export const api = createApi({
         url: 'utility/ambassador_statuses',
       }),
     }),
-    getAmbassadorInfo: build.query<AmbassadorInfoType, { id: string }>({
+    getReportStatuses: build.query<any, void>({
+      query: () => ({
+        url: 'utility/report_statuses',
+      }),
+    }),
+    getAmbassadorInfo: build.query<AmbassadorDataType, { id: string }>({
       query: ({ id }) => ({
         url: `ambassador/${id}/`,
       }),
@@ -78,6 +88,39 @@ export const api = createApi({
     getAmbassadorMerch: build.query<any, { id: string }>({
       query: ({ id }) => ({
         url: `ambassador/${id}/merches/`,
+      }),
+    }),
+    getAmbassadorReports: build.query<ReportQueryType[], { id: string }>({
+      query: ({ id }) => ({
+        url: `ambassador/${id}/reports/`,
+      }),
+    }),
+    patchReport: build.mutation<
+      any,
+      { report_id: string; grade?: number; status?: string }
+    >({
+      query: ({ report_id, grade, status }) => ({
+        url: `report/${report_id}/`,
+        method: 'PATCH',
+        body: {
+          grade: grade,
+          status: status,
+        },
+      }),
+    }),
+    getMerchStatuses: build.query<any, void>({
+      query: () => ({
+        url: 'utility/delivery_statuses',
+      }),
+    }),
+    getMerchRequests: build.query<MerchRequestListType[], void>({
+      query: () => ({
+        url: 'merch_request/',
+      }),
+    }),
+    getAllReports: build.query<ReportQueryType[], void>({
+      query: () => ({
+        url: 'report/',
       }),
     }),
   }),
@@ -91,4 +134,10 @@ export const {
   useGetAmbassadorInfoQuery,
   useGetAmbassadorMerchQuery,
   useLazyGetAmbassadorsListQuery,
+  useGetAmbassadorReportsQuery,
+  usePatchReportMutation,
+  useGetReportStatusesQuery,
+  useGetMerchRequestsQuery,
+  useGetMerchStatusesQuery,
+  useGetAllReportsQuery,
 } = api;

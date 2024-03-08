@@ -22,3 +22,8 @@ export const STATUSES = {
   DELETED: 'd2f8a184-326c-427d-869a-26e1d82dbf2b',
   CANDIDATE: 'aee0b6d0-608d-4bda-bba9-2ff477e0e5cb',
 };
+
+export const REPORT_STATUSES = {
+  ACCEPT: '0ba2d3c3-69d3-4c8c-af0c-ffa722c3ccb8',
+  REJECT: '23d79674-e7f6-40fb-bd7d-eea3ce3f98ae',
+};

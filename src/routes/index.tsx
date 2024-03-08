@@ -19,17 +19,19 @@ import ProtectedRoute from '../components/ProtectedRoute';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Layout />} errorElement={<NotFoundPage />}>
-      <Route element={<ProtectedRoute />}>
-        <Route path="ambassadors" element={<AmbassadorsPage />} />
-        <Route path="candidates" element={<CandidatesPage />} />
-        <Route path="notifications" element={<NotificationsPage />} />
-        <Route path="statistics" element={<StatisticsPage />} />
-        <Route path="merch" element={<MerchPage />} />
+    <>
+      <Route path="/" element={<Layout />} errorElement={<NotFoundPage />}>
+        <Route element={<ProtectedRoute />}>
+          <Route path="ambassadors" element={<AmbassadorsPage />} />
+          <Route path="candidates" element={<CandidatesPage />} />
+          <Route path="notifications" element={<NotificationsPage />} />
+          <Route path="statistics" element={<StatisticsPage />} />
+          <Route path="merch" element={<MerchPage />} />
+        </Route>
       </Route>
       <Route path="login" element={<LoginPage />} />
       <Route path="*" element={<NotFoundPage />} />
-    </Route>,
+    </>,
   ),
   {
     basename: '/',

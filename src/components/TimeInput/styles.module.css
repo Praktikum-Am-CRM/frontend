@@ -1,0 +1,22 @@
+.root {
+  position: relative;
+  top: 0;
+  left: 0;
+  margin-bottom: 12px;
+}
+
+.inputs {
+  display: flex;
+  width: 100px;
+  gap: 4px;
+  align-items: center;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.error {
+  position: absolute;
+  top: 36px;
+  left: 0;
+}

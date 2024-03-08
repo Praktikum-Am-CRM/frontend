@@ -1,12 +1,21 @@
 /* eslint-disable no-console */
 import styles from './styles.module.css';
-import { Button, ButtonView, Modal, TextArea } from '@gravity-ui/uikit';
+import { Button, ButtonView, Modal, Text, TextArea } from '@gravity-ui/uikit';
+import { dateTime } from '@gravity-ui/date-utils';
 import type { DateTime } from '@gravity-ui/date-utils';
 import { DatePicker } from '@gravity-ui/date-components';
 import { useAppSelector } from '../../hooks/redux';
 import { useActions } from '../../hooks/actions';
 import { useState } from 'react';
 import { formatDate } from '../../utils/formatDate';
+import TimeInput from '../TimeInput';
+
+export type Time = {
+  hours: string;
+  minutes: string;
+};
+
+const TOMORROW = dateTime().add(1, 'day');
 
 const NewMailing = () => {
   const textAreaValue = useAppSelector(state => state.mailing.textAreaValue);
@@ -16,7 +25,9 @@ const NewMailing = () => {
   );
 
   const [datePickerOpened, setDatePickerOpened] = useState(false);
-  const [pickedDate, setPickedDate] = useState(new Date().toISOString());
+  const [datePickedManually, setDatePickedManually] = useState(false);
+  const [pickedDate, setPickedDate] = useState(TOMORROW);
+  const [time, setTime] = useState<Time>({ hours: '12', minutes: '00' });
 
   const handleTextAreaChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>,
@@ -45,29 +56,33 @@ const NewMailing = () => {
     setTextAreaValue('');
   };
 
-  const isButtonActive = () => {
-    return textAreaValue.trim() === '';
-  };
-
   const handlePickDate = (value: DateTime | null) => {
     if (value) {
-      setPickedDate(value.toISOString());
+      setDatePickedManually(true);
+      setPickedDate(value);
     } else {
-      setPickedDate('');
+      setPickedDate(TOMORROW);
     }
   };
 
-  const handleSendButtonClicked = (value: string) => {
+  const handleDelayedSendButtonClicked = () => {
     console.log(
-      `Send text: ${value} on: ${textAreaValue} выбранным ID пользователям: ${selectedUsersIds}`,
+      `Send text: ${textAreaValue} on: ${pickedDate} at ${time.hours} : ${time.minutes} выбранным ID пользователям: ${selectedUsersIds}`,
     );
     setTextAreaValue('');
-    setDatePickerOpened(false);
+    handleModalClosed();
   };
+
+  function handleModalClosed() {
+    setDatePickerOpened(false);
+    setTime({ hours: '00', minutes: '00' });
+    setDatePickedManually(false);
+  }
 
   const createButton = (
     content: React.ReactNode,
     onClick: React.MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>,
+    disabled?: boolean,
     view: ButtonView = 'normal',
   ) => (
     <Button
@@ -75,32 +90,43 @@ const NewMailing = () => {
       view={view}
       className={styles.actionButton}
       onClick={onClick}
-      disabled={isButtonActive()}
+      disabled={disabled}
     >
       {content}
     </Button>
   );
 
+  const isTextValueEmpty = () => {
+    return textAreaValue.trim() === '';
+  };
+
+  const isAnyUserSelected = selectedUsersIds.length > 0;
+  const isSendDisabled = isTextValueEmpty() || !isAnyUserSelected;
+
   return (
     <>
-      <Modal open={datePickerOpened} onClose={() => setDatePickerOpened(false)}>
+      <Modal open={datePickerOpened} onClose={handleModalClosed}>
         <div className={styles.modal}>
-          <DatePicker
-            placeholder="Выберите дату отправки"
-            size="xl"
-            style={{ width: '300px' }}
-            onUpdate={handlePickDate}
-          />
+          <div className={styles.date}>
+            <Text variant="subheader-3">Выберите дату</Text>
+            <DatePicker
+              placeholder="Выберите дату"
+              size="xl"
+              style={{ width: '300px' }}
+              onUpdate={handlePickDate}
+              defaultValue={TOMORROW}
+            />
+          </div>
+          <div className={styles.time}>
+            <Text variant="subheader-3">Выберите время</Text>
+            <TimeInput time={time} setTime={setTime} />
+          </div>
           <Button
-            disabled={Object.keys(pickedDate).length === 0}
             size="xl"
-            onClick={() => handleSendButtonClicked(pickedDate)}
+            view={datePickedManually ? 'action' : 'normal'}
+            onClick={() => handleDelayedSendButtonClicked()}
           >
-            {`Отправить ${
-              Object.keys(pickedDate).length > 0
-                ? formatDate(pickedDate, 'long')
-                : ''
-            }`}
+            {`Отправить ${formatDate(pickedDate.toISOString(), 'long')} в ${time.hours}:${time.minutes}`}
           </Button>
         </div>
       </Modal>
@@ -120,11 +146,16 @@ const NewMailing = () => {
           {createButton(
             `Отправить выбранным (${selectedUsersIds.length})`,
             handleSendToSelected,
+            isSendDisabled,
             'action',
           )}
-          {createButton('Отправить всем', handleSendClick)}
-          {createButton('Отложить рассылку', handlePostponedClick)}
-          {createButton('В черновики', handleDraftClick)}
+          {createButton('Отправить всем', handleSendClick, isTextValueEmpty())}
+          {createButton(
+            'Отложить рассылку',
+            handlePostponedClick,
+            isSendDisabled,
+          )}
+          {createButton('В черновики', handleDraftClick, isTextValueEmpty())}
         </div>
       </>
     </>

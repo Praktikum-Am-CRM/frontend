@@ -11,7 +11,8 @@ import {
 } from '@gravity-ui/uikit';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { AmbassadorInfoType } from '../../types/types';
+import { AmbassadorDataType } from '../../types/types';
+import { formatDate } from '../../utils/formatDate';
 
 type Inputs = {
   country: string;
@@ -40,7 +41,7 @@ export default function AmbassadorData({
   user,
   isMerchDelivery,
 }: {
-  user: AmbassadorInfoType;
+  user: AmbassadorDataType;
   isMerchDelivery: boolean;
 }) {
   const [isFormActive, setIsFormActive] = useState<boolean>(false);
@@ -289,7 +290,10 @@ export default function AmbassadorData({
           </li>
           <li className={styles.ambassodorDataSection__item}>
             {standartTextInput('Дата принятия в Амбассадоры')}
-            <Text>{user.receipt_date}</Text>
+            <Text>
+              {typeof user.receipt_date === 'string' &&
+                formatDate(user.receipt_date, 'long')}
+            </Text>
           </li>
         </ul>
       )}
