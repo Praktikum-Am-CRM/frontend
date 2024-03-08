@@ -33,11 +33,11 @@ const TimeInput: React.FC<TimeInputProps> = ({ time, setTime }) => {
             setMinuteError('');
           }
         })
-        .catch(error => {
+        .catch(err => {
           if (part === 'hours') {
-            setHourError(error.message);
+            setHourError(err.message);
           } else {
-            setMinuteError(error.message);
+            setMinuteError(err.message);
           }
         });
     } else {
