@@ -168,6 +168,9 @@ export default function TableComponent({
             className={styles.table}
             onRowClick={evt => {
               handleRowClick(evt);
+              if (isMerchDelivery) {
+                setIsMerchDelivery(false);
+              }
               console.log(evt);
             }}
             emptyMessage="Ничего не найдено ¯\_(ツ)_/¯"

@@ -58,7 +58,7 @@ export default function Card({
   function renderAchives(ambassador: AmbassadorDataType) {
     return ambassador.achieves.map((achieve: AchieveType) => {
       return (
-        <li className={styles.card__achieve}>
+        <li className={styles.card__achieve} key={`li ${achieve.id}`}>
           <Label theme="success">{achieve.achieve_name}</Label>
         </li>
       );
