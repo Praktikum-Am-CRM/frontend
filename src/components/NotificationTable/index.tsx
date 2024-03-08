@@ -11,6 +11,9 @@
 // import { ReportQueryType } from '../../types/types';
 // import { REPORT_STATUSES } from '../../utils/constants';
 
+// import { useActions } from "../../hooks/actions";
+// import { useAppSelector } from "../../hooks/redux";
+
 // // type TableColumnConfig = {
 // //   id: string;
 // //   name: string;
@@ -31,7 +34,11 @@
 // // ];
 
 // export default function NotificationTable() {
+
 // //   const { data: reports, isFetching } = useGetAllReportsQuery();
+// const { setModalContentType, openModal } = useActions();
+// const isModalOpen = useAppSelector(state => state.modal.isModalOpen);
+// const modalContentType = useAppSelector(state => state.modal.contentType);
 
 //   const [patchReport] = usePatchReportMutation();
 

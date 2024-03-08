@@ -112,14 +112,6 @@ export type MessageType = {
   available: boolean;
 };
 
-export type ManagerType = {
-  id: string;
-  first_name: string;
-  last_name: string;
-  middle_name: string;
-  email: string;
-};
-
 export type MessageHistoryItemType = {
   id: string;
   message: {
@@ -212,4 +204,65 @@ export type ReportType = {
   id: string;
   type_name: string;
   available: boolean;
+};
+
+export type MerchRequestListType = {
+  id: string;
+  merch: Merch;
+  manager: Manager;
+  request_status: RequestStatus;
+  delivery_address: DeliveryAddress;
+  ambassadors: Ambassadors;
+};
+
+export type MerchType = {
+  id: string;
+  merch_name: string;
+  price: string;
+  intangible: boolean;
+  available: boolean;
+};
+
+export type ManagerType = {
+  id: string;
+  first_name: string;
+  last_name: string;
+  middle_name: string;
+  email: string;
+  username?: string;
+};
+
+export type RequestStatusType = {
+  id: string;
+  status_name: string;
+  available: boolean;
+};
+
+export type DeliveryAddressType = {
+  id: string;
+  is_confirmed: boolean;
+  index: string;
+  region: string;
+  district: string;
+  settlement: string;
+  street: string;
+  house: string;
+  building: string;
+  country: string;
+  apartment: string;
+};
+
+export type AmbassadorsType = {
+  id?: string;
+  status?: string;
+  manager: string;
+  promocode?: string;
+  receipt_date?: string;
+  reminder_counter?: number;
+  email?: string;
+  first_name?: string;
+  last_name?: string;
+  middle_name?: string;
+  gender?: string;
+  birthday?: string;
 };
