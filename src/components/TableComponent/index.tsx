@@ -23,6 +23,7 @@ import Card from '../Card';
 import defineStatus from '../../utils/defineStatus';
 import { formatDate } from '../../utils/formatDate';
 import { TextWithTooltip } from '../TextWithTooltip';
+import formatTelNumber from '../../utils/formatTelNumber';
 
 type TableSettingsData = Array<{
   id: string;
@@ -94,6 +95,7 @@ export default function TableComponent({
           </Link>
         ),
         program: <TextWithTooltip text={data.programs[0].program_name} />,
+        phone: formatTelNumber(data.phone),
         registration: formatDate(data.receipt_date, '2-digit'),
         gender: determineGender(data.gender),
         address: (

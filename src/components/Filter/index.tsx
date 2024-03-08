@@ -126,9 +126,6 @@ export default function Filter() {
             )}
           </div>
           <div className={styles.filters__buttons}>
-            {/* <Button view="normal" type="reset">
-              Сбросить
-            </Button> */}
             <Button view="action" type="submit">
               Показать
             </Button>

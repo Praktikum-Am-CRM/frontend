@@ -46,6 +46,7 @@ export type AmbassadorDataType = {
   status: string;
   manager: string;
   promocode: string;
+  phone: string;
   receipt_date: string;
   reminder_counter: number;
   address_country: string;
@@ -173,11 +174,11 @@ export type ReportType = {
 
 export type MerchRequestListType = {
   id: string;
-  merch: Merch;
-  manager: Manager;
-  request_status: RequestStatus;
-  delivery_address: DeliveryAddress;
-  ambassadors: Ambassadors;
+  merch: MerchType;
+  manager: ManagerType;
+  request_status: RequestStatusType;
+  delivery_address: DeliveryAddressType;
+  ambassadors: AmbassadorsType;
 };
 
 export type MerchType = {
@@ -221,6 +222,7 @@ export type AmbassadorsType = {
   id?: string;
   status?: string;
   manager: string;
+  phone?: string;
   promocode?: string;
   receipt_date?: string;
   reminder_counter?: number;
@@ -230,4 +232,16 @@ export type AmbassadorsType = {
   middle_name?: string;
   gender?: string;
   birthday?: string;
+  size_shoe?: string | number;
+  size_clothing?: string | number;
+};
+
+export type TableColumnConfig = {
+  id: string;
+  name: string;
+  width?: number;
+  align?: 'left' | 'right' | 'center';
+  meta?: {
+    sort?: boolean;
+  };
 };

@@ -8,6 +8,7 @@ import ModalWindow from '../ModalWindow';
 import Card from '../Card';
 import { useActions } from '../../hooks/actions';
 import { useAppSelector } from '../../hooks/redux';
+import formatTelNumber from '../../utils/formatTelNumber';
 
 const MyTable = withTableSorting(Table);
 
@@ -49,14 +50,14 @@ const columns = [
       },
     },
   },
-  { id: 'size', name: 'Размер' },
+  { id: 'price', name: 'Цена', width: 100 },
   {
     id: 'ambassador',
     name: `Амбассадор`,
+    width: 250,
   },
   { id: 'address', name: 'Адрес' },
-  { id: 'tel', name: 'Телефон' },
-  { id: 'сomment', name: 'Комментарий', width: 300 },
+  { id: 'phone', name: 'Телефон' },
 ];
 
 function defineStatusLabel(status: string) {
@@ -88,20 +89,20 @@ export default function MerchTable() {
         </Label>
       ),
       merchName: data.merch.merch_name,
-      size: `-`,
+      price: data.merch.price,
       ambassador: (
         <TextWithTooltip
+          width="400px"
           text={`${data.ambassadors.first_name} ${data.ambassadors.last_name}`}
         />
       ),
       address: (
         <TextWithTooltip
-          width="300px"
+          width="400px"
           text={`${data.delivery_address.country}, ${data.delivery_address.settlement}, ${data.delivery_address.street}, д.${data.delivery_address.house}, кв.${data.delivery_address.apartment} `}
         />
       ),
-      tel: `-`,
-      сomment: `-`,
+      phone: data.ambassadors.phone && formatTelNumber(data.ambassadors.phone),
     };
   }, []);
 

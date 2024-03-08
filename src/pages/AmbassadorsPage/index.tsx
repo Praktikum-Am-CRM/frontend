@@ -1,4 +1,4 @@
-import { Button, Pagination, PaginationProps } from '@gravity-ui/uikit';
+import { Button, Pagination, PaginationProps, Select } from '@gravity-ui/uikit';
 
 import AmbassadorTable from '../../components/AmbassadorTable';
 import Search from '../../components/Search';
@@ -74,6 +74,9 @@ export default function AmbassadorsPage() {
         total={ambListResponse?.count}
         onUpdate={handleUpdate}
       />
+      <Select>
+        <Select.Option value="all">Все</Select.Option>
+      </Select>
       {isModalOpen && modalContentType === 'messages' && (
         <ModalWindow content={<CommunicationSection />} />
       )}
