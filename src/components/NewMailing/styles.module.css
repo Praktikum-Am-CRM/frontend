@@ -18,3 +18,15 @@
   gap: 24px;
   padding: 24px;
 }
+
+.date {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.time {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
