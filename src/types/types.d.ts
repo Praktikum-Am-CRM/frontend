@@ -247,3 +247,12 @@ export type TableColumnConfig = {
     sort?: boolean;
   };
 };
+
+export type MerchRequestType = {
+  id: string;
+  request_id: string;
+  request_merch: MerchType;
+  assignment_date: string;
+  request_status: RequestStatusType;
+  request_delivery_address: DeliveryAddressType;
+};

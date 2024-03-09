@@ -1,46 +1,37 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import styles from './styles.module.css';
 import { Button, Table, Text } from '@gravity-ui/uikit';
 import { useGetAmbassadorMerchQuery } from '../../store/amCrm/amCrm.api';
-import { CopyIcon } from '../../assets/images/CopyIcon';
+import { ArrowDownToSquare } from '@gravity-ui/icons';
 import { TextWithTooltip } from '../TextWithTooltip';
+import { MerchRequestType } from '../../types/types';
 
-export default function Merch({
-  user,
-}: {
-  user: any;
-  // user: {
-  //   id: string;
-  //   ambassador: string;
-  //   status: string;
-  //   promo: string;
-  //   telegram: string;
-  //   program: string;
-  //   date_receipt: string;
-  //   gender: string;
-  //   address: string;
-  //   activity: string;
-  // };
-}) {
-  const { data: ambassadorMerch } = useGetAmbassadorMerchQuery({ id: user.id });
+const columns = [
+  { id: 'name', name: 'Мерч', width: 92 },
+  { id: 'quantity', name: 'Количество', width: 108 },
+  { id: 'date', name: 'Дата передачи', width: 128 },
+  { id: 'address', name: 'Адрес', width: 92 },
+  { id: 'status', name: 'Статус', width: 122 },
+  { id: 'copy', name: 'Скопировать', width: 116 },
+];
 
-  console.log({ ambassadorMerch });
+export default function Merch({ userId }: { userId: string }) {
+  const { data: ambassadorMerch } = useGetAmbassadorMerchQuery({ id: userId });
 
-  const prepareDataForTable = (data: any) => {
+  const prepareDataForTable = (data: MerchRequestType) => {
     return {
       name: data.request_merch.merch_name,
       quantity: '1',
       date: data.assignment_date,
       address: (
         <TextWithTooltip
-          text={` ${data.request_delivery_address.country}, ${data.request_delivery_address.settlement}, ${data.request_delivery_address.street}, д.${data.request_delivery_address.house}, ${data.request_delivery_address.building === null ? '' : `к${data.request_delivery_address.building}`}, кв.${data.request_delivery_address.apartment}`}
+          text={`${data.request_delivery_address.country}, ${data.request_delivery_address.settlement}, ${data.request_delivery_address.street}, д.${data.request_delivery_address.house}, ${data.request_delivery_address.building === null ? '' : `к${data.request_delivery_address.building}`}, кв.${data.request_delivery_address.apartment}`}
           width="92px"
         />
       ),
       status: data.request_status.status_name,
       copy: (
-        <Button view="raised">
-          <CopyIcon />
+        <Button view="flat">
+          <ArrowDownToSquare />
         </Button>
       ),
     };
@@ -57,16 +48,10 @@ export default function Merch({
       </Text>
       {ambassadorMerch && (
         <Table
-          columns={[
-            { id: 'name', name: 'Мерч', width: 92 },
-            { id: 'quantity', name: 'Количество', width: 108 },
-            { id: 'date', name: 'Дата передачи', width: 128 },
-            { id: 'address', name: 'Адрес', width: 92 },
-            { id: 'status', name: 'Статус', width: 122 },
-            { id: 'copy', name: 'Скопировать', width: 116 },
-          ]}
+          verticalAlign="middle"
+          columns={columns}
           data={ambassadorMerch.map(prepareDataForTable)}
-        ></Table>
+        />
       )}
     </section>
   );

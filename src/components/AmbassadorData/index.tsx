@@ -31,11 +31,7 @@ const merchArray: string[] = [
   'Скидка 50%',
 ];
 
-const curatorsArrray: string[] = [
-  'Кутузова Алиса',
-  'Бойко Рината',
-  'Зазуба Кристина',
-];
+const curatorsArrray: string[] = ['Борисова Анастасия'];
 
 export default function AmbassadorData({
   user,
@@ -86,8 +82,6 @@ export default function AmbassadorData({
       </Text>
     );
   };
-
-  console.log(user);
 
   return (
     <section className={styles.ambassodorDataSection}>

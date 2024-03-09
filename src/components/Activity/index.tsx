@@ -8,11 +8,7 @@ import {
   useGetAmbassadorReportsQuery,
   usePatchReportMutation,
 } from '../../store/amCrm/amCrm.api';
-import {
-  AmbassadorDataType,
-  ReportQueryType,
-  TableColumnConfig,
-} from '../../types/types';
+import { ReportQueryType, TableColumnConfig } from '../../types/types';
 import { REPORT_STATUSES } from '../../utils/constants';
 
 const columns: TableColumnConfig[] = [
@@ -23,15 +19,15 @@ const columns: TableColumnConfig[] = [
   { id: 'rating', name: 'Оценка', align: 'center', width: 120 },
 ];
 
-export default function Activity({ user }: { user: AmbassadorDataType }) {
+export default function Activity({ userId }: { userId: string }) {
   const { data: reports, isFetching } = useGetAmbassadorReportsQuery({
-    id: user.id,
+    id: userId,
   });
   const [patchReportStatus] = usePatchReportMutation();
 
   const handleReportStatusChange = useCallback(
-    (status: string) => patchReportStatus({ report_id: user.id, status }),
-    [patchReportStatus, user.id],
+    (status: string) => patchReportStatus({ report_id: userId, status }),
+    [patchReportStatus, userId],
   );
 
   const prepareDataForTable = useCallback((data: ReportQueryType) => {

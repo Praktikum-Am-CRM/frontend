@@ -29,7 +29,7 @@ export const api = createApi({
       return headers;
     },
   }),
-  tagTypes: ['Comments', 'Ambassadors', 'Auth'],
+  tagTypes: ['Comments', 'Ambassadors', 'Auth', 'Merch'],
   endpoints: build => ({
     login: build.mutation<LoginResponse, LoginRequest>({
       query: credentials => ({
@@ -95,6 +95,7 @@ export const api = createApi({
       query: ({ id }) => ({
         url: `ambassador/${id}/merches/`,
       }),
+      providesTags: ['Merch'],
     }),
     getAmbassadorReports: build.query<ReportQueryType[], { id: string }>({
       query: ({ id }) => ({
@@ -123,6 +124,7 @@ export const api = createApi({
       query: () => ({
         url: 'merch_request/',
       }),
+      providesTags: ['Merch'],
     }),
     getAllReports: build.query<ReportQueryType[], void>({
       query: () => ({
