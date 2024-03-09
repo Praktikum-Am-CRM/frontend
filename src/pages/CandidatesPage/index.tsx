@@ -1,16 +1,16 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Pagination, PaginationProps, Tabs } from '@gravity-ui/uikit';
 import CandidateTable from '../../components/CandidateTable';
 
 import { useEffect, useState } from 'react';
 
 import styles from './styles.module.css';
-import Search from '../../components/Search';
+// import Search from '../../components/Search';
 import { STATUSES } from '../../utils/constants';
 import {
   useGetAmbassadorsListQuery,
   useLazyGetAmbassadorsListQuery,
 } from '../../store/amCrm/amCrm.api';
+import { AmbassadorDataType } from '../../types/types';
 
 export default function CandidatesPage() {
   const [paginationState, setPaginationState] = useState({
@@ -18,7 +18,7 @@ export default function CandidatesPage() {
     pageSize: 15,
   });
   const [activeTab, setActiveTab] = useState<string>('new');
-  const [activeArray, setActiveArray] = useState<any>([]);
+  const [activeArray, setActiveArray] = useState<AmbassadorDataType[]>([]);
 
   const [triggerCandidateQuery, { data: candidateListResponse }] =
     useLazyGetAmbassadorsListQuery();
@@ -36,15 +36,15 @@ export default function CandidatesPage() {
   }, []);
 
   useEffect(() => {
-    setActiveArray(candidateListResponse?.results);
+    setActiveArray(candidateListResponse?.results ?? []);
   }, [candidateListResponse]);
 
   function handleTabClick(id: string) {
     setActiveTab(id);
     setActiveArray(
       id === 'new'
-        ? candidateListResponse?.results
-        : candidateArchiveListResponse?.results,
+        ? candidateListResponse?.results ?? []
+        : candidateArchiveListResponse?.results ?? [],
     );
   }
 
@@ -59,9 +59,9 @@ export default function CandidatesPage() {
 
   return (
     <section className={styles.candidatesPage}>
-      <div className={styles.candidatesPage__searchContainer}>
+      {/* <div className={styles.candidatesPage__searchContainer}>
         <Search />
-      </div>
+      </div> */}
 
       <Tabs activeTab={activeTab} size="xl" className={styles.tabs}>
         <Tabs.Item

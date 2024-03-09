@@ -8,20 +8,14 @@ import {
   useGetAmbassadorReportsQuery,
   usePatchReportMutation,
 } from '../../store/amCrm/amCrm.api';
-import { AmbassadorDataType, ReportQueryType } from '../../types/types';
+import {
+  AmbassadorDataType,
+  ReportQueryType,
+  TableColumnConfig,
+} from '../../types/types';
 import { REPORT_STATUSES } from '../../utils/constants';
 
-type TableColumnConfig = {
-  id: string;
-  name: string;
-  width?: number;
-  align?: 'left' | 'right' | 'center';
-  meta?: {
-    sort?: boolean;
-  };
-};
-
-const columns = [
+const columns: TableColumnConfig[] = [
   { id: 'placement', name: 'Площадка', width: 150 },
   { id: 'photo', name: 'Скриншот', align: 'center', width: 30 },
   { id: 'date', name: 'Дата размещения', align: 'center' },
@@ -35,9 +29,10 @@ export default function Activity({ user }: { user: AmbassadorDataType }) {
   });
   const [patchReportStatus] = usePatchReportMutation();
 
-  const handleReportStatusChange = (status: string) => {
-    patchReportStatus({ report_id: user.id, status: status });
-  };
+  const handleReportStatusChange = useCallback(
+    (status: string) => patchReportStatus({ report_id: user.id, status }),
+    [patchReportStatus, user.id],
+  );
 
   const prepareDataForTable = useCallback((data: ReportQueryType) => {
     return {
@@ -97,7 +92,7 @@ export default function Activity({ user }: { user: AmbassadorDataType }) {
           <Table
             className={styles.table}
             data={preparedTableData}
-            columns={columns as TableColumnConfig[]}
+            columns={columns}
           />
         )
       )}
