@@ -235,14 +235,14 @@ export type AmbassadorsType = {
 export type OnboardingMini = {
   last_name: string;
   first_name: string;
-  sex: '0' | '1';
-  telegram_nickname: string;
-  program_id: string[];
+  gender: '0' | '1';
+  telegram_id: string;
+  programs: string[];
   email: string;
   phone_number: string;
   address_country: string;
   address_settlement: string;
-  goal_id: string | null;
+  goals: string | null;
   own_version?: string;
   activity_id: (string | undefined)[];
   blog_link_uri: string;

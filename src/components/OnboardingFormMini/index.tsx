@@ -54,6 +54,7 @@ const OnboardingFormMini = () => {
       content: goal.goal_name,
     })) || [];
 
+  // debugger;
   const activitiesOptions =
     activitiesList?.filter((activity: ActivityType) => activity.available) ||
     [];
@@ -80,12 +81,12 @@ const OnboardingFormMini = () => {
     }
   };
 
-  const sexOptions = [
+  const genderOptions = [
     { value: '0', content: 'М' },
     { value: '1', content: 'Ж' },
   ];
 
-  const selectedGoal = watch('goal_id');
+  const selectedGoal = watch('goals');
 
   useEffect(() => {
     register('activity_id');
@@ -129,11 +130,11 @@ const OnboardingFormMini = () => {
           <Text>Пол</Text>
           <Controller
             control={control}
-            name="sex"
+            name="gender"
             render={({ field }) => (
               <RadioGroup
                 aria-label="Пол"
-                options={sexOptions}
+                options={genderOptions}
                 direction="horizontal"
                 {...field}
               />
@@ -145,7 +146,7 @@ const OnboardingFormMini = () => {
           <Text>Твой ник в телеграм</Text>
           <TextInput
             size="l"
-            {...register('telegram_nickname')}
+            {...register('telegram_id')}
             placeholder="Имя"
             error={Boolean(errors.first_name)}
             errorMessage={errors.first_name?.message}
@@ -154,7 +155,7 @@ const OnboardingFormMini = () => {
 
         <div>
           <Controller
-            name="program_id"
+            name="programs"
             control={control}
             render={({ field }) => (
               <Select
@@ -170,9 +171,9 @@ const OnboardingFormMini = () => {
               />
             )}
           />
-          {errors.program_id && (
+          {errors.programs && (
             <Text variant="body-3" style={{ color: 'red' }}>
-              {errors.program_id.message}
+              {errors.programs.message}
             </Text>
           )}
         </div>
@@ -231,7 +232,7 @@ const OnboardingFormMini = () => {
           </Text>
           <Controller
             control={control}
-            name="goal_id"
+            name="goals"
             render={({ field }) => (
               <RadioGroup
                 aria-label="Цель обучения"
@@ -241,8 +242,8 @@ const OnboardingFormMini = () => {
                 value={field.value || ''}
                 onChange={e => {
                   const newValue = e.target.value;
-                  setValue('goal_id', newValue);
-                  if (newValue !== 'own_version') {
+                  setValue('goals', newValue);
+                  if (newValue !== 'f5b706ef-9a19-4a71-9af2-99a3d86543ec') {
                     setValue('own_version', undefined);
                   }
                 }}
@@ -250,7 +251,7 @@ const OnboardingFormMini = () => {
             )}
           />
 
-          {selectedGoal === 'own_version' && (
+          {selectedGoal === 'f5b706ef-9a19-4a71-9af2-99a3d86543ec' && (
             <TextInput
               {...register('own_version')}
               placeholder="Укажите свою цель"

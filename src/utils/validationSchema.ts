@@ -40,11 +40,9 @@ export const onboardingMiniSchema = yup
       .required('Требуется ввести имя')
       .min(2, 'Минимум два символа')
       .max(20, 'Максимум 20 символов'),
-    sex: yup.string().oneOf(['0', '1']).required('Требуется выбрать пол'),
-    telegram_nickname: yup
-      .string()
-      .required('Требуется уазать никнейм в телеграм'),
-    program_id: yup.array().required('Требуется выбрать программу'),
+    gender: yup.string().oneOf(['0', '1']).required('Требуется выбрать пол'),
+    telegram_id: yup.string().required('Требуется уазать никнейм в телеграм'),
+    programs: yup.array().required('Требуется выбрать программу'),
     email: yup
       .string()
       .email('Введите валидный адрес электронной почты')
@@ -61,7 +59,7 @@ export const onboardingMiniSchema = yup
     address_settlement: yup
       .string()
       .required('Требуется указать город проживания'),
-    goal_id: yup.string().required('Требуется выбрать цель').nullable(),
+    goals: yup.string().required('Требуется выбрать цель').nullable(),
     own_version: yup.string(),
     activity_id: yup
       .array()
