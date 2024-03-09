@@ -231,3 +231,11 @@ export type AmbassadorsType = {
   gender?: string;
   birthday?: string;
 };
+
+export type OnboardingMini = {
+  last_name: string;
+  first_name: string;
+  sex: '0' | '1';
+  telegram_nickname: string;
+  program_id: string[];
+};

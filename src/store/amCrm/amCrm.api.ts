@@ -5,6 +5,7 @@ import {
   AmbassadorDataResponse,
   AmbassadorDataType,
   MerchRequestListType,
+  OnboardingMini,
   ReportQueryType,
 } from '../../types/types';
 
@@ -118,6 +119,13 @@ export const api = createApi({
         url: 'report/',
       }),
     }),
+    createOnboardingMini: build.mutation<any, OnboardingMini>({
+      query: data => ({
+        url: 'ambassador/',
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -134,4 +142,5 @@ export const {
   useGetMerchRequestsQuery,
   useGetMerchStatusesQuery,
   useGetAllReportsQuery,
+  useCreateOnboardingMiniMutation,
 } = api;
