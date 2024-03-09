@@ -29,7 +29,7 @@ export const api = createApi({
       return headers;
     },
   }),
-  tagTypes: ['Comments', 'Ambassadors', 'Auth', 'Merch'],
+  tagTypes: ['Comments', 'Ambassadors', 'Auth', 'Merch', 'AllReports'],
   endpoints: build => ({
     login: build.mutation<LoginResponse, LoginRequest>({
       query: credentials => ({
@@ -114,6 +114,7 @@ export const api = createApi({
           status: status,
         },
       }),
+      invalidatesTags: ['AllReports'],
     }),
     getMerchStatuses: build.query<any, void>({
       query: () => ({
@@ -130,6 +131,7 @@ export const api = createApi({
       query: () => ({
         url: 'report/',
       }),
+      providesTags: ['AllReports'],
     }),
   }),
 });

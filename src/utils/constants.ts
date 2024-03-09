@@ -26,4 +26,5 @@ export const STATUSES = {
 export const REPORT_STATUSES = {
   ACCEPT: '0ba2d3c3-69d3-4c8c-af0c-ffa722c3ccb8',
   REJECT: '23d79674-e7f6-40fb-bd7d-eea3ce3f98ae',
+  UNDEFINED: '7bfcac94-a9ef-4358-b6b8-4c802fc09679',
 };
