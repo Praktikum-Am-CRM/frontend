@@ -5,20 +5,22 @@ import {
   Checkbox,
   Icon,
   Popup,
-  RadioGroup,
-  Select,
+  // RadioGroup,
+  // Select,
   Text,
 } from '@gravity-ui/uikit';
 import { useRef, useState } from 'react';
 import { SlidersVertical } from '@gravity-ui/icons';
 
 import styles from './styles.module.css';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import {
-  useGetProgramsQuery,
+  // useGetProgramsQuery,
   useGetStatusesQuery,
 } from '../../store/amCrm/amCrm.api';
-import { ProgramType, StatusType } from '../../types/types';
+import { StatusType } from '../../types/types';
+import { useActions } from '../../hooks/actions';
+import { useAppSelector } from '../../hooks/redux';
 
 type FormData = {
   status: string[];
@@ -26,30 +28,35 @@ type FormData = {
   program: string[];
 };
 export default function Filter() {
+  const { setStatus } = useActions();
+  const selectedStatuses = useAppSelector(state => state.amFilters.status);
   const buttonRef = useRef(null);
   const [open, setOpen] = useState(false);
 
-  const { data: programs } = useGetProgramsQuery();
+  // const { data: programs } = useGetProgramsQuery();
   const { data: statuses } = useGetStatusesQuery();
 
-  const { register, control, handleSubmit } = useForm<FormData>();
+  const { register, handleSubmit } = useForm<FormData>();
 
-  const onSubmit = handleSubmit(data => console.log(data));
+  const onSubmit = handleSubmit(data => {
+    setStatus(data);
+    setOpen(false);
+  });
 
   const handleClick = () => {
     setOpen(prevOpen => !prevOpen);
   };
 
-  const genderOptions = [
-    { value: 'men', content: 'Мужчины' },
-    { value: 'women', content: 'Женщины' },
-  ];
+  // const genderOptions = [
+  //   { value: 'men', content: 'Мужчины' },
+  //   { value: 'women', content: 'Женщины' },
+  // ];
 
-  const preparePrograms = (data: ProgramType[]) =>
-    data.map((item: any) => ({
-      value: item.id,
-      content: item.program_name,
-    }));
+  // const preparePrograms = (data: ProgramType[]) =>
+  //   data.map((item: any) => ({
+  //     value: item.id,
+  //     content: item.program_name,
+  //   }));
 
   const prepareStatuses = (data: StatusType[]) =>
     data.filter((item: any) => item.status_name !== 'Кандидат');
@@ -80,6 +87,7 @@ export default function Filter() {
                   <li key={id} className={styles.filters__checkboxItem}>
                     <Checkbox
                       value={id}
+                      defaultChecked={selectedStatuses.includes(id)}
                       content={status_name}
                       {...register('status')}
                     />
@@ -87,7 +95,7 @@ export default function Filter() {
                 ))}
             </ul>
           </div>
-          <div className={styles.filters__container}>
+          {/* <div className={styles.filters__container}>
             <FilterText>Пол</FilterText>
             <Controller
               name="gender"
@@ -124,11 +132,8 @@ export default function Filter() {
                 )}
               />
             )}
-          </div>
+          </div> */}
           <div className={styles.filters__buttons}>
-            {/* <Button view="normal" type="reset">
-              Сбросить
-            </Button> */}
             <Button view="action" type="submit">
               Показать
             </Button>

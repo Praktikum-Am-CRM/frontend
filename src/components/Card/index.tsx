@@ -10,7 +10,6 @@ import { useGetAmbassadorInfoQuery } from '../../store/amCrm/amCrm.api';
 import defineStatus from '../../utils/defineStatus';
 import { AchieveType, AmbassadorDataType } from '../../types/types';
 
-// eslint-disable-next-line no-console
 export default function Card({
   rowId,
   isAmbassador,

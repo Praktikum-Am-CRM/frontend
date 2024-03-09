@@ -41,9 +41,14 @@ export const api = createApi({
     }),
     getAmbassadorsList: build.query<
       AmbassadorDataResponse,
-      { status: string | string[]; limit?: number; page?: number }
+      {
+        status: string | string[];
+        limit?: number;
+        page?: number;
+        search?: string;
+      }
     >({
-      query: ({ status, limit = 15, page }) => {
+      query: ({ status, limit = 15, page, search }) => {
         const searchParams = new URLSearchParams();
 
         // Если 'status' - массив, добавляем все его значения.
@@ -58,6 +63,7 @@ export const api = createApi({
 
         searchParams.set('limit', limit.toString());
         if (page) searchParams.set('page', page.toString());
+        if (search) searchParams.set('search', search.toString());
         return {
           url: 'ambassador/',
           params: searchParams,

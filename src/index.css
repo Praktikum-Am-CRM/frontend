@@ -26,3 +26,14 @@
   --base-misc-light: rgba(107, 132, 153, 0.15);
   --max-table-height: 70vh;
 }
+
+.g-table__head {
+  background-color: white;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.g-table__cell_sticky_end {
+  position: static;
+}
