@@ -57,7 +57,8 @@ export type AmbassadorDataType = {
   address_house: number;
   address_building?: string;
   address_apartment?: string;
-  size_clothing?: string;
+  size_clothing: string;
+  size_shoe: string;
   email: string;
   note: string;
   blog_link: string;
