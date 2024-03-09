@@ -200,7 +200,11 @@ export default function AmbassadorData({
             </li>
             <li className={styles.ambassodorDataSection__item}>
               {standartTextInput('Желаемая деятельность')}
-              {variableInput('activity', displayData(user.specialty_work), '')}
+              {variableInput(
+                'activity',
+                displayData(user.activity.map(a => a.activity_name).join('. ')),
+                '',
+              )}
             </li>
           </ul>
         )}
@@ -287,8 +291,7 @@ export default function AmbassadorData({
           <li className={styles.ambassodorDataSection__item}>
             {standartTextInput('Дата регистрации в боте')}
             <Text>
-              {typeof user.receipt_date === 'string' &&
-                formatDate(user.telegram_bot.registrarion_date, 'long')}
+              {formatDate(user.telegram_bot.registration_date, 'long')}
             </Text>
           </li>
         </ul>
