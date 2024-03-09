@@ -40,7 +40,7 @@ export default function Card({
       );
     }
     if (id === 'tabs-activity') {
-      return <Activity user={ambassadorInfo} />;
+      return ambassadorInfo && <Activity user={ambassadorInfo} />;
     }
     if (id === 'tabs-merch') {
       return <Merch user={ambassadorInfo} />;
