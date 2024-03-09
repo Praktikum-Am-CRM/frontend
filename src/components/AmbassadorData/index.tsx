@@ -87,6 +87,8 @@ export default function AmbassadorData({
     );
   };
 
+  console.log(user);
+
   return (
     <section className={styles.ambassodorDataSection}>
       {!isMerchDelivery && (
@@ -289,10 +291,10 @@ export default function AmbassadorData({
             <Text>{user.reminder_counter}</Text>
           </li>
           <li className={styles.ambassodorDataSection__item}>
-            {standartTextInput('Дата принятия в Амбассадоры')}
+            {standartTextInput('Дата регистрации в боте')}
             <Text>
               {typeof user.receipt_date === 'string' &&
-                formatDate(user.receipt_date, 'long')}
+                formatDate(user.telegram_bot.registrarion_date, 'long')}
             </Text>
           </li>
         </ul>

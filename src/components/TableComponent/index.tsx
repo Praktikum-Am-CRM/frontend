@@ -176,7 +176,6 @@ export default function TableComponent({
               if (isMerchDelivery) {
                 setIsMerchDelivery(false);
               }
-              console.log(evt);
             }}
             emptyMessage="Ничего не найдено ¯\_(ツ)_/¯"
             data={tableRowData.map(prepareDataForTable)}
