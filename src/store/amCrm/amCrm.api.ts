@@ -71,6 +71,16 @@ export const api = createApi({
         url: 'utility/programs',
       }),
     }),
+    getGoals: build.query<any, void>({
+      query: () => ({
+        url: 'utility/goals',
+      }),
+    }),
+    getActivities: build.query<any, void>({
+      query: () => ({
+        url: 'utility/activities',
+      }),
+    }),
     getStatuses: build.query<any, void>({
       query: () => ({
         url: 'utility/ambassador_statuses',
@@ -132,6 +142,8 @@ export const api = createApi({
 export const {
   useLoginMutation,
   useGetProgramsQuery,
+  useGetGoalsQuery,
+  useGetActivitiesQuery,
   useGetStatusesQuery,
   useGetAmbassadorsListQuery,
   useGetAmbassadorInfoQuery,

@@ -11,14 +11,25 @@ import {
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { onboardingMiniSchema } from '../../utils/validationSchema';
-import { useCreateOnboardingMiniMutation } from '../../store/amCrm/amCrm.api';
-import { OnboardingMini } from '../../types/types';
-
-import { PROGRAMS_LIST } from '../../utils/mockProgrammsList';
-import { GOAL_OPTIONS } from '../../utils/mockGoals';
-import { ACTIVITIES } from '../../utils/mockActivities';
+import {
+  useCreateOnboardingMiniMutation,
+  useGetActivitiesQuery,
+  useGetGoalsQuery,
+  useGetProgramsQuery,
+} from '../../store/amCrm/amCrm.api';
+import {
+  ActivityType,
+  GoalType,
+  OnboardingMini,
+  ProgramType,
+} from '../../types/types';
 
 const OnboardingFormMini = () => {
+  const { data: programsList } = useGetProgramsQuery();
+  const { data: goalsList } = useGetGoalsQuery();
+  const { data: activitiesList } = useGetActivitiesQuery();
+  const [createOnboardingMini] = useCreateOnboardingMiniMutation();
+
   const {
     register,
     handleSubmit,
@@ -31,12 +42,21 @@ const OnboardingFormMini = () => {
     resolver: yupResolver(onboardingMiniSchema),
   });
 
-  const [createOnboardingMini] = useCreateOnboardingMiniMutation();
+  const programOptions =
+    programsList?.map((program: ProgramType) => ({
+      value: program.id,
+      content: program.program_name,
+    })) || [];
 
-  const programOptions = PROGRAMS_LIST.map(program => ({
-    value: program.id,
-    content: program.program_name,
-  }));
+  const goalOptions =
+    goalsList?.map((goal: GoalType) => ({
+      value: goal.id,
+      content: goal.goal_name,
+    })) || [];
+
+  const activitiesOptions =
+    activitiesList?.filter((activity: ActivityType) => activity.available) ||
+    [];
 
   const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
 
@@ -215,7 +235,7 @@ const OnboardingFormMini = () => {
             render={({ field }) => (
               <RadioGroup
                 aria-label="Цель обучения"
-                options={GOAL_OPTIONS}
+                options={goalOptions}
                 direction="vertical"
                 {...field}
                 value={field.value || ''}
@@ -242,7 +262,7 @@ const OnboardingFormMini = () => {
 
         <div>
           <Text>Что хочешь делать в рамках амбассадорства?</Text>
-          {ACTIVITIES.map(activity => (
+          {activitiesOptions.map((activity: ActivityType) => (
             <Checkbox
               key={activity.id}
               content={activity.activity_name}
