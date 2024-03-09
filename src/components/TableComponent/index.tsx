@@ -4,6 +4,8 @@ import {
   Table,
   TableColumnConfig,
   TableDataItem,
+  Text,
+  Tooltip,
   withTableSelection,
   withTableSettings,
   withTableSorting,
@@ -34,6 +36,14 @@ function determineGender(gender: string) {
   return gender === 'ж' ? <WomanIcon /> : <ManIcon />;
 }
 
+const textWithTooltip = (text: string) => (
+  <Tooltip content={text}>
+    <Text ellipsis whiteSpace="nowrap" style={{ maxWidth: '200px' }}>
+      {text}
+    </Text>
+  </Tooltip>
+);
+
 export default function TableComponent({
   tableRowData,
   tableHeaderData,
@@ -60,6 +70,7 @@ export default function TableComponent({
     tableHeaderData?.map(col => ({ id: col.id, isSelected: true })),
   );
 
+  const [isMerchDelivery, setIsMerchDelivery] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const getRowId = 'id';
@@ -82,9 +93,7 @@ export default function TableComponent({
       return {
         ...data,
         id: data.id,
-        ambassador: (
-          <TextWithTooltip text={`${data.first_name} ${data.last_name}`} />
-        ),
+        ambassador: textWithTooltip(`${data.first_name} ${data.last_name}`),
         status: defineStatus(data.status),
         promo: data.promocode,
         telegram: (
@@ -99,10 +108,8 @@ export default function TableComponent({
         phone: formatTelNumber(data.phone),
         registration: formatDate(data.receipt_date, '2-digit'),
         gender: determineGender(data.gender),
-        address: (
-          <TextWithTooltip
-            text={`${data.address_country}, ${data.address_settlement}, ${data.address_street}, д.${data.address_house}, ${data.address_building === null ? '' : `к${data.address_building}`}, кв.${data.address_apartment}`}
-          />
+        address: textWithTooltip(
+          ` ${data.address_country}, ${data.address_settlement}, ${data.address_street}, д.${data.address_house}, ${data.address_building === null ? '' : `к${data.address_building}`}, кв.${data.address_apartment}`,
         ),
         email: data.email,
       };
@@ -111,9 +118,18 @@ export default function TableComponent({
 
   const content =
     location.pathname === '/ambassadors' ? (
-      <Card rowId={pickedRowUserId} isAmbassador />
+      <Card
+        rowId={pickedRowUserId}
+        isAmbassador
+        setIsMerchDelivery={setIsMerchDelivery}
+        isMerchDelivery={isMerchDelivery}
+      />
     ) : (
-      <Card rowId={pickedRowUserId} />
+      <Card
+        rowId={pickedRowUserId}
+        setIsMerchDelivery={setIsMerchDelivery}
+        isMerchDelivery={isMerchDelivery}
+      />
     );
 
   const handleRowClick = useCallback(
@@ -157,6 +173,10 @@ export default function TableComponent({
             className={styles.table}
             onRowClick={evt => {
               handleRowClick(evt);
+              if (isMerchDelivery) {
+                setIsMerchDelivery(false);
+              }
+              console.log(evt);
             }}
             emptyMessage="Ничего не найдено ¯\_(ツ)_/¯"
             data={tableRowData.map(prepareDataForTable)}

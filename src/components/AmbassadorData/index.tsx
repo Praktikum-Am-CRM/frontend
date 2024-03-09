@@ -223,7 +223,7 @@ export default function AmbassadorData({
           </li>
           <li className={styles.ambassodorDataSection__item}>
             {standartTextInput('Размер обуви')}
-            {variableInput('shoe_size', displayData(user.size_clothing), '')}
+            {variableInput('shoe_size', displayData(user.size_shoe), '')}
           </li>
           <li className={styles.ambassodorDataSection__item}>
             {standartTextInput('Дополнительная информация о себе')}

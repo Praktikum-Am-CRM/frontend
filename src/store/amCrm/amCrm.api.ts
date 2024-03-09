@@ -91,6 +91,11 @@ export const api = createApi({
         url: `ambassador/${id}/`,
       }),
     }),
+    getAmbassadorMerch: build.query<any, { id: string }>({
+      query: ({ id }) => ({
+        url: `ambassador/${id}/merches/`,
+      }),
+    }),
     getAmbassadorReports: build.query<ReportQueryType[], { id: string }>({
       query: ({ id }) => ({
         url: `ambassador/${id}/reports/`,
@@ -133,6 +138,7 @@ export const {
   useGetStatusesQuery,
   useGetAmbassadorsListQuery,
   useGetAmbassadorInfoQuery,
+  useGetAmbassadorMerchQuery,
   useLazyGetAmbassadorsListQuery,
   useGetAmbassadorReportsQuery,
   usePatchReportMutation,
