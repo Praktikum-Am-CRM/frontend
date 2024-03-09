@@ -5,6 +5,7 @@ import {
   AmbassadorDataResponse,
   AmbassadorDataType,
   MerchRequestListType,
+  OnboardingMini,
   ReportQueryType,
 } from '../../types/types';
 
@@ -76,6 +77,16 @@ export const api = createApi({
         url: 'utility/programs',
       }),
     }),
+    getGoals: build.query<any, void>({
+      query: () => ({
+        url: 'utility/goals',
+      }),
+    }),
+    getActivities: build.query<any, void>({
+      query: () => ({
+        url: 'utility/activities',
+      }),
+    }),
     getStatuses: build.query<any, void>({
       query: () => ({
         url: 'utility/ambassador_statuses',
@@ -133,12 +144,21 @@ export const api = createApi({
       }),
       providesTags: ['AllReports'],
     }),
+    createOnboardingMini: build.mutation<any, OnboardingMini>({
+      query: data => ({
+        url: 'ambassador/',
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
 });
 
 export const {
   useLoginMutation,
   useGetProgramsQuery,
+  useGetGoalsQuery,
+  useGetActivitiesQuery,
   useGetStatusesQuery,
   useGetAmbassadorsListQuery,
   useGetAmbassadorInfoQuery,
@@ -150,4 +170,5 @@ export const {
   useGetMerchRequestsQuery,
   useGetMerchStatusesQuery,
   useGetAllReportsQuery,
+  useCreateOnboardingMiniMutation,
 } = api;
