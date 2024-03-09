@@ -48,6 +48,7 @@ export type AmbassadorDataType = {
   promocode: string;
   phone: string;
   receipt_date: string;
+  registration: string;
   reminder_counter: number;
   address_country: string;
   address_index: string;
