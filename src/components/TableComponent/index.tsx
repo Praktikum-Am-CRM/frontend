@@ -50,6 +50,7 @@ export default function TableComponent({
   const isModalOpen = useAppSelector(state => state.modal.isModalOpen);
   const modalContentType = useAppSelector(state => state.modal.contentType);
   const pickedRowUserId = useAppSelector(state => state.table.pickedRowUserId);
+
   const selectedUsersIds = useAppSelector(
     state => state.table.selectedUsersIds,
   );

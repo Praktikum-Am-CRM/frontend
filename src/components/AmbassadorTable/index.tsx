@@ -44,7 +44,7 @@ const columns = [
       sort: (
         a: { receipt_date: string | number | Date },
         b: { receipt_date: string | number | Date },
-      ) => +new Date(b.receipt_date) - +new Date(a.receipt_date),
+      ) => Number(new Date(b.receipt_date)) - Number(new Date(a.receipt_date)),
     },
   },
   {

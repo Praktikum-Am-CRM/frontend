@@ -1,4 +1,9 @@
-import { Button, Pagination, PaginationProps, Select } from '@gravity-ui/uikit';
+import {
+  Button,
+  DropdownMenu,
+  Pagination,
+  PaginationProps,
+} from '@gravity-ui/uikit';
 
 import AmbassadorTable from '../../components/AmbassadorTable';
 import Search from '../../components/Search';
@@ -9,7 +14,6 @@ import { useAppSelector } from '../../hooks/redux';
 import ModalWindow from '../../components/ModalWindow';
 import CommunicationSection from '../../components/CommunicationSection';
 import { useLazyGetAmbassadorsListQuery } from '../../store/amCrm/amCrm.api';
-import { STATUSES } from '../../utils/constants';
 import { useEffect, useState } from 'react';
 
 export default function AmbassadorsPage() {
@@ -18,8 +22,12 @@ export default function AmbassadorsPage() {
     pageSize: 15,
   });
   const { setModalContentType, openModal } = useActions();
-  const isModalOpen = useAppSelector(state => state.modal.isModalOpen);
-  const modalContentType = useAppSelector(state => state.modal.contentType);
+  const { isModalOpen, contentType: modalContentType } = useAppSelector(
+    state => state.modal,
+  );
+
+  const { status: selectedStatuses, search: searchedAmbassador } =
+    useAppSelector(state => state.amFilters);
 
   function handleOpenModal() {
     setModalContentType('messages');
@@ -31,25 +39,16 @@ export default function AmbassadorsPage() {
 
   useEffect(() => {
     triggerAmbQuery({
-      status: [
-        STATUSES.ACTIVE,
-        STATUSES.PENDING,
-        STATUSES.PAUSE,
-        STATUSES.DELETED,
-      ],
+      status: selectedStatuses,
       page: 1,
+      search: searchedAmbassador,
     });
-  }, []);
+  }, [selectedStatuses, searchedAmbassador, triggerAmbQuery]);
 
   const handleUpdate: PaginationProps['onUpdate'] = (page, pageSize) => {
     setPaginationState(prevState => ({ ...prevState, page, pageSize }));
     triggerAmbQuery({
-      status: [
-        STATUSES.ACTIVE,
-        STATUSES.PENDING,
-        STATUSES.PAUSE,
-        STATUSES.DELETED,
-      ],
+      status: selectedStatuses,
       page,
     });
   };
@@ -68,15 +67,50 @@ export default function AmbassadorsPage() {
       {ambListResponse && (
         <AmbassadorTable tableRowData={ambListResponse.results} />
       )}
-      <Pagination
-        page={paginationState.page}
-        pageSize={paginationState.pageSize}
-        total={ambListResponse?.count}
-        onUpdate={handleUpdate}
-      />
-      <Select>
-        <Select.Option value="all">Все</Select.Option>
-      </Select>
+      <div style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
+        <Pagination
+          page={paginationState.page}
+          pageSize={paginationState.pageSize}
+          total={ambListResponse?.count}
+          onUpdate={handleUpdate}
+        />
+        <DropdownMenu
+          renderSwitcher={props => (
+            <div
+              {...props}
+              style={{ cursor: 'pointer', borderBottom: '1px dotted' }}
+            >
+              Количество строк
+            </div>
+          )}
+          items={[
+            {
+              action: () =>
+                setPaginationState(prevState => ({
+                  ...prevState,
+                  pageSize: 100,
+                })),
+              text: '100',
+            },
+            {
+              action: () =>
+                setPaginationState(prevState => ({
+                  ...prevState,
+                  pageSize: 30,
+                })),
+              text: '30',
+            },
+            {
+              action: () =>
+                setPaginationState(prevState => ({
+                  ...prevState,
+                  pageSize: 15,
+                })),
+              text: '15',
+            },
+          ]}
+        />
+      </div>
       {isModalOpen && modalContentType === 'messages' && (
         <ModalWindow content={<CommunicationSection />} />
       )}
