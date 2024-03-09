@@ -1,48 +1,36 @@
+/* eslint-disable no-console */
 import styles from './styles.module.css';
-import { RadioGroup, Select, Text, TextInput } from '@gravity-ui/uikit';
+import { useEffect, useState } from 'react';
+import {
+  Checkbox,
+  RadioGroup,
+  Select,
+  Text,
+  TextInput,
+} from '@gravity-ui/uikit';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import { onboardingMiniSchema } from '../../utils/validationSchema';
 import { useCreateOnboardingMiniMutation } from '../../store/amCrm/amCrm.api';
 import { OnboardingMini } from '../../types/types';
 
 import { PROGRAMS_LIST } from '../../utils/mockProgrammsList';
-
-const schema = yup
-  .object({
-    last_name: yup
-      .string()
-      .required('Требуется ввести имя')
-      .min(2, 'Минимум два символа')
-      .max(20, 'Максимум 20 символов'),
-    first_name: yup
-      .string()
-      .required('Требуется ввести фамилию')
-      .min(2, 'Минимум два символа')
-      .max(20, 'Максимум 20 символов'),
-    sex: yup.string().oneOf(['0', '1']).required('Требуется выбрать пол'),
-    telegram_nickname: yup.string().required(),
-    program_id: yup.array().required('Требуется выбрать программу'),
-    // email: yup.string().email().required(),
-    // phone_number: yup
-    //   .number()
-    //   .typeError('Phone number must be a number')
-    //   .required(),
-    // address_country: yup.string().required(),
-    // address_settlement: yup.string().required(),
-    // blog_link_uri: yup.string().url(),
-    // place_work: yup.string(),
-    // specialty_work: yup.string(),
-    // educational_institution: yup.string(),
-    // note: yup.string(),
-
-    // goal_id: yup.string().required(),
-    // own_version: yup.string(),
-    // activity_id: yup.string().required(),
-  })
-  .required();
+import { GOAL_OPTIONS } from '../../utils/mockGoals';
+import { ACTIVITIES } from '../../utils/mockActivities';
 
 const OnboardingFormMini = () => {
+  const {
+    register,
+    handleSubmit,
+    control,
+    watch,
+    setValue,
+    trigger,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(onboardingMiniSchema),
+  });
+
   const [createOnboardingMini] = useCreateOnboardingMiniMutation();
 
   const programOptions = PROGRAMS_LIST.map(program => ({
@@ -50,14 +38,18 @@ const OnboardingFormMini = () => {
     content: program.program_name,
   }));
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
+  const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
+
+  const handleActivityChange = (activityId: string) => {
+    setSelectedActivities(currentActivities => {
+      const newActivities = currentActivities.includes(activityId)
+        ? currentActivities.filter(id => id !== activityId)
+        : [...currentActivities, activityId];
+      setValue('activity_id', newActivities);
+      trigger('activity_id');
+      return newActivities;
+    });
+  };
 
   const onSubmit = async (data: OnboardingMini) => {
     try {
@@ -73,6 +65,16 @@ const OnboardingFormMini = () => {
     { value: '1', content: 'Ж' },
   ];
 
+  const selectedGoal = watch('goal_id');
+
+  useEffect(() => {
+    register('activity_id');
+  }, [register]);
+
+  useEffect(() => {
+    setValue('activity_id', selectedActivities);
+  }, [selectedActivities, setValue]);
+
   return (
     <div className={styles.root}>
       <Text variant="subheader-3">Анкета амбассадора</Text>
@@ -81,24 +83,26 @@ const OnboardingFormMini = () => {
         познакомиться с тобой поближе, поэтому пройди, пожалуйста, этот опрос :)
       </Text>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-        <Text>
-          Представься, пожалуйста. Укажи свою фамилию, имя и отчество.
-        </Text>
-        <div className={styles.nameSurname}>
-          <TextInput
-            size="l"
-            {...register('last_name')}
-            placeholder="Фамилия"
-            error={Boolean(errors.last_name)}
-            errorMessage={errors.last_name?.message}
-          />
-          <TextInput
-            size="l"
-            {...register('first_name')}
-            placeholder="Имя"
-            error={Boolean(errors.first_name)}
-            errorMessage={errors.first_name?.message}
-          />
+        <div>
+          <Text>
+            Представься, пожалуйста. Укажи свою фамилию, имя и отчество.
+          </Text>
+          <div className={styles.nameSurname}>
+            <TextInput
+              size="l"
+              {...register('last_name')}
+              placeholder="Фамилия"
+              error={Boolean(errors.last_name)}
+              errorMessage={errors.last_name?.message}
+            />
+            <TextInput
+              size="l"
+              {...register('first_name')}
+              placeholder="Имя"
+              error={Boolean(errors.first_name)}
+              errorMessage={errors.first_name?.message}
+            />
+          </div>
         </div>
 
         <div>
@@ -110,7 +114,7 @@ const OnboardingFormMini = () => {
               <RadioGroup
                 aria-label="Пол"
                 options={sexOptions}
-                direction="vertical"
+                direction="horizontal"
                 {...field}
               />
             )}
@@ -145,6 +149,169 @@ const OnboardingFormMini = () => {
                 }}
               />
             )}
+          />
+          {errors.program_id && (
+            <Text variant="body-3" style={{ color: 'red' }}>
+              {errors.program_id.message}
+            </Text>
+          )}
+        </div>
+
+        <div>
+          <Text>
+            {`Адрес электронной почты.
+            Та, через которую ты регистрировался в
+            студенческой Пачке`}
+          </Text>
+          <TextInput
+            size="l"
+            {...register('email')}
+            placeholder="email"
+            error={Boolean(errors.email)}
+            errorMessage={errors.email?.message}
+          />
+        </div>
+
+        <div>
+          <Text>Укажи, пожалуйста, номер своего телефона</Text>
+          <TextInput
+            size="l"
+            {...register('phone_number')}
+            placeholder="Введите номер телефона"
+            error={Boolean(errors.phone_number)}
+            errorMessage={errors.phone_number?.message}
+          />
+        </div>
+
+        <div>
+          <Text>В какой стране ты проживаешь?</Text>
+          <TextInput
+            size="l"
+            {...register('address_country')}
+            placeholder="Укажи страну"
+            error={Boolean(errors.address_country)}
+            errorMessage={errors.address_country?.message}
+          />
+        </div>
+
+        <div>
+          <Text>Из какого ты города?</Text>
+          <TextInput
+            size="l"
+            {...register('address_settlement')}
+            placeholder="Укажи город"
+            error={Boolean(errors.address_settlement)}
+            errorMessage={errors.address_settlement?.message}
+          />
+        </div>
+
+        <div>
+          <Text variant="body-3">
+            С какой целью ты пришел/пришла учиться в Практикум?
+          </Text>
+          <Controller
+            control={control}
+            name="goal_id"
+            render={({ field }) => (
+              <RadioGroup
+                aria-label="Цель обучения"
+                options={GOAL_OPTIONS}
+                direction="vertical"
+                {...field}
+                value={field.value || ''}
+                onChange={e => {
+                  const newValue = e.target.value;
+                  setValue('goal_id', newValue);
+                  if (newValue !== 'own_version') {
+                    setValue('own_version', undefined);
+                  }
+                }}
+              />
+            )}
+          />
+
+          {selectedGoal === 'own_version' && (
+            <TextInput
+              {...register('own_version')}
+              placeholder="Укажите свою цель"
+              error={Boolean(errors.own_version)}
+              errorMessage={errors.own_version?.message}
+            />
+          )}
+        </div>
+
+        <div>
+          <Text>Что хочешь делать в рамках амбассадорства?</Text>
+          {ACTIVITIES.map(activity => (
+            <Checkbox
+              key={activity.id}
+              content={activity.activity_name}
+              checked={selectedActivities.includes(activity.id)}
+              onChange={() => handleActivityChange(activity.id)}
+            />
+          ))}
+          {errors.activity_id && (
+            <Text variant="body-3" style={{ color: 'red' }}>
+              {errors.activity_id.message}
+            </Text>
+          )}
+        </div>
+
+        <div>
+          <Text>
+            Оставь ссылку на свой блог (активную соцсеть, которую ты ведешь)
+          </Text>
+          <TextInput
+            size="l"
+            {...register('blog_link_uri')}
+            placeholder="Ссылка"
+            error={Boolean(errors.blog_link_uri)}
+            errorMessage={errors.blog_link_uri?.message}
+          />
+        </div>
+
+        <div>
+          <Text>Где и кем ты работаешь сейчас?</Text>
+          <TextInput
+            size="l"
+            {...register('place_work')}
+            placeholder="Где"
+            error={Boolean(errors.place_work)}
+            errorMessage={errors.place_work?.message}
+          />
+          <TextInput
+            size="l"
+            {...register('specialty_work')}
+            placeholder="Кем"
+            error={Boolean(errors.specialty_work)}
+            errorMessage={errors.specialty_work?.message}
+          />
+        </div>
+
+        <div>
+          <Text>
+            Кто ты по образованию? Где учился/лась до Практикума и на кого?
+          </Text>
+          <TextInput
+            size="l"
+            {...register('educational_institution')}
+            placeholder="Место учебы"
+            error={Boolean(errors.educational_institution)}
+            errorMessage={errors.educational_institution?.message}
+          />
+        </div>
+
+        <div>
+          <Text>
+            Если ты хочешь рассказать о себе что-то еще, о чем мы еще не
+            спросили, напиши об этом здесь
+          </Text>
+          <TextInput
+            size="xl"
+            {...register('note')}
+            placeholder="Тут можно что то написать, если хочется"
+            error={Boolean(errors.note)}
+            errorMessage={errors.note?.message}
           />
         </div>
 

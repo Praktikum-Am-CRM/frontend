@@ -238,4 +238,16 @@ export type OnboardingMini = {
   sex: '0' | '1';
   telegram_nickname: string;
   program_id: string[];
+  email: string;
+  phone_number: string;
+  address_country: string;
+  address_settlement: string;
+  goal_id: string | null;
+  own_version?: string;
+  activity_id: (string | undefined)[];
+  blog_link_uri: string;
+  place_work: string;
+  specialty_work: string;
+  educational_institution: string;
+  note?: string;
 };
