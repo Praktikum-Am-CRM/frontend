@@ -1,11 +1,14 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-console */
 import styles from './styles.module.css';
 import { Button, ButtonView, TextArea } from '@gravity-ui/uikit';
 import { toaster } from '@gravity-ui/uikit/toaster-singleton-react-18';
 import { useAppSelector } from '../../hooks/redux';
 import { useActions } from '../../hooks/actions';
+import { usePostNewMessageMutation } from '../../store/amCrm/amCrm.api';
 
 const NewMailing = () => {
+  const [postNewMessageMutation] = usePostNewMessageMutation();
   const textAreaValue = useAppSelector(state => state.mailing.textAreaValue);
   const { setTextAreaValue } = useActions();
   const selectedUsersIds = useAppSelector(
@@ -18,20 +21,44 @@ const NewMailing = () => {
     setTextAreaValue(event.target.value);
   };
 
-  const handleSendToSelected = () => {
-    toaster.add({
-      name: 'send-to-picked',
-      title: 'Рассылка отправлена',
-      content: 'Сообщение отправлено выбранным пользователям',
-      actions: [
-        {
-          label: 'ОК',
-          removeAfterClick: true,
-          onClick: () => {},
-        },
-      ],
-    });
-    setTextAreaValue('');
+  const handleSendToSelected = async () => {
+    const messageData = {
+      message_text: textAreaValue,
+      ambassadors: selectedUsersIds,
+    };
+
+    try {
+      await postNewMessageMutation(messageData).then(() => {
+        setTextAreaValue('');
+      });
+      toaster.add({
+        name: 'send-to-picked-ok',
+        title: 'Рассылка отправлена',
+        content: 'Сообщение отправлено выбранным пользователям',
+        actions: [
+          {
+            label: 'ОК',
+            removeAfterClick: true,
+            onClick: () => {
+              setTextAreaValue('');
+            },
+          },
+        ],
+      });
+    } catch (err) {
+      toaster.add({
+        name: 'send-to-picked-err',
+        title: 'Произошла ошибка',
+        content: 'Сообщение не было отправлено',
+        actions: [
+          {
+            label: 'ОК',
+            removeAfterClick: true,
+            onClick: () => {},
+          },
+        ],
+      });
+    }
   };
 
   const handleSendClick = () => {
