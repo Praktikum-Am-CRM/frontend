@@ -1,3 +1,5 @@
+/* eslint-disable complexity */
+/* eslint-disable no-console */
 import { TrashBin } from '@gravity-ui/icons';
 import styles from './styles.module.css';
 import {
@@ -13,6 +15,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { AmbassadorDataType } from '../../types/types';
 import { formatDate } from '../../utils/formatDate';
 import { usePatchDataAmbassadorMutation } from '../../store/amCrm/amCrm.api';
+import { STATUSES } from '../../utils/constants';
 
 type Inputs = {
   country: string;
@@ -387,15 +390,23 @@ export default function AmbassadorData({
           )}
         </ul>
       )}
-      {!isMerchDelivery && (
-        <Button
-          size="l"
-          view="outlined"
-          className={styles.ambassodorCard__deleteButton}
-        >
-          <Icon data={TrashBin} size={18} />
-        </Button>
-      )}
+      {!isMerchDelivery &&
+        user.status.id !== STATUSES.CANDIDATE &&
+        user.status.id !== STATUSES.ARCHIVE && (
+          <Button
+            size="l"
+            view="outlined"
+            className={styles.ambassodorCard__deleteButton}
+            onClick={() => {
+              patchDataAmbassador({
+                id: user.id,
+                status: STATUSES.ARCHIVE,
+              });
+            }}
+          >
+            <Icon data={TrashBin} size={18} />
+          </Button>
+        )}
     </section>
   );
 }

@@ -1,5 +1,6 @@
 import styles from './styles.module.css';
 import { Button, TextInput } from '@gravity-ui/uikit';
+import { toaster } from '@gravity-ui/uikit/toaster-singleton-react-18';
 import { useNavigate } from 'react-router-dom';
 import { useFormLogic } from '../../hooks/useFormLogic';
 import { useActions } from '../../hooks/actions';
@@ -7,6 +8,21 @@ import { useLoginMutation } from '../../store/amCrm/amCrm.api';
 
 import { TEXTS } from '../../utils/constants';
 import { ILoginForm } from '../../types/types';
+
+interface ErrorData {
+  data: {
+    non_field_errors: string[];
+  };
+}
+
+function isErrorWithData(error: unknown): error is ErrorData {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'data' in (error as ErrorData) &&
+    Array.isArray((error as ErrorData).data.non_field_errors)
+  );
+}
 
 export const LoginForm = () => {
   const { setLoggedIn } = useActions();
@@ -27,7 +43,33 @@ export const LoginForm = () => {
         navigate('/');
       }
     } catch (error) {
-      throw new Error('Не удалось авторизоваться');
+      if (isErrorWithData(error)) {
+        toaster.add({
+          name: 'login-error',
+          title: 'Произошла ошибка',
+          content: error.data.non_field_errors[0],
+          actions: [
+            {
+              label: 'ОК',
+              removeAfterClick: true,
+              onClick: () => {},
+            },
+          ],
+        });
+      } else {
+        toaster.add({
+          name: 'login-error',
+          title: 'Произошла ошибка',
+          content: 'Произошла неизвестная ошибка',
+          actions: [
+            {
+              label: 'ОК',
+              removeAfterClick: true,
+              onClick: () => {},
+            },
+          ],
+        });
+      }
     }
   };
 
