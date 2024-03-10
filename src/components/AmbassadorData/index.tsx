@@ -133,8 +133,6 @@ export default function AmbassadorData({
     );
   };
 
-  console.log(user);
-
   function renderActivities() {
     return user.activity.map(
       (singleActivity: {
@@ -390,23 +388,21 @@ export default function AmbassadorData({
           )}
         </ul>
       )}
-      {!isMerchDelivery &&
-        user.status.id !== STATUSES.CANDIDATE &&
-        user.status.id !== STATUSES.ARCHIVE && (
-          <Button
-            size="l"
-            view="outlined"
-            className={styles.ambassodorCard__deleteButton}
-            onClick={() => {
-              patchDataAmbassador({
-                id: user.id,
-                status: STATUSES.ARCHIVE,
-              });
-            }}
-          >
-            <Icon data={TrashBin} size={18} />
-          </Button>
-        )}
+      {user.status.id === STATUSES.CANDIDATE && (
+        <Button
+          size="l"
+          view="outlined"
+          className={styles.ambassodorCard__deleteButton}
+          onClick={() => {
+            patchDataAmbassador({
+              id: user.id,
+              status: STATUSES.ARCHIVE,
+            });
+          }}
+        >
+          <Icon data={TrashBin} size={18} />
+        </Button>
+      )}
     </section>
   );
 }
