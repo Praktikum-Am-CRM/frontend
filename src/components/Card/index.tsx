@@ -5,7 +5,11 @@ import AmbassadorData from '../AmbassadorData';
 import Activity from '../Activity';
 import Merch from '../Merch';
 import Chat from '../Chat';
-import { useGetAmbassadorInfoQuery } from '../../store/amCrm/amCrm.api';
+import {
+  useGetAmbassadorInfoQuery,
+  usePatchDataAmbassadorMutation,
+} from '../../store/amCrm/amCrm.api';
+import { STATUSES } from '../../utils/constants';
 import defineStatus from '../../utils/defineStatus';
 import { AchieveType, AmbassadorDataType } from '../../types/types';
 
@@ -18,6 +22,7 @@ export default function Card({
 }) {
   const [activeTab, setActiveTab] = useState<string>('tabs-data');
   const [isMerchDelivery, setIsMerchDelivery] = useState<boolean>(false);
+  const [patchDataAmbassador] = usePatchDataAmbassadorMutation();
 
   const { data: ambassadorInfo } = useGetAmbassadorInfoQuery({ id: rowId });
 
@@ -139,14 +144,19 @@ export default function Card({
                   Присвоить мерч
                 </Button>
               ) : (
-                <Button
-                  className={styles.card__assignButton}
-                  onClick={() => {
-                    ambassadorInfo.status = 'active';
+                <form
+                  onSubmit={evt => {
+                    evt.preventDefault();
+                    patchDataAmbassador({
+                      id: ambassadorInfo.id,
+                      status: STATUSES.ACTIVE,
+                    });
                   }}
                 >
-                  Сделать амбассадором
-                </Button>
+                  <Button className={styles.card__assignButton} type="submit">
+                    Сделать амбассадором
+                  </Button>
+                </form>
               )}
             </div>
           )}
