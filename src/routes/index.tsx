@@ -14,6 +14,7 @@ import {
   StatisticsPage,
 } from './components';
 
+import OnboardingFormFull from '../components/OnboardingFormFull';
 import OnboardingFormMini from '../components/OnboardingFormMini';
 
 import Layout from '../components/Layout';
@@ -32,6 +33,7 @@ const router = createBrowserRouter(
         </Route>
       </Route>
       <Route path="login" element={<LoginPage />} />
+      <Route path="onboarding-full" element={<OnboardingFormFull />} />
       <Route path="onboarding-mini" element={<OnboardingFormMini />} />
       <Route path="*" element={<NotFoundPage />} />
     </>,
