@@ -20,7 +20,7 @@ import {
 import {
   ActivityType,
   GoalType,
-  OnboardingMini,
+  OnboardingMiniType,
   ProgramType,
 } from '../../types/types';
 import SizeClothing from '../../assets/images/sizeClothing.webp';
@@ -73,7 +73,7 @@ const OnboardingFormFull = () => {
     });
   };
 
-  const onSubmit = async (data: OnboardingMini) => {
+  const onSubmit = async (data: OnboardingMiniType) => {
     try {
       const response = await createOnboardingMini(data).unwrap();
       console.log('Success:', response);

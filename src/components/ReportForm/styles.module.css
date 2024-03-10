@@ -1,0 +1,19 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 48px;
+  width: calc(100vw - 96px);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nameSurname {
+  display: flex;
+  gap: 8px;
+  max-width: 600px;
+}

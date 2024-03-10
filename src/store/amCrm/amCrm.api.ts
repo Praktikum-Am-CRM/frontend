@@ -6,8 +6,9 @@ import {
   GoalType,
   MerchRequestListType,
   MerchRequestType,
-  OnboardingMini,
+  OnboardingMiniType,
   ProgramType,
+  ReportBotType,
   ReportQueryType,
   ReportType,
   RequestStatusType,
@@ -149,9 +150,17 @@ export const api = createApi({
       providesTags: ['Reports'],
     }),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    createOnboardingMini: build.mutation<any, OnboardingMini>({
+    createOnboardingMini: build.mutation<any, OnboardingMiniType>({
       query: data => ({
         url: 'ambassador/',
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    postReportBot: build.mutation<any, ReportBotType>({
+      query: data => ({
+        url: 'report/bot',
         method: 'POST',
         body: data,
       }),
@@ -176,4 +185,5 @@ export const {
   useGetMerchStatusesQuery,
   useGetAllReportsQuery,
   useCreateOnboardingMiniMutation,
+  usePostReportBotMutation,
 } = api;
