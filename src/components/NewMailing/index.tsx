@@ -131,12 +131,9 @@ const NewMailing = () => {
         </div>
       </Modal>
       <>
-        <Button className={styles.templatesButton} size="l">
-          Шаблоны
-        </Button>
         <TextArea
           placeholder="Начните новую рассылку"
-          size="l"
+          size="xl"
           className={styles.textArea}
           value={textAreaValue}
           onChange={handleTextAreaChange}
