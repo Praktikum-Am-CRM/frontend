@@ -1,5 +1,5 @@
 import styles from './styles.module.css';
-import { Switch, Text, TextInput } from '@gravity-ui/uikit';
+import { Button, Switch, Text, TextInput } from '@gravity-ui/uikit';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { reportBotSchema } from '../../utils/validationSchema';
@@ -32,12 +32,7 @@ const ReportForm = () => {
     }
 
     if (tg) {
-      const id_telegram = tg.initData.user.id;
-      const extendedData = {
-        ...data,
-        id_telegram: id_telegram,
-      };
-      tg.sendData(JSON.stringify(extendedData));
+      tg.sendData(JSON.stringify(data));
       tg.close();
     }
   };
@@ -108,7 +103,9 @@ const ReportForm = () => {
           />
         </div>
 
-        <input type="submit" />
+        <Button type="submit" view="action" width="auto">
+          Отправить
+        </Button>
       </form>
     </div>
   );

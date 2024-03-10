@@ -2,6 +2,7 @@
 import styles from './styles.module.css';
 import { useEffect, useState } from 'react';
 import {
+  Button,
   Checkbox,
   RadioGroup,
   Select,
@@ -90,12 +91,7 @@ const OnboardingFormFull = () => {
     }
 
     if (tg) {
-      const id_telegram = tg.initData.user.id;
-      const extendedData = {
-        ...data,
-        id_telegram: id_telegram,
-      };
-      tg.sendData(JSON.stringify(extendedData));
+      tg.sendData(JSON.stringify(data));
       tg.close();
     }
   };
@@ -496,7 +492,9 @@ const OnboardingFormFull = () => {
           />
         </div>
 
-        <input type="submit" />
+        <Button type="submit" view="action" width="auto">
+          Отправить
+        </Button>
       </form>
     </div>
   );
