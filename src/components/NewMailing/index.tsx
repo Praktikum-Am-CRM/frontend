@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-/* eslint-disable no-console */
 import styles from './styles.module.css';
 import { Button, ButtonView, TextArea } from '@gravity-ui/uikit';
 import { toaster } from '@gravity-ui/uikit/toaster-singleton-react-18';
@@ -61,20 +60,43 @@ const NewMailing = () => {
     }
   };
 
-  const handleSendClick = () => {
-    toaster.add({
-      name: 'send-to-all',
-      title: 'Рассылка отправлена',
-      content: 'Сообщение отправлено всем пользователям',
-      actions: [
-        {
-          label: 'ОК',
-          removeAfterClick: true,
-          onClick: () => {},
-        },
-      ],
-    });
-    setTextAreaValue('');
+  const handleSendClick = async () => {
+    const messageData = {
+      message_text: textAreaValue,
+    };
+
+    try {
+      await postNewMessageMutation(messageData).then(() => {
+        setTextAreaValue('');
+      });
+      toaster.add({
+        name: 'send-to-all-ok',
+        title: 'Рассылка отправлена',
+        content: 'Сообщение отправлено всем пользователям',
+        actions: [
+          {
+            label: 'ОК',
+            removeAfterClick: true,
+            onClick: () => {
+              setTextAreaValue('');
+            },
+          },
+        ],
+      });
+    } catch (err) {
+      toaster.add({
+        name: 'send-to-all-err',
+        title: 'Произошла ошибка',
+        content: 'Сообщение не было отправлено',
+        actions: [
+          {
+            label: 'ОК',
+            removeAfterClick: true,
+            onClick: () => {},
+          },
+        ],
+      });
+    }
   };
 
   const createButton = (
