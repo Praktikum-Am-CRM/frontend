@@ -1,22 +1,40 @@
 .root {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
   gap: 12px;
-  padding: 28px;
-  align-items: flex-start;
+  padding: 48px;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  align-items: flex-start;
   gap: 12px;
 }
 
 .nameSurname {
   display: flex;
   gap: 8px;
+}
+
+.fullAdressLine {
+  display: flex;
+  gap: 8px;
+}
+
+.fullAdressQuestion {
+  min-width: 30%;
+}
+
+.selectedProgramms {
+  max-width: 80vw;
+}
+
+.sizesSection {
+  display: flex;
+  flex-direction: row;
+}
+
+.sizesImg {
+  width: 40%;
+  max-width: 400px;
 }
