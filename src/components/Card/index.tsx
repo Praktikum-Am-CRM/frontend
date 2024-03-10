@@ -1,5 +1,12 @@
 import styles from './styles.module.css';
-import { Button, Label, Link, Tabs, Text } from '@gravity-ui/uikit';
+import {
+  Button,
+  DropdownMenu,
+  Label,
+  Link,
+  Tabs,
+  Text,
+} from '@gravity-ui/uikit';
 import { useState } from 'react';
 import AmbassadorData from '../AmbassadorData';
 import AmbassadorActivity from '../AmbassadorActivity';
@@ -57,6 +64,15 @@ export default function Card({
     setActiveTab(id);
   }
 
+  const handleStatusChange = (status: string, id: string) => ({
+    action: () =>
+      patchDataAmbassador({
+        id: id,
+        status: status,
+      }),
+    text: status && defineStatus(status),
+  });
+
   function renderAchives(ambassador: AmbassadorDataType) {
     return ambassador.achieves.map((achieve: AchieveType) => {
       return (
@@ -97,22 +113,32 @@ export default function Card({
                     @{ambassadorInfo.telegram_bot.nickname}
                   </Link>
                 </li>
-
-                <li className={styles.card__infoPoint}>
-                  <Text
-                    className={styles.card__pointDescription}
-                    color="secondary"
+                {ambassadorInfo.status.id !== STATUSES.CANDIDATE && (
+                  <li
+                    className={`${styles.card__infoPoint} ${styles.card__infoPoint_type_status}`}
                   >
-                    Статус
-                  </Text>
-                  <div className={styles.card__status}>
-                    {ambassadorInfo.status &&
-                      defineStatus(ambassadorInfo.status.id)}
-                  </div>
-                </li>
-
-                {ambassadorInfo.status.id !== STATUSES.CANDIDATE ||
-                  (STATUSES.ARCHIVE && (
+                    <Text
+                      className={styles.card__pointDescription}
+                      color="secondary"
+                    >
+                      Статус
+                    </Text>
+                    <div className={styles.card__status}>
+                      {ambassadorInfo.status &&
+                        defineStatus(ambassadorInfo.status.id)}
+                    </div>
+                    <DropdownMenu
+                      items={[
+                        handleStatusChange(STATUSES.DELETED, ambassadorInfo.id),
+                        handleStatusChange(STATUSES.ACTIVE, ambassadorInfo.id),
+                        handleStatusChange(STATUSES.PAUSE, ambassadorInfo.id),
+                        handleStatusChange(STATUSES.PENDING, ambassadorInfo.id),
+                      ]}
+                    />
+                  </li>
+                )}
+                {ambassadorInfo.status.id !== STATUSES.CANDIDATE &&
+                  ambassadorInfo.status.id !== STATUSES.ARCHIVE && (
                     <li
                       className={`${styles.card__infoPoint} ${styles.card__infoPoint_type_achievement}`}
                     >
@@ -126,7 +152,7 @@ export default function Card({
                         {renderAchives(ambassadorInfo)}
                       </ul>
                     </li>
-                  ))}
+                  )}
                 <li className={styles.card__infoPoint}>
                   <Text
                     className={styles.card__pointDescription}
