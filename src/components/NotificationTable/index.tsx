@@ -1,5 +1,4 @@
-import { useGetAllReportsQuery } from '../../store/amCrm/amCrm.api';
-import { TableColumnConfig } from '../../types/types';
+import { ReportQueryType, TableColumnConfig } from '../../types/types';
 import Activity from '../Activity';
 
 const columns: TableColumnConfig[] = [
@@ -11,18 +10,12 @@ const columns: TableColumnConfig[] = [
   { id: 'rating', name: 'Оценка', align: 'center', width: 120 },
 ];
 
-export default function NotificationTable() {
-  const { data: allReports, isFetching } = useGetAllReportsQuery();
-
+export default function NotificationTable({
+  reports,
+}: {
+  reports: ReportQueryType[];
+}) {
   return (
-    <div>
-      {allReports && (
-        <Activity
-          reports={allReports}
-          isFetching={isFetching}
-          columns={columns}
-        />
-      )}
-    </div>
+    <div>{reports && <Activity reports={reports} columns={columns} />}</div>
   );
 }
