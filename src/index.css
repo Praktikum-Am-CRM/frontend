@@ -34,6 +34,7 @@
   z-index: 2;
 }
 
-.g-table__cell_sticky_end {
+.g-table__cell_sticky_end.g-table__cell_sticky_end {
   position: static;
+  z-index: 2;
 }

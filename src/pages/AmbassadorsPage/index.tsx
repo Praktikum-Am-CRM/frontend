@@ -28,7 +28,6 @@ export default function AmbassadorsPage() {
 
   const { status: selectedStatuses, search: searchedAmbassador } =
     useAppSelector(state => state.amFilters);
-
   function handleOpenModal() {
     setModalContentType('messages');
     openModal();
@@ -40,17 +39,14 @@ export default function AmbassadorsPage() {
   useEffect(() => {
     triggerAmbQuery({
       status: selectedStatuses,
-      page: 1,
+      page: paginationState.page,
       search: searchedAmbassador,
+      limit: paginationState.pageSize,
     });
-  }, [selectedStatuses, searchedAmbassador, triggerAmbQuery]);
+  }, [selectedStatuses, searchedAmbassador, triggerAmbQuery, paginationState]);
 
   const handleUpdate: PaginationProps['onUpdate'] = (page, pageSize) => {
     setPaginationState(prevState => ({ ...prevState, page, pageSize }));
-    triggerAmbQuery({
-      status: selectedStatuses,
-      page,
-    });
   };
 
   return (

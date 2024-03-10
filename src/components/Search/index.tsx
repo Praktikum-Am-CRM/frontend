@@ -12,8 +12,11 @@ export default function Search() {
   useEffect(() => {
     if (debouncedSearchText) {
       setSearch({ search: debouncedSearchText });
+    } else {
+      setSearch({ search: '' });
     }
   }, [debouncedSearchText]);
+
   return (
     <>
       <TextInput
