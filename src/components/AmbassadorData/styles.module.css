@@ -1,25 +1,25 @@
-.ambassodorDataSection {
+.ambassodorCard {
   display: flex;
   flex-direction: column;
 }
 
-.ambassodorDataSection__form {
+.ambassodorCard__form {
   display: flex;
   flex-direction: column;
   row-gap: 16px;
 }
 
-.ambassodorDataSection__promoInfo {
+.ambassodorCard__promoInfo {
   padding: 9px 0;
   margin-top: 16px;
   margin-bottom: 16px;
 }
 
-.ambassodorDataSection__promo {
+.ambassodorCard__promo {
   margin-right: 12px;
 }
 
-.ambassodorDataSection__list {
+.ambassodorCard__list {
   list-style: none;
   padding: 16px;
   margin: 0;
@@ -30,30 +30,35 @@
   row-gap: 12px;
 }
 
-.ambassodorDataSection__listAnother {
+.ambassodorCard__listAnother {
   border: none;
   padding: 0;
 }
 
-.ambassodorDataSection__item {
+.ambassodorCard__item {
   padding: 9px 0;
   display: flex;
-  align-items: center;
+  align-items: baseline;
 }
 
-.ambassodorDataSection__itemAnother {
+.ambassodorCard__itemAnother {
   flex-direction: column;
   align-items: flex-start;
   row-gap: 8px;
   padding: 0;
 }
 
-.ambassodorDataSection__attribute {
+.ambassodorCard__itemAddress {
+  display: flex;
+  column-gap: 5px;
+}
+
+.ambassodorCard__attribute {
   margin-right: 12px;
   flex: 0 0 auto;
 }
 
-.ambassodorDataSection__deleteButton {
+.ambassodorCard__deleteButton {
   align-self: end;
 }
 
@@ -87,6 +92,6 @@
   width: 100px;
 }
 
-.ambassodorDataSection__resetButton {
+.ambassodorCard__resetButton {
   margin-left: 10px;
 }

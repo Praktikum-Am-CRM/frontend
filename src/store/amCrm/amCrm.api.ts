@@ -36,7 +36,14 @@ export const api = createApi({
       return headers;
     },
   }),
-  tagTypes: ['Comments', 'Ambassadors', 'Auth', 'Merch', 'Reports'],
+  tagTypes: [
+    'Comments',
+    'Ambassadors',
+    'Ambassador',
+    'Auth',
+    'Merch',
+    'AllReports',
+  ],
   endpoints: build => ({
     login: build.mutation<LoginResponse, LoginRequest>({
       query: credentials => ({
@@ -105,6 +112,7 @@ export const api = createApi({
       query: ({ id }) => ({
         url: `ambassador/${id}/`,
       }),
+      providesTags: ['Ambassador'],
     }),
     getAmbassadorMerch: build.query<MerchRequestType[], { id: string }>({
       query: ({ id }) => ({
@@ -116,7 +124,7 @@ export const api = createApi({
       query: ({ id }) => ({
         url: `ambassador/${id}/reports/`,
       }),
-      providesTags: ['Reports'],
+      providesTags: ['AllReports'],
     }),
     patchReport: build.mutation<
       unknown,
@@ -130,8 +138,69 @@ export const api = createApi({
           report_status: status,
         },
       }),
-      invalidatesTags: ['Reports'],
+      invalidatesTags: ['AllReports'],
     }),
+
+    patchDataAmbassador: build.mutation<
+      unknown,
+      {
+        id: string;
+        country: string;
+        settlement: string;
+        index: string;
+        street: string;
+        house: string;
+        building: string;
+        appartment: string;
+        email: string;
+        educational_institution: string;
+        place_work: string;
+        specialty_work: string;
+        blog_link: string;
+        clothing_size: string;
+        note: string;
+        comment: string;
+      }
+    >({
+      query: ({
+        id,
+        country,
+        settlement,
+        index,
+        street,
+        house,
+        building,
+        appartment,
+        email,
+        educational_institution,
+        place_work,
+        specialty_work,
+        blog_link,
+        clothing_size,
+        note,
+      }) => ({
+        url: `ambassador/${id}/`,
+        method: 'PATCH',
+        body: {
+          address_country: country,
+          address_settlement: settlement,
+          address_index: index,
+          address_street: street,
+          address_house: house,
+          address_building: building,
+          address_appartment: appartment,
+          email: email,
+          educational_institution: educational_institution,
+          place_work: place_work,
+          specialty_work: specialty_work,
+          blog_link: blog_link,
+          clothing_size: clothing_size,
+          note: note,
+        },
+      }),
+      invalidatesTags: ['Ambassador'],
+    }),
+
     getMerchStatuses: build.query<RequestStatusType[], void>({
       query: () => ({
         url: 'utility/delivery_statuses',
@@ -147,7 +216,7 @@ export const api = createApi({
       query: () => ({
         url: 'report/',
       }),
-      providesTags: ['Reports'],
+      providesTags: ['AllReports'],
     }),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     createOnboardingMini: build.mutation<any, OnboardingMiniType>({
@@ -186,4 +255,5 @@ export const {
   useGetAllReportsQuery,
   useCreateOnboardingMiniMutation,
   usePostReportBotMutation,
+  usePatchDataAmbassadorMutation,
 } = api;
