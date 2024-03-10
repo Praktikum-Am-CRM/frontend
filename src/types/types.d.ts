@@ -149,8 +149,8 @@ export type ReportQueryType = {
   report_date: string;
   content_link: string;
   screen: string;
-  placement: Placement;
-  report_status: ReportStatus;
+  placement: PlacementType;
+  report_status: ReportStatusType;
   sign_junior: boolean;
   grade: number;
   report_type: ReportType;

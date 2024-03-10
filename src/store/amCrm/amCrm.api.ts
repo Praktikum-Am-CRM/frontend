@@ -35,7 +35,7 @@ export const api = createApi({
       return headers;
     },
   }),
-  tagTypes: ['Comments', 'Ambassadors', 'Auth', 'Merch', 'AllReports'],
+  tagTypes: ['Comments', 'Ambassadors', 'Auth', 'Merch', 'Reports'],
   endpoints: build => ({
     login: build.mutation<LoginResponse, LoginRequest>({
       query: credentials => ({
@@ -115,6 +115,7 @@ export const api = createApi({
       query: ({ id }) => ({
         url: `ambassador/${id}/reports/`,
       }),
+      providesTags: ['Reports'],
     }),
     patchReport: build.mutation<
       unknown,
@@ -125,10 +126,10 @@ export const api = createApi({
         method: 'PATCH',
         body: {
           grade: grade,
-          status: status,
+          report_status: status,
         },
       }),
-      invalidatesTags: ['AllReports'],
+      invalidatesTags: ['Reports'],
     }),
     getMerchStatuses: build.query<RequestStatusType[], void>({
       query: () => ({
@@ -145,7 +146,7 @@ export const api = createApi({
       query: () => ({
         url: 'report/',
       }),
-      providesTags: ['AllReports'],
+      providesTags: ['Reports'],
     }),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     createOnboardingMini: build.mutation<any, OnboardingMini>({

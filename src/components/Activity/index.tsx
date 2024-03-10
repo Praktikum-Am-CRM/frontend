@@ -31,11 +31,12 @@ export default function Activity({ userId }: { userId: string }) {
     [patchReportStatus],
   );
 
-  function renderStatus(statusName: string, reportId: string) {
-    switch (statusName) {
-      case 'Принят':
+  function renderStatus(statusId: string, reportId: string) {
+    console.log(statusId, reportId, REPORT_STATUSES.REJECT);
+    switch (statusId) {
+      case REPORT_STATUSES.ACCEPT:
         return <Icon data={Check} size="16" />;
-      case 'Отказано':
+      case REPORT_STATUSES.REJECT:
         return <Icon data={OctagonXmark} size="16" />;
       default:
         return (
@@ -83,7 +84,7 @@ export default function Activity({ userId }: { userId: string }) {
         </Link>
       ),
       date: data.report_date,
-      accept: renderStatus(data.report_status.status_name, data.id),
+      accept: renderStatus(data.report_status.id, data.id),
       rating: (
         <RatingComponent
           initialValue={Math.round(data.grade / 2)}
