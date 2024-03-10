@@ -24,7 +24,15 @@ import {
   ProgramType,
 } from '../../types/types';
 
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Telegram: any;
+  }
+}
+
 const OnboardingFormMini = () => {
+  const tg = window.Telegram.WebApp;
   const { data: programsList } = useGetProgramsQuery();
   const { data: goalsList } = useGetGoalsQuery();
   const { data: activitiesList } = useGetActivitiesQuery();
@@ -78,6 +86,11 @@ const OnboardingFormMini = () => {
       console.log('Success:', response);
     } catch (error) {
       console.error('Error:', error);
+    }
+
+    if (tg) {
+      tg.sendData(JSON.stringify(data));
+      tg.close();
     }
   };
 
