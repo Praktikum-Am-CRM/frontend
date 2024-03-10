@@ -27,12 +27,11 @@ const NewMailing = () => {
         {
           label: 'ОК',
           removeAfterClick: true,
-          onClick: () => {
-            setTextAreaValue('');
-          },
+          onClick: () => {},
         },
       ],
     });
+    setTextAreaValue('');
   };
 
   const handleSendClick = () => {
@@ -44,12 +43,11 @@ const NewMailing = () => {
         {
           label: 'ОК',
           removeAfterClick: true,
-          onClick: () => {
-            setTextAreaValue('');
-          },
+          onClick: () => {},
         },
       ],
     });
+    setTextAreaValue('');
   };
 
   const createButton = (
