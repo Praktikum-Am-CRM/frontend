@@ -12,12 +12,13 @@ export default function RatingComponent({
   initialValue?: number;
   reportId: string;
 }) {
-  const [rating, setRating] = useState(initialValue || 0);
+  const [rating, setRating] = useState(initialValue || 1);
   const { add } = useToaster();
   const [patchGrade] = usePatchReportMutation();
 
   const handleChange = (value: number) => {
-    patchGrade({ report_id: reportId, grade: rating * 2 })
+    console.log(value);
+    patchGrade({ report_id: reportId, grade: value * 2 })
       .unwrap()
       .then(() => {
         setRating(value);

@@ -20,19 +20,18 @@ export default function Merch({ userId }: { userId: string }) {
   });
 
   const prepareDataForTable = (data: MerchRequestType) => {
+    const address = `${data.request_delivery_address.country}, ${data.request_delivery_address.settlement}, ${data.request_delivery_address.street}, д.${data.request_delivery_address.house}, ${data.request_delivery_address.building === null ? '' : `к${data.request_delivery_address.building}`}, кв.${data.request_delivery_address.apartment}`;
     return {
       name: data.request_merch.merch_name,
       quantity: '1',
       date: data.assignment_date,
-      address: (
-        <TextWithTooltip
-          text={`${data.request_delivery_address.country}, ${data.request_delivery_address.settlement}, ${data.request_delivery_address.street}, д.${data.request_delivery_address.house}, ${data.request_delivery_address.building === null ? '' : `к${data.request_delivery_address.building}`}, кв.${data.request_delivery_address.apartment}`}
-          width="92px"
-        />
-      ),
+      address: <TextWithTooltip text={address} width="92px" />,
       status: data.request_status.status_name,
       copy: (
-        <Button view="flat">
+        <Button
+          view="flat"
+          onClick={() => navigator.clipboard.writeText(address)}
+        >
           <ArrowDownToSquare />
         </Button>
       ),

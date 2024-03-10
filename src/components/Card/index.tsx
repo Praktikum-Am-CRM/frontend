@@ -2,7 +2,7 @@ import styles from './styles.module.css';
 import { Button, Label, Link, Tabs, Text } from '@gravity-ui/uikit';
 import { useState } from 'react';
 import AmbassadorData from '../AmbassadorData';
-import Activity from '../Activity';
+import AmbassadorActivity from '../AmbassadorActivity';
 import Merch from '../Merch';
 import Chat from '../Chat';
 import { useGetAmbassadorInfoQuery } from '../../store/amCrm/amCrm.api';
@@ -35,7 +35,9 @@ export default function Card({
       );
     }
     if (id === 'tabs-activity') {
-      return ambassadorInfo && <Activity userId={ambassadorInfo.id} />;
+      return (
+        ambassadorInfo && <AmbassadorActivity userId={ambassadorInfo.id} />
+      );
     }
     if (id === 'tabs-merch') {
       return ambassadorInfo && <Merch userId={ambassadorInfo.id} />;

@@ -3,26 +3,21 @@ import { Check, OctagonXmark } from '@gravity-ui/icons';
 import styles from './styles.module.css';
 import RatingComponent from '../RatingComponent';
 import { useCallback, useMemo } from 'react';
-import {
-  useGetAmbassadorReportsQuery,
-  usePatchReportMutation,
-} from '../../store/amCrm/amCrm.api';
+
 import { ReportQueryType, TableColumnConfig } from '../../types/types';
 import { REPORT_STATUSES } from '../../utils/constants';
 import { TextWithTooltip } from '../TextWithTooltip/index';
+import { usePatchReportMutation } from '../../store/amCrm/amCrm.api';
 
-const columns: TableColumnConfig[] = [
-  { id: 'placement', name: 'Площадка' },
-  { id: 'type', name: 'Тип' },
-  { id: 'date', name: 'Дата размещения', align: 'center' },
-  { id: 'accept', name: 'Одобрено', align: 'center' },
-  { id: 'rating', name: 'Оценка', align: 'center', width: 120 },
-];
-
-export default function Activity({ userId }: { userId: string }) {
-  const { data: reports, isFetching } = useGetAmbassadorReportsQuery({
-    id: userId,
-  });
+export default function Activity({
+  reports,
+  isFetching,
+  columns,
+}: {
+  reports: ReportQueryType[];
+  isFetching: boolean;
+  columns: TableColumnConfig[];
+}) {
   const [patchReportStatus] = usePatchReportMutation();
 
   const handleReportStatusChange = useCallback(
@@ -32,7 +27,6 @@ export default function Activity({ userId }: { userId: string }) {
   );
 
   function renderStatus(statusId: string, reportId: string) {
-    console.log(statusId, reportId, REPORT_STATUSES.REJECT);
     switch (statusId) {
       case REPORT_STATUSES.ACCEPT:
         return <Icon data={Check} size="16" />;
@@ -106,7 +100,7 @@ export default function Activity({ userId }: { userId: string }) {
       ) : (
         preparedTableData && (
           <Table
-            className={styles.table}
+            className={styles.activityTable}
             data={preparedTableData}
             columns={columns}
           />

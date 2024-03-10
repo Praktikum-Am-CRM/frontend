@@ -138,7 +138,6 @@ export const api = createApi({
           report_status: status,
         },
       }),
-      invalidatesTags: ['AllReports'],
     }),
 
     patchDataAmbassador: build.mutation<
