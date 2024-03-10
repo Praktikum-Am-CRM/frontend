@@ -147,3 +147,30 @@ export const onboardingFullSchema = yup
     size_shoe: yup.number().required(),
   })
   .required();
+
+export const reportBotSchema = yup
+  .object({
+    last_name: yup
+      .string()
+      .required('Требуется ввести фамилию')
+      .min(2, 'Минимум два символа')
+      .max(20, 'Максимум 20 символов'),
+    first_name: yup
+      .string()
+      .required('Требуется ввести имя')
+      .min(2, 'Минимум два символа')
+      .max(20, 'Максимум 20 символов'),
+
+    telegram_id: yup.string().required('Требуется уазать никнейм в телеграм'),
+
+    content_link_uri: yup
+      .string()
+      .matches(urlPattern, 'Введите валидный URL')
+      .required('Требуется указать URL ссылки на контент'),
+    sign_junior: yup.boolean(),
+    screen_uri: yup
+      .string()
+      .matches(urlPattern, 'Введите валидный URL')
+      .required('Требуется указать URL ссылки на скрин'),
+  })
+  .required();

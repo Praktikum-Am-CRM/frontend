@@ -257,7 +257,7 @@ export type MerchRequestType = {
   request_delivery_address: DeliveryAddressType;
 };
 
-export type OnboardingMini = {
+export type OnboardingMiniType = {
   last_name: string;
   first_name: string;
   gender: '0' | '1';
@@ -275,4 +275,13 @@ export type OnboardingMini = {
   specialty_work: string;
   educational_institution: string;
   note?: string;
+};
+
+type ReportBotType = {
+  last_name: string;
+  first_name: string;
+  telegram_id: string;
+  content_link_uri: string;
+  sign_junior?: boolean;
+  screen_uri: string;
 };
