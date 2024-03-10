@@ -19,11 +19,12 @@ import {
 import { StatusType } from '../../types/types';
 import { useActions } from '../../hooks/actions';
 import { useAppSelector } from '../../hooks/redux';
+import { STATUSES } from '../../utils/constants';
 
 type FormData = {
   status: string[];
-  gender: string;
-  program: string[];
+  // gender: string;
+  // program: string[];
 };
 export default function Filter() {
   const { setStatus } = useActions();
@@ -31,7 +32,6 @@ export default function Filter() {
   const buttonRef = useRef(null);
   const [open, setOpen] = useState(false);
 
-  // const { data: programs } = useGetProgramsQuery();
   const { data: statuses } = useGetStatusesQuery();
 
   const { register, handleSubmit } = useForm<FormData>();
@@ -57,7 +57,10 @@ export default function Filter() {
   //   }));
 
   const prepareStatuses = (data: StatusType[]) =>
-    data.filter((item: StatusType) => item.status_name !== 'Кандидат');
+    data.filter(
+      (item: StatusType) =>
+        item.id !== STATUSES.CANDIDATE && item.id !== STATUSES.ARCHIVE,
+    );
 
   const FilterText = ({ children }: { children: string }) => (
     <Text variant="body-1" color="secondary">
