@@ -1,6 +1,7 @@
 import styles from './styles.module.css';
 import { useState } from 'react';
 import Mailing from '../Mailing';
+import FaqTab from '../FaqTab';
 import { RadioButton, Text } from '@gravity-ui/uikit';
 
 const CommunicationSection = () => {
@@ -20,7 +21,7 @@ const CommunicationSection = () => {
           </div>
         );
       case 'faq':
-        return <div>Тут фак</div>;
+        return <FaqTab />;
       default:
         return null;
     }
