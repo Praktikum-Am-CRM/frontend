@@ -89,7 +89,12 @@ const OnboardingFormMini = () => {
     }
 
     if (tg) {
-      tg.sendData(JSON.stringify(data));
+      const id_telegram = tg.initData.user.id;
+      const extendedData = {
+        ...data,
+        id_telegram: id_telegram,
+      };
+      tg.sendData(JSON.stringify(extendedData));
       tg.close();
     }
   };
