@@ -144,25 +144,27 @@ export const api = createApi({
       unknown,
       {
         id: string;
-        country: string;
-        settlement: string;
-        index: string;
-        street: string;
-        house: string;
-        building: string;
-        appartment: string;
-        email: string;
-        educational_institution: string;
-        place_work: string;
-        specialty_work: string;
-        blog_link: string;
-        clothing_size: string;
-        note: string;
-        comment: string;
+        status?: string;
+        country?: string;
+        settlement?: string;
+        index?: string;
+        street?: string;
+        house?: string;
+        building?: string;
+        appartment?: string;
+        email?: string;
+        educational_institution?: string;
+        place_work?: string;
+        specialty_work?: string;
+        blog_link?: string;
+        clothing_size?: string;
+        note?: string;
+        comment?: string;
       }
     >({
       query: ({
         id,
+        status,
         country,
         settlement,
         index,
@@ -181,6 +183,7 @@ export const api = createApi({
         url: `ambassador/${id}/`,
         method: 'PATCH',
         body: {
+          status: status,
           address_country: country,
           address_settlement: settlement,
           address_index: index,
