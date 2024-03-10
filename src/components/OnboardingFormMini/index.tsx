@@ -81,15 +81,20 @@ const OnboardingFormMini = () => {
   };
 
   const onSubmit = async (data: OnboardingMiniType) => {
+    const id_telegram = tg.initData.user.id;
+    const extendedData = {
+      ...data,
+      id_telegram: id_telegram,
+    };
     try {
-      const response = await createOnboardingMini(data).unwrap();
+      const response = await createOnboardingMini(extendedData).unwrap();
       console.log('Success:', response);
     } catch (error) {
       console.error('Error:', error);
     }
 
     if (tg) {
-      tg.sendData(JSON.stringify(data));
+      tg.sendData(JSON.stringify(extendedData));
       tg.close();
     }
   };

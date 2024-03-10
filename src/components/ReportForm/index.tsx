@@ -24,15 +24,20 @@ const ReportForm = () => {
   });
 
   const onSubmit = async (data: ReportBotType) => {
+    const id_telegram = tg.initData.user.id;
+    const extendedData = {
+      ...data,
+      id_telegram: id_telegram,
+    };
     try {
-      const response = await postReportBotMutation(data).unwrap();
+      const response = await postReportBotMutation(extendedData).unwrap();
       console.log('Success:', response);
     } catch (error) {
       console.error('Error:', error);
     }
 
     if (tg) {
-      tg.sendData(JSON.stringify(data));
+      tg.sendData(JSON.stringify(extendedData));
       tg.close();
     }
   };
