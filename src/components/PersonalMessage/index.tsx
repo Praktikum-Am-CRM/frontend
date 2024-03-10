@@ -1,14 +1,24 @@
 import styles from './styles.module.css';
 import { useState } from 'react';
-import { useAppSelector } from '../../hooks/redux';
 import { Button, TextArea } from '@gravity-ui/uikit';
+import { toaster } from '@gravity-ui/uikit/toaster-singleton-react-18';
 
 const PersonalMessage = () => {
-  const pickedRowUserId = useAppSelector(state => state.table.pickedRowUserId);
   const [textInput, setTextInput] = useState('');
 
   const handleSendButtonClick = () => {
-    console.log(`Send to: ${pickedRowUserId} with text: ${textInput}`);
+    toaster.add({
+      name: 'send-to-all',
+      title: 'Отправлено',
+      content: 'Персональное сообщение отправлено',
+      actions: [
+        {
+          label: 'ОК',
+          removeAfterClick: true,
+          onClick: () => {},
+        },
+      ],
+    });
     setTextInput('');
   };
 

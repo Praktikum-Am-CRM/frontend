@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import * as yup from 'yup';
 
 const urlPattern =
