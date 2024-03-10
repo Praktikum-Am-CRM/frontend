@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TrashBin } from '@gravity-ui/icons';
 import styles from './styles.module.css';
 import {
@@ -16,6 +15,18 @@ import { formatDate } from '../../utils/formatDate';
 
 type Inputs = {
   country: string;
+  region: string;
+  index: string;
+  street: string;
+  email: string;
+  educational_institution: string;
+  place_work: string;
+  goal: string;
+  activity: string;
+  blog_link: string;
+  clothing_size: string;
+  shoe_size: string;
+  note: string;
 };
 
 const merchArray: string[] = [
@@ -49,7 +60,7 @@ export default function AmbassadorData({
   const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
 
   const variableInput = (
-    nameInput: any,
+    nameInput: keyof Inputs,
     value: string,
     placeholder: string,
   ) => {
@@ -177,7 +188,7 @@ export default function AmbassadorData({
           </li>
           <li className={styles.ambassodorDataSection__item}>
             {standartTextInput('Email')}
-            {variableInput('e-mail', displayData(user.email), '')}
+            {variableInput('email', displayData(user.email), '')}
           </li>
         </ul>
         {!isMerchDelivery && (

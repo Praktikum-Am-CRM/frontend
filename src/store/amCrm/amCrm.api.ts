@@ -1,12 +1,17 @@
-/* eslint-disable camelcase */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
+  ActivityType,
   AmbassadorDataResponse,
   AmbassadorDataType,
+  GoalType,
   MerchRequestListType,
+  MerchRequestType,
   OnboardingMini,
+  ProgramType,
   ReportQueryType,
+  ReportType,
+  RequestStatusType,
+  StatusType,
 } from '../../types/types';
 
 interface LoginRequest {
@@ -23,9 +28,9 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://ambassadorsyapractice.ru/api/v1/',
     prepareHeaders: headers => {
-      const auth_token = localStorage.getItem('auth_token');
-      if (auth_token) {
-        headers.set('authorization', `Token ${auth_token}`);
+      const authToken = localStorage.getItem('authToken');
+      if (authToken) {
+        headers.set('authorization', `Token ${authToken}`);
       }
       return headers;
     },
@@ -52,8 +57,6 @@ export const api = createApi({
       query: ({ status, limit = 15, page, search }) => {
         const searchParams = new URLSearchParams();
 
-        // Если 'status' - массив, добавляем все его значения.
-        // В противном случае просто добавляем 'status' как строку.
         if (Array.isArray(status)) {
           status.forEach(s => {
             searchParams.append('status', s);
@@ -72,27 +75,27 @@ export const api = createApi({
       },
       providesTags: ['Ambassadors'],
     }),
-    getPrograms: build.query<any, void>({
+    getPrograms: build.query<ProgramType[], void>({
       query: () => ({
         url: 'utility/programs',
       }),
     }),
-    getGoals: build.query<any, void>({
+    getGoals: build.query<GoalType[], void>({
       query: () => ({
         url: 'utility/goals',
       }),
     }),
-    getActivities: build.query<any, void>({
+    getActivities: build.query<ActivityType[], void>({
       query: () => ({
         url: 'utility/activities',
       }),
     }),
-    getStatuses: build.query<any, void>({
+    getStatuses: build.query<StatusType[], void>({
       query: () => ({
         url: 'utility/ambassador_statuses',
       }),
     }),
-    getReportStatuses: build.query<any, void>({
+    getReportStatuses: build.query<ReportType[], void>({
       query: () => ({
         url: 'utility/report_statuses',
       }),
@@ -102,7 +105,7 @@ export const api = createApi({
         url: `ambassador/${id}/`,
       }),
     }),
-    getAmbassadorMerch: build.query<any, { id: string }>({
+    getAmbassadorMerch: build.query<MerchRequestType[], { id: string }>({
       query: ({ id }) => ({
         url: `ambassador/${id}/merches/`,
       }),
@@ -114,7 +117,7 @@ export const api = createApi({
       }),
     }),
     patchReport: build.mutation<
-      any,
+      unknown,
       { report_id: string; grade?: number; status?: string }
     >({
       query: ({ report_id, grade, status }) => ({
@@ -127,7 +130,7 @@ export const api = createApi({
       }),
       invalidatesTags: ['AllReports'],
     }),
-    getMerchStatuses: build.query<any, void>({
+    getMerchStatuses: build.query<RequestStatusType[], void>({
       query: () => ({
         url: 'utility/delivery_statuses',
       }),
@@ -144,6 +147,7 @@ export const api = createApi({
       }),
       providesTags: ['AllReports'],
     }),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     createOnboardingMini: build.mutation<any, OnboardingMini>({
       query: data => ({
         url: 'ambassador/',

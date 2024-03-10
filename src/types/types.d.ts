@@ -73,8 +73,8 @@ export type AmbassadorDataType = {
   gender: string;
   birthday: string;
   programs: Program[];
-  goals: Goal[];
-  activity: Activity[];
+  goals: GoalType[];
+  activity: ActivityType[];
   achieves: AchieveType[];
 };
 

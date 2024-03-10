@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import styles from './styles.module.css';
 import { useActions } from '../../hooks/actions';
 import { useAppSelector } from '../../hooks/redux';

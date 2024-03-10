@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Icon, Link, Skeleton, Table } from '@gravity-ui/uikit';
 import { Check, OctagonXmark } from '@gravity-ui/icons';
 import styles from './styles.module.css';

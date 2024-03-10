@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import styles from './styles.module.css';
 import { Button, Label, Link, Tabs, Text } from '@gravity-ui/uikit';
 import { useState } from 'react';

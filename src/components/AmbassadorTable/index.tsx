@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AmbassadorDataType } from '../../types/types';
 import TableComponent from '../TableComponent';
 

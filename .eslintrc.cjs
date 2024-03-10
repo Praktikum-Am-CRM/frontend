@@ -16,6 +16,13 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    "camelcase": [
+      "warn",
+      {
+        "ignoreDestructuring": true,
+      }
+    ],
+
     'prettier/prettier': [
       'warn',
       {

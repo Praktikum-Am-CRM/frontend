@@ -22,7 +22,7 @@ export const LoginForm = () => {
     try {
       const res = await login(data).unwrap();
       if (res.auth_token) {
-        localStorage.setItem('auth_token', res.auth_token);
+        localStorage.setItem('authToken', res.auth_token);
         setLoggedIn(true);
         navigate('/');
       }

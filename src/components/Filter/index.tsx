@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Button,
   Checkbox,
@@ -59,7 +57,7 @@ export default function Filter() {
   //   }));
 
   const prepareStatuses = (data: StatusType[]) =>
-    data.filter((item: any) => item.status_name !== 'Кандидат');
+    data.filter((item: StatusType) => item.status_name !== 'Кандидат');
 
   const FilterText = ({ children }: { children: string }) => (
     <Text variant="body-1" color="secondary">
