@@ -231,7 +231,15 @@ export const api = createApi({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     postReportBot: build.mutation<any, ReportBotType>({
       query: data => ({
-        url: 'report/bot',
+        url: 'report/bot/',
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    postNewMessage: build.mutation<any, any>({
+      query: data => ({
+        url: 'bot_message/',
         method: 'POST',
         body: data,
       }),
@@ -258,4 +266,5 @@ export const {
   useCreateOnboardingMiniMutation,
   usePostReportBotMutation,
   usePatchDataAmbassadorMutation,
+  usePostNewMessageMutation,
 } = api;
