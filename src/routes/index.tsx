@@ -15,6 +15,7 @@ import {
 } from './components';
 
 import OnboardingFormMini from '../components/OnboardingFormMini';
+import OnboardingFormFull from '../components/OnboardingFormFull';
 
 import Layout from '../components/Layout';
 import ProtectedRoute from '../components/ProtectedRoute';
@@ -33,6 +34,7 @@ const router = createBrowserRouter(
       </Route>
       <Route path="login" element={<LoginPage />} />
       <Route path="onboarding-mini" element={<OnboardingFormMini />} />
+      <Route path="onboarding-full" element={<OnboardingFormFull />} />
       <Route path="*" element={<NotFoundPage />} />
     </>,
   ),

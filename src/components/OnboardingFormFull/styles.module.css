@@ -1,0 +1,47 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 48px;
+  width: calc(100vw - 96px);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 12px;
+  /* align-items: flex-start; */
+}
+
+.nameSurname {
+  display: flex;
+  gap: 8px;
+  max-width: 600px;
+}
+
+.fullAdressLine {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.fullAdressQuestion {
+  min-width: 30%;
+}
+
+.selectedProgramms {
+  max-width: 80vw;
+}
+
+.sizesSection {
+  display: flex;
+  flex-direction: row;
+}
+
+.sizesImg {
+  width: 40%;
+  max-width: 400px;
+}
