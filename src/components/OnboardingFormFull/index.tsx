@@ -83,23 +83,16 @@ const OnboardingFormFull = () => {
   };
 
   const onSubmit = async (data: OnboardingMiniType) => {
-    if (window.Telegram && window.Telegram.WebApp) {
-      const id_telegram = tg.initData.user.id;
-      const extendedData = {
-        ...data,
-        id_telegram: id_telegram,
-      };
-      tg.sendData(JSON.stringify(extendedData));
-      tg.close();
-    } else {
-      tg.sendData(JSON.stringify(data));
-      tg.close();
-    }
     try {
       const response = await createOnboardingMini(data).unwrap();
       console.log('Success:', response);
     } catch (error) {
       console.error('Error:', error);
+    }
+
+    if (tg) {
+      tg.sendData(JSON.stringify(data));
+      tg.close();
     }
   };
 
