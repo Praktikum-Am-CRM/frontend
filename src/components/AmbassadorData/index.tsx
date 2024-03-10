@@ -294,6 +294,12 @@ export default function AmbassadorData({
               {formatDate(user.telegram_bot.registration_date, 'long')}
             </Text>
           </li>
+          {user.receipt_date && (
+            <li className={styles.ambassodorDataSection__item}>
+              {standartTextInput('Дата принятия в амбассадоры')}
+              <Text>{formatDate(user.receipt_date, 'long')}</Text>
+            </li>
+          )}
         </ul>
       )}
       {!isMerchDelivery && (
