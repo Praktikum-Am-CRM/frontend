@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import styles from './styles.module.css';
 import { Button, ButtonView, TextArea } from '@gravity-ui/uikit';
+import { toaster } from '@gravity-ui/uikit/toaster-singleton-react-18';
 import { useAppSelector } from '../../hooks/redux';
 import { useActions } from '../../hooks/actions';
 
@@ -18,15 +19,37 @@ const NewMailing = () => {
   };
 
   const handleSendToSelected = () => {
-    console.log(
-      `Выбранным ID пользователям: ${selectedUsersIds} Отправка текста:  ${textAreaValue} `,
-    );
-    setTextAreaValue('');
+    toaster.add({
+      name: 'send-to-picked',
+      title: 'Рассылка отправлена',
+      content: 'Сообщение отправлено выбранным пользователям',
+      actions: [
+        {
+          label: 'ОК',
+          removeAfterClick: true,
+          onClick: () => {
+            setTextAreaValue('');
+          },
+        },
+      ],
+    });
   };
 
   const handleSendClick = () => {
-    console.log(`Отправка текста : ${textAreaValue} `);
-    setTextAreaValue('');
+    toaster.add({
+      name: 'send-to-all',
+      title: 'Рассылка отправлена',
+      content: 'Сообщение отправлено всем пользователям',
+      actions: [
+        {
+          label: 'ОК',
+          removeAfterClick: true,
+          onClick: () => {
+            setTextAreaValue('');
+          },
+        },
+      ],
+    });
   };
 
   const createButton = (
