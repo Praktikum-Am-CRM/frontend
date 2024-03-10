@@ -82,3 +82,68 @@ export const onboardingMiniSchema = yup
       .max(1000, 'Примечание не должно превышать 1000 символов'),
   })
   .required();
+
+export const onboardingFullSchema = yup
+  .object({
+    last_name: yup
+      .string()
+      .required('Требуется ввести фамилию')
+      .min(2, 'Минимум два символа')
+      .max(20, 'Максимум 20 символов'),
+    first_name: yup
+      .string()
+      .required('Требуется ввести имя')
+      .min(2, 'Минимум два символа')
+      .max(20, 'Максимум 20 символов'),
+    gender: yup.string().oneOf(['0', '1']).required('Требуется выбрать пол'),
+    telegram_id: yup.string().required('Требуется уазать никнейм в телеграм'),
+    programs: yup.array().required('Требуется выбрать программу'),
+    email: yup
+      .string()
+      .email('Введите валидный адрес электронной почты')
+      .required('Требуется ввести адрес электронной почты'),
+    phone_number: yup
+      .string()
+      .required('Требуется ввести номер телефона')
+      .matches(/^[0-9]+$/, 'Номер телефона должен содержать только цифры')
+      .min(7, 'Номер телефона должен содержать не менее 7 цифр')
+      .max(15, 'Номер телефона должен содержать не более 15 цифр'),
+    address_country: yup
+      .string()
+      .required('Требуется указать страну проживания'),
+    address_settlement: yup
+      .string()
+      .required('Требуется указать город проживания'),
+    goals: yup.string().required('Требуется выбрать цель').nullable(),
+    own_version: yup.string(),
+    activity_id: yup
+      .array()
+      .of(yup.string())
+      .min(1, 'Выберите хотя бы одну активность')
+      .required('Требуется выбрать активность'),
+    blog_link_uri: yup
+      .string()
+      .matches(urlPattern, 'Введите валидный URL')
+      .required('Требуется указать URL блога или активной соцсети'),
+    place_work: yup.string().required('Требуется указать место работы'),
+    specialty_work: yup
+      .string()
+      .required('Требуется указать специальность на текущей работе'),
+    educational_institution: yup
+      .string()
+      .required('Требуется указать образовательное учреждение'),
+    note: yup
+      .string()
+      .max(1000, 'Примечание не должно превышать 1000 символов'),
+
+    address_index: yup.number().required(),
+    address_region: yup.string().required(),
+    address_district: yup.string().required(),
+    address_street: yup.string().required(),
+    address_house: yup.string().required(),
+    address_building: yup.string().required(),
+    address_apartment: yup.string().required(),
+    size_clothing: yup.string().required('Выбор размера обязателен'),
+    size_shoe: yup.number().required(),
+  })
+  .required();

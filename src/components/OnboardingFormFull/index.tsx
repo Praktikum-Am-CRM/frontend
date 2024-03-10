@@ -10,7 +10,7 @@ import {
 } from '@gravity-ui/uikit';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { onboardingMiniSchema } from '../../utils/validationSchema';
+import { onboardingFullSchema } from '../../utils/validationSchema';
 import {
   useCreateOnboardingMiniMutation,
   useGetActivitiesQuery,
@@ -23,8 +23,9 @@ import {
   OnboardingMini,
   ProgramType,
 } from '../../types/types';
+import SizeClothing from '../../assets/images/sizeClothing.webp';
 
-const OnboardingFormMini = () => {
+const OnboardingFormFull = () => {
   const { data: programsList } = useGetProgramsQuery();
   const { data: goalsList } = useGetGoalsQuery();
   const { data: activitiesList } = useGetActivitiesQuery();
@@ -39,7 +40,7 @@ const OnboardingFormMini = () => {
     trigger,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(onboardingMiniSchema),
+    resolver: yupResolver(onboardingFullSchema),
   });
 
   const programOptions =
@@ -152,6 +153,7 @@ const OnboardingFormMini = () => {
         </div>
 
         <div>
+          <Text>Выбери программу, на которой ты учишься или учился/лась</Text>
           <Controller
             name="programs"
             control={control}
@@ -159,8 +161,9 @@ const OnboardingFormMini = () => {
               <Select
                 {...field}
                 value={field.value || []}
-                placeholder="Выбери программу, на которой ты учишься или учился/лась"
+                placeholder="Выбери программу"
                 size="m"
+                className={styles.selectedProgramms}
                 multiple
                 options={programOptions}
                 onUpdate={e => {
@@ -214,14 +217,89 @@ const OnboardingFormMini = () => {
         </div>
 
         <div>
-          <Text>Из какого ты города?</Text>
-          <TextInput
-            size="l"
-            {...register('address_settlement')}
-            placeholder="Укажи город"
-            error={Boolean(errors.address_settlement)}
-            errorMessage={errors.address_settlement?.message}
-          />
+          <Text>Напиши, пожалуйста полный адрес</Text>
+          <div className={styles.fullAdressLine}>
+            <Text className={styles.fullAdressQuestion}>Индекс</Text>
+            <TextInput
+              size="l"
+              {...register('address_index')}
+              placeholder="Индекс"
+              error={Boolean(errors.address_index)}
+              errorMessage={errors.address_index?.message}
+            />
+          </div>
+          <div className={styles.fullAdressLine}>
+            <Text className={styles.fullAdressQuestion}>Область, край</Text>
+            <TextInput
+              size="l"
+              {...register('address_region')}
+              placeholder="Укажи область, край"
+              error={Boolean(errors.address_region)}
+              errorMessage={errors.address_region?.message}
+            />
+          </div>
+          <div className={styles.fullAdressLine}>
+            <Text className={styles.fullAdressQuestion}>Район</Text>
+            <TextInput
+              size="l"
+              {...register('address_district')}
+              placeholder="Укажи Район"
+              error={Boolean(errors.address_district)}
+              errorMessage={errors.address_district?.message}
+            />
+          </div>
+          <div className={styles.fullAdressLine}>
+            <Text className={styles.fullAdressQuestion}>
+              Город, населенный пункт
+            </Text>
+            <TextInput
+              size="l"
+              {...register('address_settlement')}
+              placeholder="Укажи город"
+              error={Boolean(errors.address_settlement)}
+              errorMessage={errors.address_settlement?.message}
+            />
+          </div>
+          <div className={styles.fullAdressLine}>
+            <Text className={styles.fullAdressQuestion}>Улица</Text>
+            <TextInput
+              size="l"
+              {...register('address_street')}
+              placeholder="Укажи Улицу"
+              error={Boolean(errors.address_street)}
+              errorMessage={errors.address_street?.message}
+            />
+          </div>
+          <div className={styles.fullAdressLine}>
+            <Text className={styles.fullAdressQuestion}>Дом</Text>
+            <TextInput
+              size="l"
+              {...register('address_house')}
+              placeholder="Укажи дом"
+              error={Boolean(errors.address_house)}
+              errorMessage={errors.address_house?.message}
+            />
+          </div>
+          <div className={styles.fullAdressLine}>
+            <Text className={styles.fullAdressQuestion}>Корпус</Text>
+            <TextInput
+              size="l"
+              {...register('address_building')}
+              placeholder="Укажи Корпус"
+              error={Boolean(errors.address_building)}
+              errorMessage={errors.address_building?.message}
+            />
+          </div>
+          <div className={styles.fullAdressLine}>
+            <Text className={styles.fullAdressQuestion}>Квартира</Text>
+            <TextInput
+              size="l"
+              {...register('address_apartment')}
+              placeholder="Квартира"
+              error={Boolean(errors.address_apartment)}
+              errorMessage={errors.address_apartment?.message}
+            />
+          </div>
         </div>
 
         <div>
@@ -334,10 +412,76 @@ const OnboardingFormMini = () => {
           />
         </div>
 
+        <div>
+          <Text>
+            Размер одежды, который ты обычно носишь (на фото представлена
+            размерная сетка толстовок)
+          </Text>
+          <div className={styles.sizesSection}>
+            <img
+              src={SizeClothing}
+              alt="Таблица размеров"
+              className={styles.sizesImg}
+            />
+            <div>
+              <Text>
+                Обрати внимание на размерную сетку. Наши толстовки оверсайз,
+                поэтому важно подобрать размер правильно
+              </Text>
+              <Controller
+                name="size_clothing"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    value={field.value ? [field.value] : []}
+                    placeholder="Выберите размер"
+                    size="m"
+                    className={styles.selectedSizes}
+                    options={[
+                      { value: 'XS', content: 'XS' },
+                      { value: 'S', content: 'S' },
+                      { value: 'M', content: 'M' },
+                      { value: 'L', content: 'L' },
+                      { value: 'XL', content: 'XL' },
+                    ]}
+                    onUpdate={value => {
+                      field.onChange(value.length > 0 ? value[0] : '');
+                    }}
+                  />
+                )}
+              />
+              {errors.size_clothing && (
+                <Text variant="body-3" style={{ color: 'red' }}>
+                  {errors.size_clothing.message}
+                </Text>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.fullAdressLine}>
+          <div>
+            <Text className={styles.fullAdressQuestion}>Твой размер обуви</Text>
+            <Text>
+              Пусть тебя не пугает этот вопрос, это нужно для того, чтобы мы
+              могли отправить тебе подарок от нас, который подойдет по размеру
+              :)
+            </Text>
+          </div>
+          <TextInput
+            size="l"
+            {...register('size_shoe')}
+            placeholder="Укажи размер обуви"
+            error={Boolean(errors.size_shoe)}
+            errorMessage={errors.size_shoe?.message}
+          />
+        </div>
+
         <input type="submit" />
       </form>
     </div>
   );
 };
 
-export default OnboardingFormMini;
+export default OnboardingFormFull;
