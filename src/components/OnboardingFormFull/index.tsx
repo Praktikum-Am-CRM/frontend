@@ -2,6 +2,7 @@
 import styles from './styles.module.css';
 import { useEffect, useState } from 'react';
 import {
+  Button,
   Checkbox,
   RadioGroup,
   Select,
@@ -82,14 +83,7 @@ const OnboardingFormFull = () => {
   };
 
   const onSubmit = async (data: OnboardingMiniType) => {
-    try {
-      const response = await createOnboardingMini(data).unwrap();
-      console.log('Success:', response);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-
-    if (tg) {
+    if (window.Telegram && window.Telegram.WebApp) {
       const id_telegram = tg.initData.user.id;
       const extendedData = {
         ...data,
@@ -97,6 +91,15 @@ const OnboardingFormFull = () => {
       };
       tg.sendData(JSON.stringify(extendedData));
       tg.close();
+    } else {
+      tg.sendData(JSON.stringify(data));
+      tg.close();
+    }
+    try {
+      const response = await createOnboardingMini(data).unwrap();
+      console.log('Success:', response);
+    } catch (error) {
+      console.error('Error:', error);
     }
   };
 
@@ -496,7 +499,9 @@ const OnboardingFormFull = () => {
           />
         </div>
 
-        <input type="submit" />
+        <Button type="submit" view="action" width="auto">
+          Отправить
+        </Button>
       </form>
     </div>
   );

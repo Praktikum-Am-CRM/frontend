@@ -1,5 +1,5 @@
 import styles from './styles.module.css';
-import { Switch, Text, TextInput } from '@gravity-ui/uikit';
+import { Button, Switch, Text, TextInput } from '@gravity-ui/uikit';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { reportBotSchema } from '../../utils/validationSchema';
@@ -24,14 +24,7 @@ const ReportForm = () => {
   });
 
   const onSubmit = async (data: ReportBotType) => {
-    try {
-      const response = await postReportBotMutation(data).unwrap();
-      console.log('Success:', response);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-
-    if (tg) {
+    if (window.Telegram && window.Telegram.WebApp) {
       const id_telegram = tg.initData.user.id;
       const extendedData = {
         ...data,
@@ -39,6 +32,16 @@ const ReportForm = () => {
       };
       tg.sendData(JSON.stringify(extendedData));
       tg.close();
+    } else {
+      tg.sendData(JSON.stringify(data));
+      tg.close();
+    }
+
+    try {
+      const response = await postReportBotMutation(data).unwrap();
+      console.log('Success:', response);
+    } catch (error) {
+      console.error('Error:', error);
     }
   };
 
@@ -108,7 +111,9 @@ const ReportForm = () => {
           />
         </div>
 
-        <input type="submit" />
+        <Button type="submit" view="action" width="auto">
+          Отправить
+        </Button>
       </form>
     </div>
   );
