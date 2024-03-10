@@ -28,6 +28,10 @@
   display: flex;
 }
 
+.card__infoPoint_type_status {
+  position: relative;
+}
+
 .card__infoPoint_type_achievement {
   padding: 0;
 }
@@ -58,4 +62,16 @@
 .card__achives {
   list-style: none;
   padding-left: 0;
+}
+
+.card__arrowToggle {
+  color: #00000080;
+  margin-left: 6px;
+}
+
+.card__formStatus {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
 }
