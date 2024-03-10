@@ -93,7 +93,7 @@ export default function TableComponent({
         ...data,
         id: data.id,
         ambassador: textWithTooltip(`${data.first_name} ${data.last_name}`),
-        status: defineStatus(data.status),
+        status: defineStatus(data.status.id),
         promo: data.promocode,
         telegram: (
           <Link

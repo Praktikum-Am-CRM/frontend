@@ -1,6 +1,7 @@
 import Activity from '../Activity';
 import { useGetAmbassadorReportsQuery } from '../../store/amCrm/amCrm.api';
 import { TableColumnConfig } from '../../types/types';
+import { Skeleton } from '@gravity-ui/uikit';
 
 const columns: TableColumnConfig[] = [
   { id: 'placement', name: 'Площадка' },
@@ -14,9 +15,9 @@ export default function AmbassadorActivity({ userId }: { userId: string }) {
   const { data: reports, isFetching } = useGetAmbassadorReportsQuery({
     id: userId,
   });
-  return (
-    reports && (
-      <Activity reports={reports} isFetching={isFetching} columns={columns} />
-    )
+  return isFetching ? (
+    <Skeleton style={{ height: '100px', width: '100%' }} />
+  ) : (
+    reports && <Activity reports={reports} columns={columns} />
   );
 }

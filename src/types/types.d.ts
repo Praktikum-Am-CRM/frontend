@@ -42,8 +42,8 @@ export type Message = BulkMessage | PersonalMessage;
 
 export type AmbassadorDataType = {
   id: string;
-  telegram_bot: TelegramBot;
-  status: string;
+  telegram_bot: TelegramBotType;
+  status: StatusType;
   manager: string;
   promocode: string;
   phone: string;
@@ -72,7 +72,7 @@ export type AmbassadorDataType = {
   middle_name: string;
   gender: string;
   birthday: string;
-  programs: Program[];
+  programs: ProgramType[];
   goals: GoalType[];
   activity: ActivityType[];
   achieves: AchieveType[];
@@ -107,6 +107,8 @@ export type ActivityType = {
 export type StatusType = {
   id: string;
   status_name: string;
+  sort_level: number;
+  available: boolean;
 };
 
 export type MessageType = {

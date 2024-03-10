@@ -97,35 +97,36 @@ export default function Card({
                     @{ambassadorInfo.telegram_bot.nickname}
                   </Link>
                 </li>
-                {ambassadorInfo.status !== 'candidate' && (
-                  <li className={styles.card__infoPoint}>
-                    <Text
-                      className={styles.card__pointDescription}
-                      color="secondary"
-                    >
-                      Статус
-                    </Text>
-                    <div className={styles.card__status}>
-                      {ambassadorInfo.status &&
-                        defineStatus(ambassadorInfo.status)}
-                    </div>
-                  </li>
-                )}
-                {ambassadorInfo.status !== 'candidate' && (
-                  <li
-                    className={`${styles.card__infoPoint} ${styles.card__infoPoint_type_achievement}`}
+
+                <li className={styles.card__infoPoint}>
+                  <Text
+                    className={styles.card__pointDescription}
+                    color="secondary"
                   >
-                    <Text
-                      className={styles.card__pointDescription}
-                      color="secondary"
+                    Статус
+                  </Text>
+                  <div className={styles.card__status}>
+                    {ambassadorInfo.status &&
+                      defineStatus(ambassadorInfo.status.id)}
+                  </div>
+                </li>
+
+                {ambassadorInfo.status.id !== STATUSES.CANDIDATE ||
+                  (STATUSES.ARCHIVE && (
+                    <li
+                      className={`${styles.card__infoPoint} ${styles.card__infoPoint_type_achievement}`}
                     >
-                      Ачивка
-                    </Text>
-                    <ul className={styles.card__achives}>
-                      {renderAchives(ambassadorInfo)}
-                    </ul>
-                  </li>
-                )}
+                      <Text
+                        className={styles.card__pointDescription}
+                        color="secondary"
+                      >
+                        Ачивка
+                      </Text>
+                      <ul className={styles.card__achives}>
+                        {renderAchives(ambassadorInfo)}
+                      </ul>
+                    </li>
+                  ))}
                 <li className={styles.card__infoPoint}>
                   <Text
                     className={styles.card__pointDescription}

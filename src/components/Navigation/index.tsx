@@ -7,7 +7,7 @@ const links = [
   { title: 'Амбассадоры', url: 'ambassadors' },
   { title: 'Кандидаты', url: 'candidates' },
   { title: 'Статистика', url: 'statistics' },
-  { title: 'Уведомления', url: 'notifications' },
+  { title: 'Отчеты', url: 'notifications' },
   { title: 'Мерч', url: 'merch' },
 ];
 

@@ -22,13 +22,13 @@ export default function MerchPage() {
               handleTabClick(id);
             }}
           />
-          <Tabs.Item
+          {/* <Tabs.Item
             id="expenses"
             title="Расходы на мерч"
             onClick={id => {
               handleTabClick(id);
             }}
-          />
+          /> */}
         </Tabs>
         <Button view="action" size="l">
           Цены на мерч

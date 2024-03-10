@@ -49,6 +49,11 @@ export default function AmbassadorsPage() {
     setPaginationState(prevState => ({ ...prevState, page, pageSize }));
   };
 
+  const handlePageSizeChange = (pageSize: number) => ({
+    action: () => setPaginationState(prevState => ({ ...prevState, pageSize })),
+    text: pageSize,
+  });
+
   return (
     <section className={styles.ambassadorsPage}>
       <div className={styles.ambassadorsPage__container}>
@@ -76,34 +81,13 @@ export default function AmbassadorsPage() {
               {...props}
               style={{ cursor: 'pointer', borderBottom: '1px dotted' }}
             >
-              Количество строк
+              Количество строк на странице: {paginationState.pageSize}
             </div>
           )}
           items={[
-            {
-              action: () =>
-                setPaginationState(prevState => ({
-                  ...prevState,
-                  pageSize: 100,
-                })),
-              text: '100',
-            },
-            {
-              action: () =>
-                setPaginationState(prevState => ({
-                  ...prevState,
-                  pageSize: 30,
-                })),
-              text: '30',
-            },
-            {
-              action: () =>
-                setPaginationState(prevState => ({
-                  ...prevState,
-                  pageSize: 15,
-                })),
-              text: '15',
-            },
+            handlePageSizeChange(15),
+            handlePageSizeChange(30),
+            handlePageSizeChange(50),
           ]}
         />
       </div>
