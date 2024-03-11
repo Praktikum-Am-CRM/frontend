@@ -12,14 +12,17 @@ const columns: TableColumnConfig[] = [
 ];
 
 export default function NotificationTable() {
-  const { data: allReports, isFetching } = useGetAllReportsQuery();
+  const {
+    data: allReports,
+    // isFetching
+  } = useGetAllReportsQuery();
 
   return (
     <div>
       {allReports && (
         <Activity
           reports={allReports}
-          isFetching={isFetching}
+          // isFetching={isFetching}
           columns={columns}
         />
       )}
