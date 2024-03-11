@@ -1,4 +1,11 @@
-import { Button, Icon, Link, Table } from '@gravity-ui/uikit';
+import {
+  Button,
+  Icon,
+  Link,
+  Table,
+  useToaster,
+  withTableSorting,
+} from '@gravity-ui/uikit';
 import { Check, OctagonXmark } from '@gravity-ui/icons';
 import styles from './styles.module.css';
 import RatingComponent from '../RatingComponent';
@@ -10,6 +17,7 @@ import { TextWithTooltip } from '../TextWithTooltip/index';
 import { usePatchReportMutation } from '../../store/amCrm/amCrm.api';
 import { formatDate } from '../../utils/formatDate';
 
+const TableWithSort = withTableSorting(Table);
 export default function Activity({
   reports,
   columns,
@@ -18,6 +26,7 @@ export default function Activity({
   columns: TableColumnConfig[];
 }) {
   const [patchReportStatus] = usePatchReportMutation();
+  const { add } = useToaster();
 
   const handleReportStatusChange = useCallback(
     (id: string, status: string) =>
@@ -39,6 +48,8 @@ export default function Activity({
   const prepareDataForTable = useCallback((data: ReportQueryType) => {
     return {
       id: data.id,
+      ambassador: `${data.ambassador?.first_name} ${data.ambassador?.last_name}`,
+
       placement: (
         <Link view="normal" href={data.content_link}>
           <TextWithTooltip text={data.placement.site} width="150px" />
@@ -64,9 +75,25 @@ export default function Activity({
             <Button
               view="action"
               size="m"
-              onClick={() =>
+              onClick={() => {
                 handleReportStatusChange(data.id, REPORT_STATUSES.ACCEPT)
-              }
+                  .then(() => {
+                    add({
+                      name: 'ratingSuccess',
+                      title: 'Успешно одобрили отчёт',
+                      autoHiding: 5000,
+                      theme: 'success',
+                    });
+                  })
+                  .catch(() =>
+                    add({
+                      name: 'ratingError',
+                      title: 'Не удалось одобрить отчёт',
+                      autoHiding: 5000,
+                      theme: 'danger',
+                    }),
+                  );
+              }}
             >
               <Icon data={Check} size="16" />
             </Button>
@@ -75,6 +102,22 @@ export default function Activity({
               size="m"
               onClick={() =>
                 handleReportStatusChange(data.id, REPORT_STATUSES.REJECT)
+                  .then(() => {
+                    add({
+                      name: 'ratingSuccess',
+                      title: 'Успешно отклонили отчёт',
+                      autoHiding: 5000,
+                      theme: 'success',
+                    });
+                  })
+                  .catch(() =>
+                    add({
+                      name: 'ratingError',
+                      title: 'Не удалось отклонить отчёт',
+                      autoHiding: 5000,
+                      theme: 'danger',
+                    }),
+                  )
               }
             >
               <Icon data={OctagonXmark} size="16" />
@@ -100,7 +143,7 @@ export default function Activity({
   return (
     <section className={styles.activity}>
       {preparedTableData && (
-        <Table
+        <TableWithSort
           className={styles.activityTable}
           data={preparedTableData}
           columns={columns}

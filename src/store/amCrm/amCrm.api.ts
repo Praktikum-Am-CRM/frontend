@@ -2,8 +2,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
   ActivityType,
-  AmbassadorDataResponse,
   AmbassadorDataType,
+  DataResponseFromServer,
   GoalType,
   MerchRequestListType,
   MerchRequestType,
@@ -15,6 +15,7 @@ import {
   RequestStatusType,
   StatusType,
 } from '../../types/types';
+import { REPORT_STATUSES } from '../../utils/constants';
 
 interface LoginRequest {
   email: string;
@@ -55,7 +56,7 @@ export const api = createApi({
       invalidatesTags: ['Auth'],
     }),
     getAmbassadorsList: build.query<
-      AmbassadorDataResponse,
+      DataResponseFromServer<AmbassadorDataType>,
       {
         status: string | string[];
         limit?: number;
@@ -139,6 +140,7 @@ export const api = createApi({
           report_status: status,
         },
       }),
+      invalidatesTags: ['AllReports'],
     }),
 
     patchDataAmbassador: build.mutation<
@@ -201,7 +203,7 @@ export const api = createApi({
           note: note,
         },
       }),
-      invalidatesTags: ['Ambassador'],
+      invalidatesTags: ['Ambassador', 'Ambassadors'],
     }),
 
     getMerchStatuses: build.query<RequestStatusType[], void>({
@@ -215,11 +217,35 @@ export const api = createApi({
       }),
       providesTags: ['Merch'],
     }),
-    getAllReports: build.query<ReportQueryType[], void>({
-      query: () => ({
-        url: 'report/',
+    getAllReports: build.query<
+      DataResponseFromServer<ReportQueryType>,
+      { limit?: number; page?: number }
+    >({
+      query: ({ limit = 15, page = 1 }) => {
+        const searchParams = new URLSearchParams();
+
+        searchParams.append('status', REPORT_STATUSES.ACCEPT);
+        searchParams.append('status', REPORT_STATUSES.REJECT);
+        searchParams.set('limit', limit.toString());
+        searchParams.set('page', page.toString());
+
+        return {
+          url: 'report/',
+          params: searchParams,
+        };
+      },
+    }),
+    getUnreadReports: build.query<
+      DataResponseFromServer<ReportQueryType>,
+      { limit?: number; page?: number }
+    >({
+      query: ({ limit = 15, page = 1 }) => ({
+        url: 'report/unread_reports/',
+        params: {
+          limit,
+          page,
+        },
       }),
-      providesTags: ['AllReports'],
     }),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     createOnboardingMini: build.mutation<any, OnboardingMiniType>({
@@ -263,7 +289,8 @@ export const {
   useGetReportStatusesQuery,
   useGetMerchRequestsQuery,
   useGetMerchStatusesQuery,
-  useGetAllReportsQuery,
+  useLazyGetAllReportsQuery,
+  useLazyGetUnreadReportsQuery,
   useCreateOnboardingMiniMutation,
   usePostReportBotMutation,
   usePatchDataAmbassadorMutation,

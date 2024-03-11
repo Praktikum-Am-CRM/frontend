@@ -139,14 +139,15 @@ export type AchieveType = {
   available: boolean;
 };
 
-export interface AmbassadorDataResponse {
+export interface DataResponseFromServer<T> {
   count: number;
   next: string;
   previous: string;
-  results: AmbassadorDataType[];
+  results: T[];
 }
 
 export type ReportQueryType = {
+  ambassador?: AmbassadorsType;
   id: string;
   report_date: string;
   content_link: string;

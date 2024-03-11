@@ -7,10 +7,12 @@ const columns = [
     name: 'Амбассадор',
     meta: {
       sort: (
-        a: { ambassador: { props: { text: string } } },
-        b: { ambassador: { props: { text: string } } },
+        a: { ambassador: { props: { content: string } } },
+        b: { ambassador: { props: { content: string } } },
       ) => {
-        return a.ambassador.props.text.localeCompare(b.ambassador.props.text);
+        return a.ambassador.props.content.localeCompare(
+          b.ambassador.props.content,
+        );
       },
     },
   },
