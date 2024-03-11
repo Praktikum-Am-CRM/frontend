@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { Rating } from '@smastrom/react-rating';
 
 import '@smastrom/react-rating/style.css';
@@ -17,7 +18,6 @@ export default function RatingComponent({
   const [patchGrade] = usePatchReportMutation();
 
   const handleChange = (value: number) => {
-    console.log(value);
     patchGrade({ report_id: reportId, grade: value * 2 })
       .unwrap()
       .then(() => {

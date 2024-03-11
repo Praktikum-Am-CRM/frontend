@@ -4,7 +4,6 @@ import CandidateTable from '../../components/CandidateTable';
 import { useEffect, useState } from 'react';
 
 import styles from './styles.module.css';
-// import Search from '../../components/Search';
 import { STATUSES } from '../../utils/constants';
 import {
   useGetAmbassadorsListQuery,
@@ -22,7 +21,6 @@ export default function CandidatesPage() {
   const [triggerCandidateQuery, { data: candidateListResponse }] =
     useLazyGetAmbassadorsListQuery();
 
-  //Запрос только для вывода числа архивных записей
   const { data: candidateArchiveListResponse } = useGetAmbassadorsListQuery({
     status: STATUSES.ARCHIVE,
   });
@@ -58,10 +56,6 @@ export default function CandidatesPage() {
 
   return (
     <section className={styles.candidatesPage}>
-      {/* <div className={styles.candidatesPage__searchContainer}>
-        <Search />
-      </div> */}
-
       <Tabs activeTab={activeTab} size="xl" className={styles.tabs}>
         <Tabs.Item
           id="new"

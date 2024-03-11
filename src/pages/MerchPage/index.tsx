@@ -25,13 +25,6 @@ export default function MerchPage() {
               handleTabClick(id);
             }}
           />
-          {/* <Tabs.Item
-            id="expenses"
-            title="Расходы на мерч"
-            onClick={id => {
-              handleTabClick(id);
-            }}
-          /> */}
         </Tabs>
         <Button view="action" size="l" onClick={() => openModal()}>
           Цены на мерч
