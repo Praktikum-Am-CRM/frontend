@@ -125,9 +125,16 @@ export default function AmbassadorData({
   function renderGoals() {
     if (user.goals[0].own_version) {
       return (
-        <li className={styles.ambassodorCard__itemActivity}>
-          {user.goals[0].own_version}
-        </li>
+        <ul
+          className={`${styles.ambassodorCard__list} ${styles.ambassodorCard__listAnother}`}
+        >
+          <li className={styles.ambassodorCard__itemActivity}>
+            {user.goals[0].goal.goal_name}
+          </li>
+          <li className={styles.ambassodorCard__itemActivity}>
+            {user.goals[0].own_version}
+          </li>
+        </ul>
       );
     } else {
       return (
@@ -296,11 +303,7 @@ export default function AmbassadorData({
             </li>
             <li className={styles.ambassodorCard__item}>
               {standartTextInput('Цель учёбы в Практикум')}
-              <ul
-                className={`${styles.ambassodorCard__list} ${styles.ambassodorCard__listAnother}`}
-              >
-                {renderGoals()}
-              </ul>
+              {renderGoals()}
             </li>
           </ul>
         )}
