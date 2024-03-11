@@ -31,6 +31,7 @@ export const api = createApi({
     'Auth',
     'Merch',
     'AllReports',
+    'AmbassadorMessages',
   ],
   endpoints: build => ({
     login: build.mutation<LoginResponse, LoginRequest>({
@@ -217,6 +218,9 @@ export const api = createApi({
         method: 'POST',
         body: data,
       }),
+      invalidatesTags: (_result, _error, arg) => [
+        { type: 'AmbassadorMessages', id: arg.ambassadors?.[0] },
+      ],
     }),
     getAmbassadorMessages: build.query<
       MessageHistoryItemType[],
@@ -225,6 +229,9 @@ export const api = createApi({
       query: ({ id }) => ({
         url: `ambassador/${id}/messages/`,
       }),
+      providesTags: (_result, _error, arg) => [
+        { type: 'AmbassadorMessages', id: arg.id },
+      ],
     }),
   }),
 });
