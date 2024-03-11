@@ -1,5 +1,5 @@
 import styles from './styles.module.css';
-import { Button, Skeleton, Table, Text } from '@gravity-ui/uikit';
+import { Button, Skeleton, Table, Text, useToaster } from '@gravity-ui/uikit';
 import { useGetAmbassadorMerchQuery } from '../../store/amCrm/amCrm.api';
 import { ArrowDownToSquare } from '@gravity-ui/icons';
 import { TextWithTooltip } from '../TextWithTooltip';
@@ -18,6 +18,27 @@ export default function Merch({ userId }: { userId: string }) {
   const { data: ambassadorMerch, isFetching } = useGetAmbassadorMerchQuery({
     id: userId,
   });
+  const { add } = useToaster();
+  const handleCopyClick = (text: string) => {
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        add({
+          name: 'clipboard',
+          title: 'Информация скопирована в буфер обмена',
+          theme: 'success',
+          autoHiding: 5000,
+        });
+      })
+      .catch(() => {
+        add({
+          name: 'clipboard',
+          title: 'Информация не скопирована в буфер обмена',
+          theme: 'danger',
+          autoHiding: 5000,
+        });
+      });
+  };
 
   const prepareDataForTable = (data: MerchRequestType) => {
     const address = `${data.request_delivery_address.country}, ${data.request_delivery_address.settlement}, ${data.request_delivery_address.street}, д.${data.request_delivery_address.house}, ${data.request_delivery_address.building === null ? '' : `к${data.request_delivery_address.building}`}, кв.${data.request_delivery_address.apartment}`;
@@ -30,7 +51,11 @@ export default function Merch({ userId }: { userId: string }) {
       copy: (
         <Button
           view="flat"
-          onClick={() => navigator.clipboard.writeText(address)}
+          onClick={() =>
+            handleCopyClick(
+              `${data.request_merch.merch_name} 1 шт по адресу ${address} ${data.request_status.status_name}`,
+            )
+          }
         >
           <ArrowDownToSquare />
         </Button>

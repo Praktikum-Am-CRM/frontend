@@ -7,6 +7,7 @@ import {
   Link,
   Tabs,
   Text,
+  useToaster,
 } from '@gravity-ui/uikit';
 import { useState } from 'react';
 import AmbassadorData from '../AmbassadorData';
@@ -31,7 +32,7 @@ export default function Card({
   const [activeTab, setActiveTab] = useState<string>('tabs-data');
   const [isMerchDelivery, setIsMerchDelivery] = useState<boolean>(false);
   const [patchDataAmbassador] = usePatchDataAmbassadorMutation();
-
+  const { add } = useToaster();
   const { data: ambassadorInfo } = useGetAmbassadorInfoQuery({ id: rowId });
 
   function determineContent(id: string) {
@@ -65,12 +66,36 @@ export default function Card({
     setActiveTab(id);
   }
 
+  const handleStatusPatchToaster = (bool: boolean) =>
+    bool
+      ? add({
+          name: 'status',
+          title: 'Статус изменен',
+          theme: 'success',
+          autoHiding: 5000,
+        })
+      : add({
+          name: 'status',
+          title: 'Статус не изменен',
+          theme: 'danger',
+          autoHiding: 5000,
+        });
+
   const handleStatusChange = (status: string, id: string) => ({
-    action: () =>
+    action: () => {
       patchDataAmbassador({
         id,
         status,
-      }),
+      })
+        .unwrap()
+        .then(() => {
+          handleStatusPatchToaster(true);
+        })
+        .catch(() => {
+          handleStatusPatchToaster(false);
+        });
+    },
+
     text: status && defineStatus(status),
   });
 
@@ -195,7 +220,10 @@ export default function Card({
                     patchDataAmbassador({
                       id: ambassadorInfo.id,
                       status: STATUSES.ACTIVE,
-                    });
+                    })
+                      .unwrap()
+                      .then(() => handleStatusPatchToaster(true))
+                      .catch(() => handleStatusPatchToaster(false));
                   }}
                 >
                   <Button className={styles.card__assignButton} type="submit">
