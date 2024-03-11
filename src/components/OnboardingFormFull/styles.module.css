@@ -13,7 +13,6 @@
   flex-wrap: wrap;
   align-content: flex-start;
   gap: 12px;
-  /* align-items: flex-start; */
 }
 
 .nameSurname {

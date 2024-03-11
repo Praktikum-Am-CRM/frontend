@@ -8,8 +8,6 @@ import { ChartOptions } from 'chart.js';
 
 import { STATS_COLORS } from '../../utils/constants';
 
-// import PolarAreaChart from '../../components/PolarAreaStats';
-
 export default function StatisticsPage() {
   const { data: ambStatusesStats } = useGetStatisticsOnAmbassadorsQuery();
   const { data: programStats } = useGetStatisticsOnProgramQuery();
