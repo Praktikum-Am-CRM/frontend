@@ -43,33 +43,23 @@ export const LoginForm = () => {
         navigate('/');
       }
     } catch (error) {
+      let errorMessage = TEXTS.LOGIN_PAGE.LOGIN_UNKNOWN_ERROR;
       if (isErrorWithData(error)) {
-        toaster.add({
-          name: 'login-error',
-          title: 'Произошла ошибка',
-          content: error.data.non_field_errors[0],
-          actions: [
-            {
-              label: 'ОК',
-              removeAfterClick: true,
-              onClick: () => {},
-            },
-          ],
-        });
-      } else {
-        toaster.add({
-          name: 'login-error',
-          title: 'Произошла ошибка',
-          content: 'Произошла неизвестная ошибка',
-          actions: [
-            {
-              label: 'ОК',
-              removeAfterClick: true,
-              onClick: () => {},
-            },
-          ],
-        });
+        errorMessage = error.data.non_field_errors[0];
       }
+
+      toaster.add({
+        name: 'login-error',
+        title: TEXTS.LOGIN_PAGE.LOGIN_ERROR_TITLE,
+        content: errorMessage,
+        actions: [
+          {
+            label: 'OK',
+            removeAfterClick: true,
+            onClick: () => {},
+          },
+        ],
+      });
     }
   };
 

@@ -18,7 +18,7 @@ const Mailing = () => {
   const handleTabClick = (tabId: TabId) => setActiveTab(tabId);
 
   return (
-    <div className={styles.mailListContainer}>
+    <div>
       <Tabs size="l" className={styles.tabs}>
         <Tabs.Item
           id="tabs-newMailing"

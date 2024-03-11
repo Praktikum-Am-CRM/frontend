@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-type TabId = 'newMailing' | 'delayed' | 'drafts' | 'history';
+type TabId = 'newMailing';
 
 interface MailingState {
   activeTab: TabId;

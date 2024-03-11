@@ -3,6 +3,7 @@ import { Link, Text } from '@gravity-ui/uikit';
 import { messageHistoryAmbassadorId } from '../../utils/mockData';
 import { MessageHistoryItemType } from '../../types/types';
 import { formatDate } from '../../utils/formatDate';
+import { TEXTS } from '../../utils/constants';
 
 const groupByDate = (messages: MessageHistoryItemType[]) => {
   const groups: { [key: string]: MessageHistoryItemType[] } = {};
@@ -25,7 +26,9 @@ const formatMessageTime = (dateString: string) => {
 };
 
 const isAmbassadorsMessage = (message: MessageHistoryItemType) => {
-  return message.message.message_type.type_name === 'Сообщение от пользователя';
+  return (
+    message.message.message_type.type_name === TEXTS.COMMUNICATION.USERS_MESSAGE
+  );
 };
 const CommunicationHistory = () => {
   const groupedMessages = groupByDate(messageHistoryAmbassadorId);

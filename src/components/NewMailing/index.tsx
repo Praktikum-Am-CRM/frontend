@@ -5,6 +5,7 @@ import { toaster } from '@gravity-ui/uikit/toaster-singleton-react-18';
 import { useAppSelector } from '../../hooks/redux';
 import { useActions } from '../../hooks/actions';
 import { usePostNewMessageMutation } from '../../store/amCrm/amCrm.api';
+import { TEXTS } from '../../utils/constants';
 
 const NewMailing = () => {
   const [postNewMessageMutation] = usePostNewMessageMutation();
@@ -32,8 +33,8 @@ const NewMailing = () => {
       });
       toaster.add({
         name: 'send-to-picked-ok',
-        title: 'Рассылка отправлена',
-        content: 'Сообщение отправлено выбранным пользователям',
+        title: TEXTS.MAILING.MAILING_SENT,
+        content: TEXTS.MAILING.MESSAGE_SENT,
         actions: [
           {
             label: 'ОК',
@@ -47,8 +48,8 @@ const NewMailing = () => {
     } catch (err) {
       toaster.add({
         name: 'send-to-picked-err',
-        title: 'Произошла ошибка',
-        content: 'Сообщение не было отправлено',
+        title: TEXTS.MAILING.ERROR_OCCURRED,
+        content: TEXTS.MAILING.MESSAGE_NOT_SENT,
         actions: [
           {
             label: 'ОК',
@@ -71,8 +72,8 @@ const NewMailing = () => {
       });
       toaster.add({
         name: 'send-to-all-ok',
-        title: 'Рассылка отправлена',
-        content: 'Сообщение отправлено всем пользователям',
+        title: TEXTS.MAILING.MAILING_SENT,
+        content: TEXTS.MAILING.MESSAGE_SENT_ALL,
         actions: [
           {
             label: 'ОК',
@@ -86,8 +87,8 @@ const NewMailing = () => {
     } catch (err) {
       toaster.add({
         name: 'send-to-all-err',
-        title: 'Произошла ошибка',
-        content: 'Сообщение не было отправлено',
+        title: TEXTS.MAILING.ERROR_OCCURRED,
+        content: TEXTS.MAILING.MESSAGE_NOT_SENT,
         actions: [
           {
             label: 'ОК',
@@ -126,7 +127,7 @@ const NewMailing = () => {
   return (
     <>
       <TextArea
-        placeholder="Начните новую рассылку"
+        placeholder={TEXTS.MAILING.PLACEHOLDER}
         size="xl"
         className={styles.textArea}
         value={textAreaValue}
@@ -135,12 +136,16 @@ const NewMailing = () => {
 
       <div className={styles.actions}>
         {createButton(
-          `Отправить выбранным (${selectedUsersIds.length})`,
+          `${TEXTS.MAILING.SEND_TO_SELECTED} (${selectedUsersIds.length})`,
           handleSendToSelected,
           isSendDisabled,
           'action',
         )}
-        {createButton('Отправить всем', handleSendClick, isTextValueEmpty())}
+        {createButton(
+          TEXTS.MAILING.SEND_TO_ALL,
+          handleSendClick,
+          isTextValueEmpty(),
+        )}
       </div>
     </>
   );
