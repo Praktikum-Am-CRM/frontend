@@ -9,6 +9,7 @@ import {
   Text,
   TextInput,
 } from '@gravity-ui/uikit';
+import { toaster } from '@gravity-ui/uikit/toaster-singleton-react-18';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { onboardingFullSchema } from '../../utils/validationSchema';
@@ -25,6 +26,7 @@ import {
   ProgramType,
 } from '../../types/types';
 import SizeClothing from '../../assets/images/sizeClothing.webp';
+import { TEXTS } from '../../utils/constants';
 
 declare global {
   interface Window {
@@ -64,7 +66,6 @@ const OnboardingFormFull = () => {
       content: goal.goal_name,
     })) || [];
 
-  // debugger;
   const activitiesOptions =
     activitiesList?.filter((activity: ActivityType) => activity.available) ||
     [];
@@ -84,10 +85,31 @@ const OnboardingFormFull = () => {
 
   const onSubmit = async (data: OnboardingMiniType) => {
     try {
-      const response = await createOnboardingMini(data).unwrap();
-      console.log('Success:', response);
+      await createOnboardingMini(data);
+      toaster.add({
+        name: 'onboarding-full-ok',
+        title: 'Данные отправлены',
+        actions: [
+          {
+            label: 'ОК',
+            removeAfterClick: true,
+            onClick: () => {},
+          },
+        ],
+      });
     } catch (error) {
-      console.error('Error:', error);
+      toaster.add({
+        name: 'onboarding-full-err',
+        title: 'Произошла ошибка',
+        content: 'Данные не отправлены',
+        actions: [
+          {
+            label: 'ОК',
+            removeAfterClick: true,
+            onClick: () => {},
+          },
+        ],
+      });
     }
 
     if (tg) {
@@ -113,14 +135,11 @@ const OnboardingFormFull = () => {
 
   return (
     <div className={styles.root}>
-      <Text variant="subheader-3">Анкета амбассадора</Text>
-      <Text variant="body-3">
-        Привет! Поздравляю, теперь ты — амбассадор Яндекс Практикума! Мы хотим
-        познакомиться с тобой поближе, поэтому пройди, пожалуйста, этот опрос :)
-      </Text>
+      <Text variant="subheader-3">{TEXTS.ONBOARDING.SUBHEADER}</Text>
+      <Text variant="body-3">{TEXTS.ONBOARDING.INTRO_TEXT}</Text>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <Text>Представься, пожалуйста. Укажи свою фамилию и имя.</Text>
+          <Text>{TEXTS.ONBOARDING.NAME_SURNAME}</Text>
           <div className={styles.nameSurname}>
             <TextInput
               size="l"
@@ -140,13 +159,13 @@ const OnboardingFormFull = () => {
         </div>
 
         <div>
-          <Text>Пол</Text>
+          <Text>{TEXTS.ONBOARDING.GENDER}</Text>
           <Controller
             control={control}
             name="gender"
             render={({ field }) => (
               <RadioGroup
-                aria-label="Пол"
+                aria-label={TEXTS.ONBOARDING.GENDER}
                 options={genderOptions}
                 direction="horizontal"
                 {...field}
@@ -156,18 +175,18 @@ const OnboardingFormFull = () => {
         </div>
 
         <div>
-          <Text>Твой ник в телеграм</Text>
+          <Text>{TEXTS.ONBOARDING.NICKNAME}</Text>
           <TextInput
             size="l"
             {...register('telegram_id')}
-            placeholder="Имя"
-            error={Boolean(errors.first_name)}
-            errorMessage={errors.first_name?.message}
+            placeholder="Никнейм"
+            error={Boolean(errors.telegram_id)}
+            errorMessage={errors.telegram_id?.message}
           />
         </div>
 
         <div>
-          <Text>Выбери программу, на которой ты учишься или учился/лась</Text>
+          <Text>{TEXTS.ONBOARDING.PROGRAM}</Text>
           <Controller
             name="programs"
             control={control}
@@ -194,11 +213,7 @@ const OnboardingFormFull = () => {
         </div>
 
         <div>
-          <Text>
-            {`Адрес электронной почты.
-            Та, через которую ты регистрировался в
-            студенческой Пачке`}
-          </Text>
+          <Text>{TEXTS.ONBOARDING.EMAIL}</Text>
           <TextInput
             size="l"
             {...register('email')}
@@ -209,7 +224,7 @@ const OnboardingFormFull = () => {
         </div>
 
         <div>
-          <Text>Укажи, пожалуйста, номер своего телефона</Text>
+          <Text>{TEXTS.ONBOARDING.PHONE}</Text>
           <TextInput
             size="l"
             {...register('phone_number')}
@@ -220,7 +235,7 @@ const OnboardingFormFull = () => {
         </div>
 
         <div>
-          <Text>В какой стране ты проживаешь?</Text>
+          <Text>{TEXTS.ONBOARDING.COUNTRY}</Text>
           <TextInput
             size="l"
             {...register('address_country')}
@@ -231,7 +246,7 @@ const OnboardingFormFull = () => {
         </div>
 
         <div>
-          <Text>Напиши, пожалуйста полный адрес</Text>
+          <Text>{TEXTS.ONBOARDING.FULL_ADDRESS}</Text>
           <div className={styles.fullAdressLine}>
             <Text className={styles.fullAdressQuestion}>Индекс</Text>
             <TextInput
@@ -317,9 +332,7 @@ const OnboardingFormFull = () => {
         </div>
 
         <div>
-          <Text variant="body-3">
-            С какой целью ты пришел/пришла учиться в Практикум?
-          </Text>
+          <Text variant="body-3">{TEXTS.ONBOARDING.GOAL_QUESTION}</Text>
           <Controller
             control={control}
             name="goals"
@@ -341,7 +354,7 @@ const OnboardingFormFull = () => {
             )}
           />
 
-          {selectedGoal === 'f5b706ef-9a19-4a71-9af2-99a3d86543ec' && (
+          {selectedGoal === TEXTS.ONBOARDING.OWN_GOAL_ID && (
             <TextInput
               {...register('own_version')}
               placeholder="Укажите свою цель"
@@ -352,7 +365,7 @@ const OnboardingFormFull = () => {
         </div>
 
         <div>
-          <Text>Что хочешь делать в рамках амбассадорства?</Text>
+          <Text>{TEXTS.ONBOARDING.AMBASSADOR_ACTIVITY_QUESTION}</Text>
           {activitiesOptions.map((activity: ActivityType) => (
             <Checkbox
               key={activity.id}
@@ -369,9 +382,7 @@ const OnboardingFormFull = () => {
         </div>
 
         <div>
-          <Text>
-            Оставь ссылку на свой блог (активную соцсеть, которую ты ведешь)
-          </Text>
+          <Text>{TEXTS.ONBOARDING.BLOG_LINK}</Text>
           <TextInput
             size="l"
             {...register('blog_link_uri')}
@@ -382,7 +393,7 @@ const OnboardingFormFull = () => {
         </div>
 
         <div>
-          <Text>Где и кем ты работаешь сейчас?</Text>
+          <Text>{TEXTS.ONBOARDING.CURRENT_WORK}</Text>
           <TextInput
             size="l"
             {...register('place_work')}
@@ -400,9 +411,7 @@ const OnboardingFormFull = () => {
         </div>
 
         <div>
-          <Text>
-            Кто ты по образованию? Где учился/лась до Практикума и на кого?
-          </Text>
+          <Text>{TEXTS.ONBOARDING.EDUCATION}</Text>
           <TextInput
             size="l"
             {...register('educational_institution')}
@@ -413,10 +422,7 @@ const OnboardingFormFull = () => {
         </div>
 
         <div>
-          <Text>
-            Если ты хочешь рассказать о себе что-то еще, о чем мы еще не
-            спросили, напиши об этом здесь
-          </Text>
+          <Text>{TEXTS.ONBOARDING.ADDITIONAL_INFO}</Text>
           <TextInput
             size="xl"
             {...register('note')}
@@ -427,10 +433,7 @@ const OnboardingFormFull = () => {
         </div>
 
         <div>
-          <Text>
-            Размер одежды, который ты обычно носишь (на фото представлена
-            размерная сетка толстовок)
-          </Text>
+          <Text>{TEXTS.ONBOARDING.CLOTHING_SIZE}</Text>
           <div className={styles.sizesSection}>
             <img
               src={SizeClothing}
@@ -474,14 +477,10 @@ const OnboardingFormFull = () => {
           </div>
         </div>
 
-        <div className={styles.fullAdressLine}>
+        <div>
           <div>
-            <Text className={styles.fullAdressQuestion}>Твой размер обуви</Text>
-            <Text>
-              Пусть тебя не пугает этот вопрос, это нужно для того, чтобы мы
-              могли отправить тебе подарок от нас, который подойдет по размеру
-              :)
-            </Text>
+            <Text>{TEXTS.ONBOARDING.SHOE_SIZE}</Text>
+            <Text>{TEXTS.ONBOARDING.SHOE_SIZE_NOTICE}</Text>
           </div>
           <TextInput
             size="l"
@@ -493,7 +492,7 @@ const OnboardingFormFull = () => {
         </div>
 
         <Button type="submit" view="action" width="auto">
-          Отправить
+          {TEXTS.ONBOARDING.SUBMIT_BUTTON}
         </Button>
       </form>
     </div>

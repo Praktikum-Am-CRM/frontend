@@ -9,6 +9,7 @@ import {
   Text,
   TextInput,
 } from '@gravity-ui/uikit';
+import { toaster } from '@gravity-ui/uikit/toaster-singleton-react-18';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { onboardingMiniSchema } from '../../utils/validationSchema';
@@ -24,6 +25,8 @@ import {
   OnboardingMiniType,
   ProgramType,
 } from '../../types/types';
+
+import { TEXTS } from '../../utils/constants';
 
 declare global {
   interface Window {
@@ -63,7 +66,6 @@ const OnboardingFormMini = () => {
       content: goal.goal_name,
     })) || [];
 
-  // debugger;
   const activitiesOptions =
     activitiesList?.filter((activity: ActivityType) => activity.available) ||
     [];
@@ -83,10 +85,31 @@ const OnboardingFormMini = () => {
 
   const onSubmit = async (data: OnboardingMiniType) => {
     try {
-      const response = await createOnboardingMini(data).unwrap();
-      console.log('Success:', response);
+      await createOnboardingMini(data);
+      toaster.add({
+        name: 'onboarding-full-ok',
+        title: 'Данные отправлены',
+        actions: [
+          {
+            label: 'ОК',
+            removeAfterClick: true,
+            onClick: () => {},
+          },
+        ],
+      });
     } catch (error) {
-      console.error('Error:', error);
+      toaster.add({
+        name: 'onboarding-full-err',
+        title: 'Произошла ошибка',
+        content: 'Данные не отправлены',
+        actions: [
+          {
+            label: 'ОК',
+            removeAfterClick: true,
+            onClick: () => {},
+          },
+        ],
+      });
     }
 
     if (tg) {
@@ -112,14 +135,11 @@ const OnboardingFormMini = () => {
 
   return (
     <div className={styles.root}>
-      <Text variant="subheader-3">Анкета амбассадора</Text>
-      <Text variant="body-3">
-        Привет! Поздравляю, теперь ты — амбассадор Яндекс Практикума! Мы хотим
-        познакомиться с тобой поближе, поэтому пройди, пожалуйста, этот опрос :)
-      </Text>
+      <Text variant="subheader-3">{TEXTS.ONBOARDING.SUBHEADER}</Text>
+      <Text variant="body-3">{TEXTS.ONBOARDING.INTRO_TEXT}</Text>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <Text>Представься, пожалуйста. Укажи свою фамилию и имя.</Text>
+          <Text>{TEXTS.ONBOARDING.NAME_SURNAME}</Text>
           <div className={styles.nameSurname}>
             <TextInput
               size="l"
@@ -139,13 +159,13 @@ const OnboardingFormMini = () => {
         </div>
 
         <div>
-          <Text>Пол</Text>
+          <Text>{TEXTS.ONBOARDING.GENDER}</Text>
           <Controller
             control={control}
             name="gender"
             render={({ field }) => (
               <RadioGroup
-                aria-label="Пол"
+                aria-label={TEXTS.ONBOARDING.GENDER}
                 options={genderOptions}
                 direction="horizontal"
                 {...field}
@@ -155,13 +175,13 @@ const OnboardingFormMini = () => {
         </div>
 
         <div>
-          <Text>Твой ник в телеграм</Text>
+          <Text>{TEXTS.ONBOARDING.NICKNAME}</Text>
           <TextInput
             size="l"
             {...register('telegram_id')}
-            placeholder="Имя"
-            error={Boolean(errors.first_name)}
-            errorMessage={errors.first_name?.message}
+            placeholder="Никнейм"
+            error={Boolean(errors.telegram_id)}
+            errorMessage={errors.telegram_id?.message}
           />
         </div>
 
@@ -173,7 +193,7 @@ const OnboardingFormMini = () => {
               <Select
                 {...field}
                 value={field.value || []}
-                placeholder="Выбери программу, на которой ты учишься или учился/лась"
+                placeholder={TEXTS.ONBOARDING.PROGRAM}
                 size="m"
                 multiple
                 options={programOptions}
@@ -191,63 +211,57 @@ const OnboardingFormMini = () => {
         </div>
 
         <div>
-          <Text>
-            {`Адрес электронной почты.
-            Та, через которую ты регистрировался в
-            студенческой Пачке`}
-          </Text>
+          <Text>{TEXTS.ONBOARDING.EMAIL}</Text>
           <TextInput
             size="l"
             {...register('email')}
-            placeholder="email"
+            placeholder="Email"
             error={Boolean(errors.email)}
             errorMessage={errors.email?.message}
           />
         </div>
 
         <div>
-          <Text>Укажи, пожалуйста, номер своего телефона</Text>
+          <Text>{TEXTS.ONBOARDING.PHONE}</Text>
           <TextInput
             size="l"
             {...register('phone_number')}
-            placeholder="Введите номер телефона"
+            placeholder="Номер телефона"
             error={Boolean(errors.phone_number)}
             errorMessage={errors.phone_number?.message}
           />
         </div>
 
         <div>
-          <Text>В какой стране ты проживаешь?</Text>
+          <Text>{TEXTS.ONBOARDING.COUNTRY}</Text>
           <TextInput
             size="l"
             {...register('address_country')}
-            placeholder="Укажи страну"
+            placeholder="Страна"
             error={Boolean(errors.address_country)}
             errorMessage={errors.address_country?.message}
           />
         </div>
 
         <div>
-          <Text>Из какого ты города?</Text>
+          <Text>{TEXTS.ONBOARDING.FULL_ADDRESS}</Text>
           <TextInput
             size="l"
             {...register('address_settlement')}
-            placeholder="Укажи город"
+            placeholder="Полный адрес"
             error={Boolean(errors.address_settlement)}
             errorMessage={errors.address_settlement?.message}
           />
         </div>
 
         <div>
-          <Text variant="body-3">
-            С какой целью ты пришел/пришла учиться в Практикум?
-          </Text>
+          <Text variant="body-3">{TEXTS.ONBOARDING.GOAL_QUESTION}</Text>
           <Controller
             control={control}
             name="goals"
             render={({ field }) => (
               <RadioGroup
-                aria-label="Цель обучения"
+                aria-label={TEXTS.ONBOARDING.GOAL_QUESTION}
                 options={goalOptions}
                 direction="vertical"
                 {...field}
@@ -255,7 +269,7 @@ const OnboardingFormMini = () => {
                 onChange={e => {
                   const newValue = e.target.value;
                   setValue('goals', newValue);
-                  if (newValue !== 'f5b706ef-9a19-4a71-9af2-99a3d86543ec') {
+                  if (newValue !== TEXTS.ONBOARDING.OWN_GOAL_ID) {
                     setValue('own_version', undefined);
                   }
                 }}
@@ -263,10 +277,10 @@ const OnboardingFormMini = () => {
             )}
           />
 
-          {selectedGoal === 'f5b706ef-9a19-4a71-9af2-99a3d86543ec' && (
+          {selectedGoal === TEXTS.ONBOARDING.OWN_GOAL_ID && (
             <TextInput
               {...register('own_version')}
-              placeholder="Укажите свою цель"
+              placeholder="Ваша цель"
               error={Boolean(errors.own_version)}
               errorMessage={errors.own_version?.message}
             />
@@ -274,7 +288,7 @@ const OnboardingFormMini = () => {
         </div>
 
         <div>
-          <Text>Что хочешь делать в рамках амбассадорства?</Text>
+          <Text>{TEXTS.ONBOARDING.AMBASSADOR_ACTIVITY_QUESTION}</Text>
           {activitiesOptions.map((activity: ActivityType) => (
             <Checkbox
               key={activity.id}
@@ -291,65 +305,58 @@ const OnboardingFormMini = () => {
         </div>
 
         <div>
-          <Text>
-            Оставь ссылку на свой блог (активную соцсеть, которую ты ведешь)
-          </Text>
+          <Text>{TEXTS.ONBOARDING.BLOG_LINK}</Text>
           <TextInput
             size="l"
             {...register('blog_link_uri')}
-            placeholder="Ссылка"
+            placeholder="Ссылка на блог"
             error={Boolean(errors.blog_link_uri)}
             errorMessage={errors.blog_link_uri?.message}
           />
         </div>
 
         <div>
-          <Text>Где и кем ты работаешь сейчас?</Text>
+          <Text>{TEXTS.ONBOARDING.CURRENT_WORK}</Text>
           <TextInput
             size="l"
             {...register('place_work')}
-            placeholder="Где"
+            placeholder="Место работы"
             error={Boolean(errors.place_work)}
             errorMessage={errors.place_work?.message}
           />
           <TextInput
             size="l"
             {...register('specialty_work')}
-            placeholder="Кем"
+            placeholder="Специальность"
             error={Boolean(errors.specialty_work)}
             errorMessage={errors.specialty_work?.message}
           />
         </div>
 
         <div>
-          <Text>
-            Кто ты по образованию? Где учился/лась до Практикума и на кого?
-          </Text>
+          <Text>{TEXTS.ONBOARDING.EDUCATION}</Text>
           <TextInput
             size="l"
             {...register('educational_institution')}
-            placeholder="Место учебы"
+            placeholder="Образовательное учреждение"
             error={Boolean(errors.educational_institution)}
             errorMessage={errors.educational_institution?.message}
           />
         </div>
 
         <div>
-          <Text>
-            Если ты хочешь рассказать о себе что-то еще, о чем мы еще не
-            спросили, напиши об этом здесь
-          </Text>
+          <Text>{TEXTS.ONBOARDING.ADDITIONAL_INFO}</Text>
           <TextInput
             size="xl"
             {...register('note')}
-            placeholder="Тут можно что то написать, если хочется"
+            placeholder="Дополнительная информация"
             error={Boolean(errors.note)}
             errorMessage={errors.note?.message}
           />
         </div>
 
         <Button type="submit" view="action" width="auto">
-          Отправить
+          {TEXTS.ONBOARDING.SUBMIT_BUTTON}
         </Button>
       </form>
     </div>

@@ -1,10 +1,12 @@
 import styles from './styles.module.css';
 import { Button, Switch, Text, TextInput } from '@gravity-ui/uikit';
+import { toaster } from '@gravity-ui/uikit/toaster-singleton-react-18';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { reportBotSchema } from '../../utils/validationSchema';
 import { usePostReportBotMutation } from '../../store/amCrm/amCrm.api';
 import { ReportBotType } from '../../types/types';
+import { TEXTS } from '../../utils/constants';
 
 declare global {
   interface Window {
@@ -25,10 +27,31 @@ const ReportForm = () => {
 
   const onSubmit = async (data: ReportBotType) => {
     try {
-      const response = await postReportBotMutation(data).unwrap();
-      console.log('Success:', response);
+      await postReportBotMutation(data);
+      toaster.add({
+        name: 'report-ok',
+        title: TEXTS.REPORT_FORM.TOASTER_SUCCESS_TITLE,
+        actions: [
+          {
+            label: 'ОК',
+            removeAfterClick: true,
+            onClick: () => {},
+          },
+        ],
+      });
     } catch (error) {
-      console.error('Error:', error);
+      toaster.add({
+        name: 'report-err',
+        title: TEXTS.REPORT_FORM.TOASTER_ERROR_TITLE,
+        content: TEXTS.REPORT_FORM.TOASTER_ERROR_CONTENT,
+        actions: [
+          {
+            label: 'ОК',
+            removeAfterClick: true,
+            onClick: () => {},
+          },
+        ],
+      });
     }
 
     if (tg) {
@@ -39,22 +62,22 @@ const ReportForm = () => {
 
   return (
     <div className={styles.root}>
-      <Text variant="subheader-3">Мой амбассадорский контент</Text>
+      <Text variant="subheader-3">{TEXTS.REPORT_FORM.HEADER}</Text>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <Text>Фамилия, имя</Text>
+          <Text>{TEXTS.REPORT_FORM.LAST_NAME}</Text>
           <div className={styles.nameSurname}>
             <TextInput
               size="l"
               {...register('last_name')}
-              placeholder="Фамилия"
+              placeholder={TEXTS.REPORT_FORM.FIRST_NAME_PLACEHOLDER}
               error={Boolean(errors.last_name)}
               errorMessage={errors.last_name?.message}
             />
             <TextInput
               size="l"
               {...register('first_name')}
-              placeholder="Имя"
+              placeholder={TEXTS.REPORT_FORM.LAST_NAME_PLACEHOLDER}
               error={Boolean(errors.first_name)}
               errorMessage={errors.first_name?.message}
             />
@@ -62,49 +85,49 @@ const ReportForm = () => {
         </div>
 
         <div>
-          <Text>Твой ник в телеграм</Text>
+          <Text>{TEXTS.REPORT_FORM.TELEGRAM_NICK}</Text>
           <TextInput
             size="l"
             {...register('telegram_id')}
-            placeholder="Ник в телеграм"
+            placeholder={TEXTS.REPORT_FORM.TELEGRAM_NICK_PLACEHOLDER}
             error={Boolean(errors.telegram_id)}
             errorMessage={errors.telegram_id?.message}
           />
         </div>
 
         <div>
-          <Text>Ссылка на контент</Text>
+          <Text>{TEXTS.REPORT_FORM.CONTENT_LINK}</Text>
           <TextInput
             size="l"
             {...register('content_link_uri')}
-            placeholder="Ссылка на контент"
+            placeholder={TEXTS.REPORT_FORM.CONTENT_LINK_PLACEHOLDER}
             error={Boolean(errors.content_link_uri)}
             errorMessage={errors.content_link_uri?.message}
           />
         </div>
 
         <div>
-          <Text>Это контент в рамках Гайда начинающего амбассадора?</Text>
+          <Text>{TEXTS.REPORT_FORM.GUIDE_QUESTION}</Text>
           <Switch
             size="l"
             {...register('sign_junior')}
-            title="Укажите, относится ли контент к Гайду начинающего амбассадора"
+            title={TEXTS.REPORT_FORM.GUIDE_SWITCH_TITLE}
           />
         </div>
 
         <div>
-          <Text>Поле для ссылки на скриншот/скринкаст</Text>
+          <Text>{TEXTS.REPORT_FORM.SCREENSHOT_LINK}</Text>
           <TextInput
             size="l"
             {...register('screen_uri')}
-            placeholder="Ссылка на скриншот/скринкаст"
+            placeholder={TEXTS.REPORT_FORM.SCREENSHOT_LINK_PLACEHOLDER}
             error={Boolean(errors.screen_uri)}
             errorMessage={errors.screen_uri?.message}
           />
         </div>
 
         <Button type="submit" view="action" width="auto">
-          Отправить
+          {TEXTS.REPORT_FORM.SUBMIT_BUTTON}
         </Button>
       </form>
     </div>
