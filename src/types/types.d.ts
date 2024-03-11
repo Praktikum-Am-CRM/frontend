@@ -102,9 +102,13 @@ type ProgramType = {
 };
 
 type GoalType = {
-  id: string;
-  goal_name: string;
-  available: boolean;
+  goal: {
+    id: string;
+    goal_name: string;
+    available: boolean;
+  };
+
+  own_version: string;
 };
 
 type ActivityType = {

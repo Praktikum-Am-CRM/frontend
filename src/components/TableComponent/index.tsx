@@ -117,7 +117,7 @@ export default function TableComponent({
 
   const content =
     location.pathname === '/ambassadors' ? (
-      <Card rowId={pickedRowUserId} isAmbassador />
+      <Card rowId={pickedRowUserId} />
     ) : (
       <Card rowId={pickedRowUserId} />
     );

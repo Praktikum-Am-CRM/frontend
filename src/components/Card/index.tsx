@@ -21,13 +21,7 @@ import {
 import { STATUSES } from '../../utils/constants';
 import defineStatus from '../../utils/defineStatus';
 
-export default function Card({
-  rowId,
-  isAmbassador,
-}: {
-  rowId: string;
-  isAmbassador?: boolean;
-}) {
+export default function Card({ rowId }: { rowId: string }) {
   const [activeTab, setActiveTab] = useState<string>('tabs-data');
   const [isMerchDelivery, setIsMerchDelivery] = useState<boolean>(false);
   const [patchDataAmbassador] = usePatchDataAmbassadorMutation();
@@ -205,7 +199,8 @@ export default function Card({
                   </Text>
                 </li>
               </ul>
-              {isAmbassador ? (
+              {ambassadorInfo.status.id !== STATUSES.CANDIDATE &&
+              ambassadorInfo.status.id !== STATUSES.ARCHIVE ? (
                 <Button
                   className={styles.card__assignButton}
                   onClick={() => setIsMerchDelivery(true)}
@@ -241,24 +236,26 @@ export default function Card({
                   handleTabClick(id);
                 }}
               ></Tabs.Item>
-              {isAmbassador && (
-                <Tabs.Item
-                  id="tabs-activity"
-                  title="Деятельность"
-                  onClick={id => {
-                    handleTabClick(id);
-                  }}
-                ></Tabs.Item>
-              )}
-              {isAmbassador && (
-                <Tabs.Item
-                  id="tabs-merch"
-                  title="Мерч"
-                  onClick={id => {
-                    handleTabClick(id);
-                  }}
-                ></Tabs.Item>
-              )}
+              {ambassadorInfo.status.id !== STATUSES.CANDIDATE &&
+                ambassadorInfo.status.id !== STATUSES.ARCHIVE && (
+                  <Tabs.Item
+                    id="tabs-activity"
+                    title="Деятельность"
+                    onClick={id => {
+                      handleTabClick(id);
+                    }}
+                  ></Tabs.Item>
+                )}
+              {ambassadorInfo.status.id !== STATUSES.CANDIDATE &&
+                ambassadorInfo.status.id !== STATUSES.ARCHIVE && (
+                  <Tabs.Item
+                    id="tabs-merch"
+                    title="Мерч"
+                    onClick={id => {
+                      handleTabClick(id);
+                    }}
+                  ></Tabs.Item>
+                )}
               <Tabs.Item
                 id="tabs-history"
                 title="История"
