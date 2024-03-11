@@ -138,9 +138,13 @@ export default function AmbassadorData({
       );
     } else {
       return (
-        <li className={styles.ambassodorCard__itemActivity}>
-          {user.goals[0].goal_name}
-        </li>
+        <ul
+          className={`${styles.ambassodorCard__list} ${styles.ambassodorCard__listAnother}`}
+        >
+          <li className={styles.ambassodorCard__itemActivity}>
+            {user.goals[0].goal_name}
+          </li>
+        </ul>
       );
     }
   }
