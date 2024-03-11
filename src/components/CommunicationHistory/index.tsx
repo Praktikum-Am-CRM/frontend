@@ -1,8 +1,10 @@
 import styles from './styles.module.css';
 import { Link, Text } from '@gravity-ui/uikit';
-import { messageHistoryAmbassadorId } from '../../utils/mockData';
 import { formatDate } from '../../utils/formatDate';
-import { TEXTS } from '../../utils/constants';
+
+interface Props {
+  messages: MessageHistoryItemType[];
+}
 
 const groupByDate = (messages: MessageHistoryItemType[]) => {
   const groups: { [key: string]: MessageHistoryItemType[] } = {};
@@ -25,24 +27,22 @@ const formatMessageTime = (dateString: string) => {
 };
 
 const isAmbassadorsMessage = (message: MessageHistoryItemType) => {
-  return (
-    message.message.message_type.type_name === TEXTS.COMMUNICATION.USERS_MESSAGE
-  );
+  return Boolean(message.message.message_type);
 };
-const CommunicationHistory = () => {
-  const groupedMessages = groupByDate(messageHistoryAmbassadorId);
+const CommunicationHistory: React.FC<Props> = ({ messages }) => {
+  const groupedMessages = groupByDate(messages);
 
   return (
     <div className={styles.root}>
       {Object.entries(groupedMessages)
         .sort((a, b) => new Date(a[0]).getTime() - new Date(b[0]).getTime())
-        .map(([date, messages]) => (
+        .map(([date, groupedMessagesForDate]) => (
           <div key={date} className={styles.messsgesThisDay}>
             <Text className={styles.date} variant="body-1">
               {formatDate(date, '2-digit')}
             </Text>
             <div className={styles.messagesList}>
-              {messages.map(messageData => (
+              {groupedMessagesForDate.map(messageData => (
                 <div
                   key={messageData.id}
                   className={`${styles.messageItem} ${
