@@ -3,7 +3,7 @@ name: docker front
 on:
   push:
     branches:
-      - 'develop'
+      - 'main'
 
 jobs:
   build_and_push_to_docker_hub:
