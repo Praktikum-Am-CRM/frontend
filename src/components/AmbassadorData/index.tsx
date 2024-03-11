@@ -87,6 +87,8 @@ export default function AmbassadorData({
     );
   };
 
+  console.log(user);
+
   function displayData(value: string) {
     if (value) {
       return value;
@@ -118,6 +120,29 @@ export default function AmbassadorData({
         );
       },
     );
+  }
+
+  function renderGoals() {
+    if (user.goals[0].own_version) {
+      return (
+        <ul
+          className={`${styles.ambassodorCard__list} ${styles.ambassodorCard__listAnother}`}
+        >
+          <li className={styles.ambassodorCard__itemActivity}>
+            {user.goals[0].goal.goal_name}
+          </li>
+          <li className={styles.ambassodorCard__itemActivity}>
+            {user.goals[0].own_version}
+          </li>
+        </ul>
+      );
+    } else {
+      return (
+        <li className={styles.ambassodorCard__itemActivity}>
+          {user.goals[0].goal.goal_name}
+        </li>
+      );
+    }
   }
 
   return (
@@ -275,6 +300,10 @@ export default function AmbassadorData({
               >
                 {renderActivities()}
               </ul>
+            </li>
+            <li className={styles.ambassodorCard__item}>
+              {standartTextInput('Цель учёбы в Практикум')}
+              {renderGoals()}
             </li>
           </ul>
         )}

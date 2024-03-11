@@ -56,8 +56,8 @@ const OnboardingFormMini = () => {
 
   const goalOptions =
     goalsList?.map((goal: GoalType) => ({
-      value: goal.id,
-      content: goal.goal_name,
+      value: goal.goal.id,
+      content: goal.goal.goal_name,
     })) || [];
 
   const activitiesOptions =

@@ -110,7 +110,7 @@ export default function MerchTable() {
     openModal();
   }
 
-  const content = <Card rowId={ambId} isAmbassador />;
+  const content = <Card rowId={ambId} />;
 
   return (
     <div>
