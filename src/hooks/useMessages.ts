@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { MessagesState } from '../types/types';
 import { mockDelayedMessages } from '../utils/mockData';
 
 const useMessages = () => {

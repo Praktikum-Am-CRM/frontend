@@ -19,12 +19,6 @@ import {
   useGetGoalsQuery,
   useGetProgramsQuery,
 } from '../../store/amCrm/amCrm.api';
-import {
-  ActivityType,
-  GoalType,
-  OnboardingMiniType,
-  ProgramType,
-} from '../../types/types';
 
 import { TEXTS } from '../../utils/constants';
 

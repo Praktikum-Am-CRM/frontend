@@ -1,6 +1,5 @@
 import Activity from '../Activity';
 import { useGetAmbassadorReportsQuery } from '../../store/amCrm/amCrm.api';
-import { TableColumnConfig } from '../../types/types';
 import { Skeleton } from '@gravity-ui/uikit';
 
 const columns: TableColumnConfig[] = [

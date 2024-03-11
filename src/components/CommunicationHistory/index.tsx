@@ -1,7 +1,6 @@
 import styles from './styles.module.css';
 import { Link, Text } from '@gravity-ui/uikit';
 import { messageHistoryAmbassadorId } from '../../utils/mockData';
-import { MessageHistoryItemType } from '../../types/types';
 import { formatDate } from '../../utils/formatDate';
 import { TEXTS } from '../../utils/constants';
 

@@ -1,21 +1,6 @@
 /* eslint-disable camelcase */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import {
-  ActivityType,
-  AmbassadorDataPartialWithStringStatus,
-  AmbassadorDataType,
-  DataResponseFromServer,
-  GoalType,
-  MerchRequestListType,
-  MerchRequestType,
-  OnboardingMiniType,
-  ProgramType,
-  ReportBotType,
-  ReportQueryType,
-  ReportType,
-  RequestStatusType,
-  StatusType,
-} from '../../types/types';
+
 import { REPORT_STATUSES } from '../../utils/constants';
 
 interface LoginRequest {
@@ -197,6 +182,21 @@ export const api = createApi({
         },
       }),
     }),
+    getStatisticsOnProgram: build.query<AmbassadorProgramStatisticType[], void>(
+      {
+        query: () => ({
+          url: 'statistic/ambassador_program/',
+        }),
+      },
+    ),
+    getStatisticsOnAmbassadors: build.query<
+      AmbassadorStatusStatisticType[],
+      void
+    >({
+      query: () => ({
+        url: 'statistic/ambassador_status/',
+      }),
+    }),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     createOnboardingMini: build.mutation<any, OnboardingMiniType>({
       query: data => ({
@@ -245,4 +245,6 @@ export const {
   usePostReportBotMutation,
   usePatchDataAmbassadorMutation,
   usePostNewMessageMutation,
+  useGetStatisticsOnProgramQuery,
+  useGetStatisticsOnAmbassadorsQuery,
 } = api;

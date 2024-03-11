@@ -1,4 +1,3 @@
-import { AmbassadorDataType } from '../../types/types';
 import TableComponent from '../TableComponent';
 
 const columns = [

@@ -12,10 +12,6 @@ import {
 } from '@gravity-ui/uikit';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import {
-  AmbassadorDataPartialWithStringStatus,
-  AmbassadorDataType,
-} from '../../types/types';
 import { formatDate } from '../../utils/formatDate';
 import { usePatchDataAmbassadorMutation } from '../../store/amCrm/amCrm.api';
 import { STATUSES } from '../../utils/constants';

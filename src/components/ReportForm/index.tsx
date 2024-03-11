@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { reportBotSchema } from '../../utils/validationSchema';
 import { usePostReportBotMutation } from '../../store/amCrm/amCrm.api';
-import { ReportBotType } from '../../types/types';
 import { TEXTS } from '../../utils/constants';
 
 declare global {

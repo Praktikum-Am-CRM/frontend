@@ -7,7 +7,6 @@ import { useActions } from '../../hooks/actions';
 import { useLoginMutation } from '../../store/amCrm/amCrm.api';
 
 import { TEXTS } from '../../utils/constants';
-import { ILoginForm } from '../../types/types';
 
 interface ErrorData {
   data: {

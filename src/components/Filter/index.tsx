@@ -16,7 +16,6 @@ import {
   // useGetProgramsQuery,
   useGetStatusesQuery,
 } from '../../store/amCrm/amCrm.api';
-import { StatusType } from '../../types/types';
 import { useActions } from '../../hooks/actions';
 import { useAppSelector } from '../../hooks/redux';
 import { STATUSES } from '../../utils/constants';

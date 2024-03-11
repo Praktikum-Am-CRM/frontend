@@ -2,7 +2,6 @@ import { Label, Loader, Table, withTableSorting } from '@gravity-ui/uikit';
 import { useGetMerchRequestsQuery } from '../../store/amCrm/amCrm.api';
 import styles from './styles.module.css';
 import { useCallback, useState } from 'react';
-import { MerchRequestListType } from '../../types/types';
 import { TextWithTooltip } from '../TextWithTooltip';
 import ModalWindow from '../ModalWindow';
 import Card from '../Card';

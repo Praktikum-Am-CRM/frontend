@@ -1,4 +1,4 @@
-export type TableRowData = {
+type TableRowData = {
   id: string;
   ambassador: string;
   tel?: string;
@@ -12,17 +12,17 @@ export type TableRowData = {
   address?: string;
 };
 
-export interface ILoginForm {
+interface ILoginForm {
   email: string;
   password: string;
 }
 
-export interface MessagesState {
+interface MessagesState {
   bulkMessages: BulkMessage[];
   personalMessages: PersonalMessage[];
 }
 
-export interface BulkMessage {
+interface BulkMessage {
   id: string;
   recipients: string;
   message: string;
@@ -30,7 +30,7 @@ export interface BulkMessage {
   pinned?: boolean;
 }
 
-export interface PersonalMessage {
+interface PersonalMessage {
   id: string;
   recipient: string;
   message: string;
@@ -38,9 +38,9 @@ export interface PersonalMessage {
   pinned?: boolean;
 }
 
-export type Message = BulkMessage | PersonalMessage;
+type Message = BulkMessage | PersonalMessage;
 
-export type AmbassadorDataType = {
+type AmbassadorDataType = {
   id: string;
   telegram_bot: TelegramBotType;
   status: StatusType;
@@ -87,7 +87,7 @@ type AmbassadorDataPartialWithStringStatus =
     status?: string;
   };
 
-export type TelegramBotType = {
+type TelegramBotType = {
   id: string;
   telegram_id: string;
   nickname: string;
@@ -95,38 +95,38 @@ export type TelegramBotType = {
   active: boolean;
 };
 
-export type ProgramType = {
+type ProgramType = {
   id: string;
   program_name: string;
   available: boolean;
 };
 
-export type GoalType = {
+type GoalType = {
   id: string;
   goal_name: string;
   available: boolean;
 };
 
-export type ActivityType = {
+type ActivityType = {
   id: string;
   activity_name: string;
   available: boolean;
 };
 
-export type StatusType = {
+type StatusType = {
   id: string;
   status_name?: string;
   sort_level?: number;
   available?: boolean;
 };
 
-export type MessageType = {
+type MessageType = {
   id: string;
   type_name: string;
   available: boolean;
 };
 
-export type MessageHistoryItemType = {
+type MessageHistoryItemType = {
   id: string;
   message: {
     id: string;
@@ -142,20 +142,20 @@ export type MessageHistoryItemType = {
   reaction: number | null;
 };
 
-export type AchieveType = {
+type AchieveType = {
   id: string;
   achieve_name: string;
   available: boolean;
 };
 
-export interface DataResponseFromServer<T> {
+interface DataResponseFromServer<T> {
   count: number;
   next: string;
   previous: string;
   results: T[];
 }
 
-export type ReportQueryType = {
+type ReportQueryType = {
   ambassador?: AmbassadorsType;
   id: string;
   report_date: string;
@@ -168,25 +168,25 @@ export type ReportQueryType = {
   report_type: ReportType;
 };
 
-export type PlacementType = {
+type PlacementType = {
   id: string;
   site: string;
   available: boolean;
 };
 
-export type ReportStatusType = {
+type ReportStatusType = {
   id: string;
   status_name: string;
   available: boolean;
 };
 
-export type ReportType = {
+type ReportType = {
   id: string;
   type_name: string;
   available: boolean;
 };
 
-export type MerchRequestListType = {
+type MerchRequestListType = {
   id: string;
   merch: MerchType;
   manager: ManagerType;
@@ -195,7 +195,7 @@ export type MerchRequestListType = {
   ambassadors: AmbassadorsType;
 };
 
-export type MerchType = {
+type MerchType = {
   id: string;
   merch_name: string;
   price: string;
@@ -203,7 +203,7 @@ export type MerchType = {
   available: boolean;
 };
 
-export type ManagerType = {
+type ManagerType = {
   id: string;
   first_name: string;
   last_name: string;
@@ -212,13 +212,13 @@ export type ManagerType = {
   username?: string;
 };
 
-export type RequestStatusType = {
+type RequestStatusType = {
   id: string;
   status_name: string;
   available: boolean;
 };
 
-export type DeliveryAddressType = {
+type DeliveryAddressType = {
   id: string;
   is_confirmed: boolean;
   index: string;
@@ -232,7 +232,7 @@ export type DeliveryAddressType = {
   apartment: string;
 };
 
-export type TableColumnConfig = {
+type TableColumnConfig = {
   id: string;
   name: string;
   width?: number;
@@ -242,7 +242,7 @@ export type TableColumnConfig = {
   };
 };
 
-export type MerchRequestType = {
+type MerchRequestType = {
   id: string;
   request_id: string;
   request_merch: MerchType;
@@ -251,7 +251,7 @@ export type MerchRequestType = {
   request_delivery_address: DeliveryAddressType;
 };
 
-export type OnboardingMiniType = {
+type OnboardingMiniType = {
   last_name: string;
   first_name: string;
   gender: '0' | '1';
@@ -278,4 +278,19 @@ type ReportBotType = {
   content_link_uri: string;
   sign_junior?: boolean;
   screen_uri: string;
+};
+
+type AmbassadorStatusStatisticType = {
+  id: string;
+  status_name: string;
+  sort_level: number;
+  available: boolean;
+  count: number;
+};
+
+type AmbassadorProgramStatisticType = {
+  id: string;
+  program_name: string;
+  available: boolean;
+  count: number;
 };

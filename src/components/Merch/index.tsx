@@ -3,7 +3,6 @@ import { Button, Skeleton, Table, Text, useToaster } from '@gravity-ui/uikit';
 import { useGetAmbassadorMerchQuery } from '../../store/amCrm/amCrm.api';
 import { ArrowDownToSquare } from '@gravity-ui/icons';
 import { TextWithTooltip } from '../TextWithTooltip';
-import { MerchRequestType } from '../../types/types';
 
 const columns = [
   { id: 'name', name: 'Мерч', width: 100 },

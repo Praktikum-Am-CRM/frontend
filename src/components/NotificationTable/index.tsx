@@ -1,4 +1,3 @@
-import { ReportQueryType, TableColumnConfig } from '../../types/types';
 import Activity from '../Activity';
 import {
   useLazyGetAllReportsQuery,

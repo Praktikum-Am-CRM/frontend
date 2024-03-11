@@ -15,7 +15,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import styles from './styles.module.css';
 import { WomanIcon } from '../../assets/images/WomanIcon';
 import { ManIcon } from '../../assets/images/ManIcon';
-import { AmbassadorDataType } from '../../types/types';
+
 import ModalWindow from '../ModalWindow';
 
 import { useActions } from '../../hooks/actions';

@@ -11,7 +11,6 @@ import styles from './styles.module.css';
 import RatingComponent from '../RatingComponent';
 import { useCallback, useMemo } from 'react';
 
-import { ReportQueryType, TableColumnConfig } from '../../types/types';
 import { REPORT_STATUSES } from '../../utils/constants';
 import { TextWithTooltip } from '../TextWithTooltip/index';
 import { usePatchReportMutation } from '../../store/amCrm/amCrm.api';

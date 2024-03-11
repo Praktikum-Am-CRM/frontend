@@ -10,7 +10,6 @@ import {
   useGetAmbassadorsListQuery,
   useLazyGetAmbassadorsListQuery,
 } from '../../store/amCrm/amCrm.api';
-import { AmbassadorDataType } from '../../types/types';
 
 export default function CandidatesPage() {
   const [paginationState, setPaginationState] = useState({

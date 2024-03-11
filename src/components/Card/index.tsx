@@ -20,7 +20,6 @@ import {
 } from '../../store/amCrm/amCrm.api';
 import { STATUSES } from '../../utils/constants';
 import defineStatus from '../../utils/defineStatus';
-import { AchieveType, AmbassadorDataType } from '../../types/types';
 
 export default function Card({
   rowId,
