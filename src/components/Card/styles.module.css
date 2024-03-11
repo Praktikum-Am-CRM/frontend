@@ -1,0 +1,77 @@
+.card {
+  padding: 28px;
+}
+
+.card__heading {
+  cursor: default;
+}
+
+.card__infoContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+  margin-bottom: 28px;
+}
+
+.card__infoList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+}
+
+.card__infoPoint {
+  margin: 0;
+  padding: 9px 0;
+  display: flex;
+}
+
+.card__infoPoint_type_status {
+  position: relative;
+}
+
+.card__infoPoint_type_achievement {
+  padding: 0;
+}
+
+.card__pointDescription {
+  margin: 0 12px 0 0;
+  cursor: default;
+}
+
+.card__course {
+  cursor: default;
+}
+
+.card__status {
+  cursor: pointer;
+}
+
+.card__assignButton {
+  height: 36px;
+  background-color: var(--Base-Brand);
+  color: var(--Text-Primary);
+}
+
+.card__tabs {
+  width: max-content;
+}
+
+.card__achives {
+  list-style: none;
+  padding-left: 0;
+}
+
+.card__arrowToggle {
+  color: #00000080;
+  margin-left: 6px;
+}
+
+.card__formStatus {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+}

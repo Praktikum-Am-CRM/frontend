@@ -1,13 +1,14 @@
 .modal {
   max-width: calc(714px + 19px + 24px);
   width: 52.56vw;
-  height: calc(100vh - 66px);
+  max-height: 90vh;
   position: absolute;
   top: -16px;
   right: 0;
   z-index: 2;
   background-color: var(--Branding-Base-Background);
   display: none;
+  overflow-y: auto;
 }
 
 .modal_active {
@@ -15,9 +16,12 @@
 }
 
 .modal__container {
+  display: flex;
+  flex-direction: column;
   max-width: 714px;
   width: 49.58vw;
-  position: absolute;
+  min-height: calc(100vh - 173px);
+  position: relative;
   top: 0;
   left: 24px;
   border-radius: 10px;
@@ -27,16 +31,6 @@
 
 .modal__closeIcon {
   position: absolute;
-  cursor: pointer;
-  right: 28px;
-  top: 26px;
-  background-color: transparent;
-  border: none;
-  padding: 0;
-  width: 24px;
-  height: 24px;
-  background-image: url(../../ui/closeIcon.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 10px;
+  top: 2em;
+  right: 2em;
 }

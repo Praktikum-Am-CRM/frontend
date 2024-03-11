@@ -17,10 +17,24 @@
   -moz-osx-font-smoothing: grayscale;
 
   --Text-Complementary: #000000b2;
-  --Line-Generic: #0000001a;
+  --Line-Generic: rgba(0, 0, 0, 0.102);
   --Branding-Base-Background: #fff;
   --Base-Semantic-Neutral-Light: #0000000d;
   --Base-Area-Ultralight: #fafafa;
   --Base-Brand: #ffbe5c;
   --max-desktop-width: 1440px;
+  --base-misc-light: rgba(107, 132, 153, 0.15);
+  --max-table-height: 70vh;
+}
+
+.g-table__head {
+  background-color: white;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.g-table__cell_sticky_end.g-table__cell_sticky_end {
+  position: static;
+  z-index: 2;
 }

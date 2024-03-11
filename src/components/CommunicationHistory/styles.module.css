@@ -1,0 +1,65 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 28px;
+  margin-top: 20px;
+}
+
+.messsgesThisDay {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.messagesList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.messageItem {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  gap: 4px;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  gap: 8px;
+}
+
+.userMessage {
+  align-self: flex-start;
+  border: 2px solid lightgray;
+  border-radius: 16px 16px 16px 0px;
+}
+
+.botMessage {
+  align-self: flex-end;
+  border: 2px solid rgba(233, 174, 86, 1);
+  border-radius: 16px 16px 0px 16px;
+}
+
+.texts {
+  display: flex;
+  flex-direction: column;
+}
+
+.date {
+  background-color: var(--base-misc-light);
+  border-radius: 3px;
+  padding: 1px 8px;
+  align-self: center;
+}
+
+.userMessageAlign {
+  align-self: flex-start;
+}
+
+.botMessageAlign {
+  align-self: flex-end;
+}

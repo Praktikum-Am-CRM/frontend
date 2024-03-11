@@ -2,12 +2,18 @@ import { configureStore } from '@reduxjs/toolkit';
 import { api } from './amCrm/amCrm.api';
 import { authReducer } from './amCrm/auth.slice';
 import { modalReducer } from './amCrm/modal.slice';
+import { tableReducer } from './amCrm/table.slice';
+import { mailingReducer } from './amCrm/mailing.slice';
+import { amFiltersReducer } from './amCrm/amFilters.slice';
 
 export const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
     auth: authReducer,
     modal: modalReducer,
+    table: tableReducer,
+    mailing: mailingReducer,
+    amFilters: amFiltersReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(api.middleware),

@@ -1,7 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import styles from './styles.module.css';
 import { useActions } from '../../hooks/actions';
 import { useAppSelector } from '../../hooks/redux';
+import { Button, Icon } from '@gravity-ui/uikit';
+import { Xmark } from '@gravity-ui/icons';
 
 export default function ModalWindow({ content }: { content: JSX.Element }) {
   const isModalOpen = useAppSelector(state => state.modal.isModalOpen);
@@ -16,10 +17,14 @@ export default function ModalWindow({ content }: { content: JSX.Element }) {
       className={`${styles.modal} ${isModalOpen === true && `${styles.modal_active}`}`}
     >
       <div className={styles.modal__container}>
-        <button
-          className={styles.modal__closeIcon}
+        <Button
+          view="flat"
+          size="s"
           onClick={handleCloseModal}
-        ></button>
+          className={styles.modal__closeIcon}
+        >
+          <Icon data={Xmark} size={18} />
+        </Button>
         <div className={styles.modal__content}>{content}</div>
       </div>
     </div>

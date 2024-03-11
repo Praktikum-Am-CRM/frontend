@@ -1,11 +1,27 @@
-import styles from './LoginForm.module.css';
+import styles from './styles.module.css';
 import { Button, TextInput } from '@gravity-ui/uikit';
+import { toaster } from '@gravity-ui/uikit/toaster-singleton-react-18';
 import { useNavigate } from 'react-router-dom';
 import { useFormLogic } from '../../hooks/useFormLogic';
 import { useActions } from '../../hooks/actions';
 import { useLoginMutation } from '../../store/amCrm/amCrm.api';
-import { ILoginForm } from '../../types/ILoginForm';
+
 import { TEXTS } from '../../utils/constants';
+
+interface ErrorData {
+  data: {
+    non_field_errors: string[];
+  };
+}
+
+function isErrorWithData(error: unknown): error is ErrorData {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'data' in (error as ErrorData) &&
+    Array.isArray((error as ErrorData).data.non_field_errors)
+  );
+}
 
 export const LoginForm = () => {
   const { setLoggedIn } = useActions();
@@ -21,12 +37,28 @@ export const LoginForm = () => {
     try {
       const res = await login(data).unwrap();
       if (res.auth_token) {
-        localStorage.setItem('auth_token', res.auth_token);
+        localStorage.setItem('authToken', res.auth_token);
         setLoggedIn(true);
         navigate('/');
       }
     } catch (error) {
-      throw new Error('Не удалось авторизоваться');
+      let errorMessage = TEXTS.LOGIN_PAGE.LOGIN_UNKNOWN_ERROR;
+      if (isErrorWithData(error)) {
+        errorMessage = error.data.non_field_errors[0];
+      }
+
+      toaster.add({
+        name: 'login-error',
+        title: TEXTS.LOGIN_PAGE.LOGIN_ERROR_TITLE,
+        content: errorMessage,
+        actions: [
+          {
+            label: 'OK',
+            removeAfterClick: true,
+            onClick: () => {},
+          },
+        ],
+      });
     }
   };
 
@@ -47,6 +79,7 @@ export const LoginForm = () => {
         errorMessage={errors.email?.message}
         size="l"
         disabled={isLoading}
+        autoComplete
       />
       <label className={styles.label} htmlFor="password">
         {TEXTS.LOGIN_PAGE.PASSWORD_LABEL}
@@ -59,6 +92,7 @@ export const LoginForm = () => {
         errorMessage={errors.password?.message}
         size="l"
         disabled={isLoading}
+        autoComplete
       />
       <div className={styles.buttonsContainer}>
         <Button loading={isLoading} type="submit" view="action" size="xl">

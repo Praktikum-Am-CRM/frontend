@@ -1,25 +1,25 @@
-.ambassodorDataSection {
-  position: relative;
-  padding-bottom: 36px;
+.ambassodorCard {
+  display: flex;
+  flex-direction: column;
 }
 
-.ambassodorDataSection__form {
+.ambassodorCard__form {
   display: flex;
   flex-direction: column;
   row-gap: 16px;
 }
 
-.ambassodorDataSection__promoInfo {
+.ambassodorCard__promoInfo {
   padding: 9px 0;
   margin-top: 16px;
   margin-bottom: 16px;
 }
 
-.ambassodorDataSection__promo {
+.ambassodorCard__promo {
   margin-right: 12px;
 }
 
-.ambassodorDataSection__list {
+.ambassodorCard__list {
   list-style: none;
   padding: 16px;
   margin: 0;
@@ -30,36 +30,68 @@
   row-gap: 12px;
 }
 
-.ambassodorDataSection__listAnother {
+.ambassodorCard__listAnother {
   border: none;
   padding: 0;
 }
 
-.ambassodorDataSection__item {
+.ambassodorCard__item {
   padding: 9px 0;
   display: flex;
-  align-items: center;
+  align-items: baseline;
 }
 
-.ambassodorDataSection__itemAnother {
+.ambassodorCard__itemAnother {
   flex-direction: column;
   align-items: flex-start;
   row-gap: 8px;
   padding: 0;
 }
 
-.ambassodorDataSection__attribute {
+.ambassodorCard__itemAddress {
+  display: flex;
+  column-gap: 5px;
+}
+
+.ambassodorCard__attribute {
   margin-right: 12px;
   flex: 0 0 auto;
 }
 
-.ambassodorDataSection__deleteButton {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 36px;
-  background-image: url(../../ui/icontrash.svg);
-  background-repeat: no-repeat;
-  background-size: 16px;
-  background-position: center;
+.ambassodorCard__deleteButton {
+  align-self: end;
+}
+
+.ambassadorCard__merchSettings {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 28px;
+  margin-bottom: 12px;
+}
+
+.ambassadorCard__merchSettingContainer {
+  width: 224px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ambassadorCard__merchSetting {
+  display: flex;
+  flex-direction: column;
+}
+
+.ambassadorCard__merchButtons {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 8px;
+  border-top: 1px solid var(--Line-Generic);
+}
+
+.ambassadorCard__merchButton {
+  width: 100px;
+}
+
+.ambassodorCard__resetButton {
+  margin-left: 10px;
 }

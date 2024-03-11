@@ -1,53 +1,65 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Button,
   Checkbox,
   Icon,
   Popup,
-  RadioGroup,
-  Select,
+  // RadioGroup,
+  // Select,
   Text,
 } from '@gravity-ui/uikit';
 import { useRef, useState } from 'react';
 import { SlidersVertical } from '@gravity-ui/icons';
 
 import styles from './styles.module.css';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import {
+  // useGetProgramsQuery,
+  useGetStatusesQuery,
+} from '../../store/amCrm/amCrm.api';
+import { useActions } from '../../hooks/actions';
+import { useAppSelector } from '../../hooks/redux';
+import { STATUSES } from '../../utils/constants';
 
 type FormData = {
   status: string[];
-  gender: string;
-  program: string[];
+  // gender: string;
+  // program: string[];
 };
 export default function Filter() {
+  const { setStatus } = useActions();
+  const selectedStatuses = useAppSelector(state => state.amFilters.status);
   const buttonRef = useRef(null);
   const [open, setOpen] = useState(false);
 
-  const { register, control, handleSubmit } = useForm<FormData>();
+  const { data: statuses } = useGetStatusesQuery();
 
-  const onSubmit = handleSubmit(data => console.log(data));
+  const { register, handleSubmit } = useForm<FormData>();
+
+  const onSubmit = handleSubmit(data => {
+    setStatus(data);
+    setOpen(false);
+  });
 
   const handleClick = () => {
     setOpen(prevOpen => !prevOpen);
   };
 
-  const genderOptions = [
-    { value: 'men', content: 'Мужчины' },
-    { value: 'women', content: 'Женщины' },
-  ];
+  // const genderOptions = [
+  //   { value: 'men', content: 'Мужчины' },
+  //   { value: 'women', content: 'Женщины' },
+  // ];
 
-  const amStatusOptions = [
-    { value: 'active', content: 'Активный' },
-    { value: 'pending', content: 'Уточняется' },
-    { value: 'paused', content: 'На паузе' },
-    { value: 'notamb', content: 'Не амбассадор' },
-  ];
+  // const preparePrograms = (data: ProgramType[]) =>
+  //   data.map((item: any) => ({
+  //     value: item.id,
+  //     content: item.program_name,
+  //   }));
 
-  const programOptions = [
-    { value: 'program1', content: 'Программа 1' },
-    { value: 'program2', content: 'Программа 2' },
-    { value: 'program3', content: 'Программа 3' },
-  ];
+  const prepareStatuses = (data: StatusType[]) =>
+    data.filter(
+      (item: StatusType) =>
+        item.id !== STATUSES.CANDIDATE && item.id !== STATUSES.ARCHIVE,
+    );
 
   const FilterText = ({ children }: { children: string }) => (
     <Text variant="body-1" color="secondary">
@@ -57,7 +69,7 @@ export default function Filter() {
 
   return (
     <>
-      <Button size="xl" ref={buttonRef} onClick={handleClick}>
+      <Button size="xl" ref={buttonRef} onClick={handleClick} title="Фильтры">
         <Icon data={SlidersVertical} size={18} />
       </Button>
       <Popup
@@ -70,18 +82,20 @@ export default function Filter() {
           <div className={styles.filters__container}>
             <FilterText>Статус</FilterText>
             <ul className={styles.filters__checkboxList}>
-              {amStatusOptions.map(({ value, content }) => (
-                <li key={value} className={styles.filters__checkboxItem}>
-                  <Checkbox
-                    value={value}
-                    content={content}
-                    {...register('status')}
-                  />
-                </li>
-              ))}
+              {statuses &&
+                prepareStatuses(statuses).map(({ id, status_name }) => (
+                  <li key={id} className={styles.filters__checkboxItem}>
+                    <Checkbox
+                      value={id}
+                      defaultChecked={selectedStatuses.includes(id)}
+                      content={status_name}
+                      {...register('status')}
+                    />
+                  </li>
+                ))}
             </ul>
           </div>
-          <div className={styles.filters__container}>
+          {/* <div className={styles.filters__container}>
             <FilterText>Пол</FilterText>
             <Controller
               name="gender"
@@ -98,26 +112,28 @@ export default function Filter() {
           </div>
           <div className={styles.filters__container}>
             <FilterText>Программа</FilterText>
-
-            <Select
-              placeholder="Программа"
-              className={styles.filters__checkboxList}
-              size="m"
-              filterable
-              multiple
-              {...register('program')}
-            >
-              {programOptions.map(({ value, content }) => (
-                <Select.Option key={value} value={value}>
-                  {content}
-                </Select.Option>
-              ))}
-            </Select>
-          </div>
+            {programs && (
+              <Controller
+                name="program"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    placeholder="Программа"
+                    className={styles.filters__checkboxList}
+                    size="m"
+                    filterable
+                    multiple
+                    options={preparePrograms(programs)}
+                    onUpdate={e => {
+                      field.onChange(e);
+                    }}
+                  />
+                )}
+              />
+            )}
+          </div> */}
           <div className={styles.filters__buttons}>
-            {/* <Button view="normal" type="reset">
-              Сбросить
-            </Button> */}
             <Button view="action" type="submit">
               Показать
             </Button>

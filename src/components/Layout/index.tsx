@@ -21,7 +21,18 @@ export default function Layout() {
       <div className={styles.layout}>
         {!isLoginPage && <Header />}
         <main className={styles.layout__main}>
-          <Suspense fallback={<Loader size="l" />}>
+          <Suspense
+            fallback={
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                <Loader size="l" />
+              </div>
+            }
+          >
             <Outlet />
           </Suspense>
         </main>

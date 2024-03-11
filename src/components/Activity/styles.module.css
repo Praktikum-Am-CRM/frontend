@@ -1,0 +1,13 @@
+.activity {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.activityTable {
+  width: 100%;
+  overflow: auto;
+  margin-bottom: 10px;
+  max-height: var(--max-table-height);
+}

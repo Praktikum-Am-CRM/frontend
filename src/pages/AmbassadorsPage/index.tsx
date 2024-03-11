@@ -1,29 +1,58 @@
-import { Button } from '@gravity-ui/uikit';
+import {
+  Button,
+  DropdownMenu,
+  Pagination,
+  PaginationProps,
+} from '@gravity-ui/uikit';
+
 import AmbassadorTable from '../../components/AmbassadorTable';
 import Search from '../../components/Search';
 import styles from './styles.module.css';
 import Filter from '../../components/Filter';
-import { ambassadorArray } from '../../utils/mockData';
 import { useActions } from '../../hooks/actions';
 import { useAppSelector } from '../../hooks/redux';
 import ModalWindow from '../../components/ModalWindow';
 import CommunicationSection from '../../components/CommunicationSection';
+import { useLazyGetAmbassadorsListQuery } from '../../store/amCrm/amCrm.api';
+import { useEffect, useState } from 'react';
 
 export default function AmbassadorsPage() {
+  const [paginationState, setPaginationState] = useState({
+    page: 1,
+    pageSize: 15,
+  });
   const { setModalContentType, openModal } = useActions();
-  const isModalOpen = useAppSelector(state => state.modal.isModalOpen);
-  const modalContentType = useAppSelector(state => state.modal.contentType);
+  const { isModalOpen, contentType: modalContentType } = useAppSelector(
+    state => state.modal,
+  );
 
+  const { status: selectedStatuses, search: searchedAmbassador } =
+    useAppSelector(state => state.amFilters);
   function handleOpenModal() {
     setModalContentType('messages');
     openModal();
   }
 
-  function determineAmbassadorArray() {
-    return ambassadorArray.filter(ambassador => {
-      return ambassador.status === 'pending' || ambassador.status === 'active';
+  const [triggerAmbQuery, { data: ambListResponse }] =
+    useLazyGetAmbassadorsListQuery();
+
+  useEffect(() => {
+    triggerAmbQuery({
+      status: selectedStatuses,
+      page: paginationState.page,
+      search: searchedAmbassador,
+      limit: paginationState.pageSize,
     });
-  }
+  }, [selectedStatuses, searchedAmbassador, triggerAmbQuery, paginationState]);
+
+  const handleUpdate: PaginationProps['onUpdate'] = (page, pageSize) => {
+    setPaginationState(prevState => ({ ...prevState, page, pageSize }));
+  };
+
+  const handlePageSizeChange = (pageSize: number) => ({
+    action: () => setPaginationState(prevState => ({ ...prevState, pageSize })),
+    text: pageSize,
+  });
 
   return (
     <section className={styles.ambassadorsPage}>
@@ -36,7 +65,32 @@ export default function AmbassadorsPage() {
           Сообщения
         </Button>
       </div>
-      <AmbassadorTable tableRowData={determineAmbassadorArray()} />
+      {ambListResponse && (
+        <AmbassadorTable tableRowData={ambListResponse.results} />
+      )}
+      <div style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
+        <Pagination
+          page={paginationState.page}
+          pageSize={paginationState.pageSize}
+          total={ambListResponse?.count}
+          onUpdate={handleUpdate}
+        />
+        <DropdownMenu
+          renderSwitcher={props => (
+            <div
+              {...props}
+              style={{ cursor: 'pointer', borderBottom: '1px dotted' }}
+            >
+              Количество строк на странице: {paginationState.pageSize}
+            </div>
+          )}
+          items={[
+            handlePageSizeChange(15),
+            handlePageSizeChange(30),
+            handlePageSizeChange(50),
+          ]}
+        />
+      </div>
       {isModalOpen && modalContentType === 'messages' && (
         <ModalWindow content={<CommunicationSection />} />
       )}

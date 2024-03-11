@@ -1,11 +1,11 @@
-import ava from '../../assets/images/ava.png';
+import ava from '../../assets/images/avatar.webp';
 import styles from './styles.module.css';
 import { Text } from '@gravity-ui/uikit';
 
 const data = {
   urlPhoto: ava,
-  username: 'КоммунитиМенеджер',
-  usermail: 'user_mail@ya.ru',
+  username: 'Анастасия Борисова',
+  usermail: 'anastasia@yandex.ru',
 };
 
 export default function Profile() {
