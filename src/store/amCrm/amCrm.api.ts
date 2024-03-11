@@ -221,6 +221,14 @@ export const api = createApi({
         body: data,
       }),
     }),
+    getAmbassadorMessages: build.query<
+      MessageHistoryItemType[],
+      { id: string }
+    >({
+      query: ({ id }) => ({
+        url: `ambassador/${id}/messages/`,
+      }),
+    }),
   }),
 });
 
@@ -247,4 +255,5 @@ export const {
   usePostNewMessageMutation,
   useGetStatisticsOnProgramQuery,
   useGetStatisticsOnAmbassadorsQuery,
+  useGetAmbassadorMessagesQuery,
 } = api;
