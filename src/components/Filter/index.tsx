@@ -1,29 +1,17 @@
-import {
-  Button,
-  Checkbox,
-  Icon,
-  Popup,
-  // RadioGroup,
-  // Select,
-  Text,
-} from '@gravity-ui/uikit';
+/* eslint-disable camelcase */
+import { Button, Checkbox, Icon, Popup, Text } from '@gravity-ui/uikit';
 import { useRef, useState } from 'react';
 import { SlidersVertical } from '@gravity-ui/icons';
 
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
-import {
-  // useGetProgramsQuery,
-  useGetStatusesQuery,
-} from '../../store/amCrm/amCrm.api';
+import { useGetStatusesQuery } from '../../store/amCrm/amCrm.api';
 import { useActions } from '../../hooks/actions';
 import { useAppSelector } from '../../hooks/redux';
 import { STATUSES } from '../../utils/constants';
 
 type FormData = {
   status: string[];
-  // gender: string;
-  // program: string[];
 };
 export default function Filter() {
   const { setStatus } = useActions();
@@ -84,44 +72,6 @@ export default function Filter() {
                 ))}
             </ul>
           </div>
-          {/* <div className={styles.filters__container}>
-            <FilterText>Пол</FilterText>
-            <Controller
-              name="gender"
-              control={control}
-              defaultValue={genderOptions[0].value}
-              render={({ field }) => (
-                <RadioGroup
-                  {...field}
-                  options={genderOptions}
-                  direction="vertical"
-                />
-              )}
-            />
-          </div>
-          <div className={styles.filters__container}>
-            <FilterText>Программа</FilterText>
-            {programs && (
-              <Controller
-                name="program"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    placeholder="Программа"
-                    className={styles.filters__checkboxList}
-                    size="m"
-                    filterable
-                    multiple
-                    options={preparePrograms(programs)}
-                    onUpdate={e => {
-                      field.onChange(e);
-                    }}
-                  />
-                )}
-              />
-            )}
-          </div> */}
           <div className={styles.filters__buttons}>
             <Button view="action" type="submit">
               Показать

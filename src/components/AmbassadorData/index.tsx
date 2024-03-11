@@ -1,5 +1,4 @@
 /* eslint-disable complexity */
-/* eslint-disable no-console */
 import { TrashBin } from '@gravity-ui/icons';
 import styles from './styles.module.css';
 import {
@@ -58,11 +57,7 @@ export default function AmbassadorData({
   isMerchDelivery: boolean;
 }) {
   const [isFormActive, setIsFormActive] = useState<boolean>(false);
-  const {
-    register,
-    handleSubmit,
-    // formState: { errors },
-  } = useForm<Inputs>();
+  const { register, handleSubmit } = useForm<Inputs>();
 
   const [patchDataAmbassador] = usePatchDataAmbassadorMutation();
   const onSubmit: SubmitHandler<Inputs> = (
@@ -86,8 +81,6 @@ export default function AmbassadorData({
       <Text>{value}</Text>
     );
   };
-
-  console.log(user);
 
   function displayData(value: string) {
     if (value) {
@@ -332,10 +325,6 @@ export default function AmbassadorData({
               '',
             )}
           </li>
-          {/* <li className={styles.ambassodorCard__item}>
-            {standartTextInput('Дополнительная информация о себе')}
-            {variableInput('note', displayData(user.note), '')}
-          </li> */}
         </ul>
         <ul
           className={`${styles.ambassodorCard__list} ${styles.ambassodorCard__listAnother}`}

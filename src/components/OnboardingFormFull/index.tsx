@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import styles from './styles.module.css';
 import { useEffect, useState } from 'react';
 import {
