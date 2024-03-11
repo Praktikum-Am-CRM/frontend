@@ -6,6 +6,7 @@ import {
   Checkbox,
   RadioGroup,
   Select,
+  Spin,
   Text,
   TextInput,
 } from '@gravity-ui/uikit';
@@ -31,9 +32,12 @@ declare global {
 
 const OnboardingFormMini = () => {
   const tg = window.Telegram.WebApp;
-  const { data: programsList } = useGetProgramsQuery();
-  const { data: goalsList } = useGetGoalsQuery();
-  const { data: activitiesList } = useGetActivitiesQuery();
+  const { data: programsList, isFetching: programsListIsFetching } =
+    useGetProgramsQuery();
+  const { data: goalsList, isFetching: goalsListIsFetching } =
+    useGetGoalsQuery();
+  const { data: activitiesList, isFetching: activitiesListIsFetching } =
+    useGetActivitiesQuery();
   const [createOnboardingMini] = useCreateOnboardingMiniMutation();
 
   const {
@@ -56,8 +60,8 @@ const OnboardingFormMini = () => {
 
   const goalOptions =
     goalsList?.map((goal: GoalType) => ({
-      value: goal.goal.id,
-      content: goal.goal.goal_name,
+      value: goal.id,
+      content: goal.goal_name,
     })) || [];
 
   const activitiesOptions =
@@ -127,7 +131,12 @@ const OnboardingFormMini = () => {
     setValue('activity_id', selectedActivities);
   }, [selectedActivities, setValue]);
 
-  return (
+  const dataIsNotReady =
+    programsListIsFetching || goalsListIsFetching || activitiesListIsFetching;
+
+  return dataIsNotReady ? (
+    <Spin className={styles.spin} size="xl" />
+  ) : (
     <div className={styles.root}>
       <Text variant="subheader-3">{TEXTS.ONBOARDING.SUBHEADER}</Text>
       <Text variant="body-3">{TEXTS.ONBOARDING.INTRO_TEXT}</Text>

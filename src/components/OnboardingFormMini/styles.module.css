@@ -5,6 +5,10 @@
   padding: 48px;
 }
 
+.spin {
+  margin: 50%;
+}
+
 .form {
   display: flex;
   flex-direction: column;

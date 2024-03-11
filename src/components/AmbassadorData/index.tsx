@@ -129,7 +129,7 @@ export default function AmbassadorData({
           className={`${styles.ambassodorCard__list} ${styles.ambassodorCard__listAnother}`}
         >
           <li className={styles.ambassodorCard__itemActivity}>
-            {user.goals[0].goal.goal_name}
+            {user.goals[0].goal_name}
           </li>
           <li className={styles.ambassodorCard__itemActivity}>
             {user.goals[0].own_version}
@@ -142,7 +142,7 @@ export default function AmbassadorData({
           className={`${styles.ambassodorCard__list} ${styles.ambassodorCard__listAnother}`}
         >
           <li className={styles.ambassodorCard__itemActivity}>
-            {user.goals[0].goal.goal_name}
+            {user.goals[0].goal_name}
           </li>
         </ul>
       );
