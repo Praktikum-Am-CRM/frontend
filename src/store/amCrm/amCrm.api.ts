@@ -181,7 +181,9 @@ export const api = createApi({
           page,
         },
       }),
+      providesTags: ['AllReports'],
     }),
+
     getStatisticsOnProgram: build.query<AmbassadorProgramStatisticType[], void>(
       {
         query: () => ({
