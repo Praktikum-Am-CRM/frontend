@@ -17,29 +17,6 @@ interface ILoginForm {
   password: string;
 }
 
-interface MessagesState {
-  bulkMessages: BulkMessage[];
-  personalMessages: PersonalMessage[];
-}
-
-interface BulkMessage {
-  id: string;
-  recipients: string;
-  message: string;
-  date: string;
-  pinned?: boolean;
-}
-
-interface PersonalMessage {
-  id: string;
-  recipient: string;
-  message: string;
-  date: string;
-  pinned?: boolean;
-}
-
-type Message = BulkMessage | PersonalMessage;
-
 type AmbassadorDataType = {
   id: string;
   telegram_bot: TelegramBotType;
@@ -142,6 +119,11 @@ type MessageHistoryItemType = {
   sign_ai: boolean;
   message_telegram_id: string;
   reaction: number | null;
+};
+
+type NewMessageType = {
+  message_text: string;
+  ambassadors?: string[];
 };
 
 type AchieveType = {
@@ -296,3 +278,10 @@ type AmbassadorProgramStatisticType = {
   available: boolean;
   count: number;
 };
+
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Telegram: any;
+  }
+}

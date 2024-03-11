@@ -44,17 +44,6 @@ export default function Filter() {
     setOpen(prevOpen => !prevOpen);
   };
 
-  // const genderOptions = [
-  //   { value: 'men', content: 'Мужчины' },
-  //   { value: 'women', content: 'Женщины' },
-  // ];
-
-  // const preparePrograms = (data: ProgramType[]) =>
-  //   data.map((item: any) => ({
-  //     value: item.id,
-  //     content: item.program_name,
-  //   }));
-
   const prepareStatuses = (data: StatusType[]) =>
     data.filter(
       (item: StatusType) =>
