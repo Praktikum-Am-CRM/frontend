@@ -46,7 +46,7 @@
 }
 
 .card__status {
-  cursor: default;
+  cursor: pointer;
 }
 
 .card__assignButton {

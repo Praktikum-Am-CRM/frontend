@@ -60,7 +60,7 @@ export type AmbassadorDataType = {
   address_building?: string;
   address_apartment?: string;
   size_clothing: string;
-  size_shoe: string;
+  size_choe: number;
   email: string;
   note: string;
   blog_link: string;
@@ -77,6 +77,15 @@ export type AmbassadorDataType = {
   activity: ActivityType[];
   achieves: AchieveType[];
 };
+
+type AmbassadorDataPartial = Partial<AmbassadorDataType>;
+
+type AmbassadorDataPartialWithoutStatus = Omit<AmbassadorDataPartial, 'status'>;
+
+type AmbassadorDataPartialWithStringStatus =
+  AmbassadorDataPartialWithoutStatus & {
+    status?: string;
+  };
 
 export type TelegramBotType = {
   id: string;
@@ -106,9 +115,9 @@ export type ActivityType = {
 
 export type StatusType = {
   id: string;
-  status_name: string;
-  sort_level: number;
-  available: boolean;
+  status_name?: string;
+  sort_level?: number;
+  available?: boolean;
 };
 
 export type MessageType = {
@@ -221,24 +230,6 @@ export type DeliveryAddressType = {
   building: string;
   country: string;
   apartment: string;
-};
-
-export type AmbassadorsType = {
-  id?: string;
-  status?: string;
-  manager: string;
-  phone?: string;
-  promocode?: string;
-  receipt_date?: string;
-  reminder_counter?: number;
-  email?: string;
-  first_name?: string;
-  last_name?: string;
-  middle_name?: string;
-  gender?: string;
-  birthday?: string;
-  size_shoe?: string | number;
-  size_clothing?: string | number;
 };
 
 export type TableColumnConfig = {

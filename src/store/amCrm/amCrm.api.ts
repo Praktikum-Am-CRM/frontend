@@ -2,6 +2,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
   ActivityType,
+  AmbassadorDataPartialWithStringStatus,
   AmbassadorDataType,
   DataResponseFromServer,
   GoalType,
@@ -145,63 +146,12 @@ export const api = createApi({
 
     patchDataAmbassador: build.mutation<
       unknown,
-      {
-        id: string;
-        status?: string;
-        country?: string;
-        settlement?: string;
-        index?: string;
-        street?: string;
-        house?: string;
-        building?: string;
-        appartment?: string;
-        email?: string;
-        educational_institution?: string;
-        place_work?: string;
-        specialty_work?: string;
-        blog_link?: string;
-        clothing_size?: string;
-        note?: string;
-        comment?: string;
-      }
+      AmbassadorDataPartialWithStringStatus
     >({
-      query: ({
-        id,
-        status,
-        country,
-        settlement,
-        index,
-        street,
-        house,
-        building,
-        appartment,
-        email,
-        educational_institution,
-        place_work,
-        specialty_work,
-        blog_link,
-        clothing_size,
-        note,
-      }) => ({
-        url: `ambassador/${id}/`,
+      query: formData => ({
+        url: `ambassador/${formData.id}/`,
         method: 'PATCH',
-        body: {
-          status: status,
-          address_country: country,
-          address_settlement: settlement,
-          address_index: index,
-          address_street: street,
-          address_house: house,
-          address_building: building,
-          address_appartment: appartment,
-          email: email,
-          educational_institution: educational_institution,
-          place_work: place_work,
-          specialty_work: specialty_work,
-          blog_link: blog_link,
-          clothing_size: clothing_size,
-          note: note,
-        },
+        body: formData,
       }),
       invalidatesTags: ['Ambassador', 'Ambassadors'],
     }),

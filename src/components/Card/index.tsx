@@ -1,5 +1,6 @@
 import styles from './styles.module.css';
 import {
+  ArrowToggle,
   Button,
   DropdownMenu,
   Label,
@@ -67,8 +68,8 @@ export default function Card({
   const handleStatusChange = (status: string, id: string) => ({
     action: () =>
       patchDataAmbassador({
-        id: id,
-        status: status,
+        id,
+        status,
       }),
     text: status && defineStatus(status),
   });
@@ -113,30 +114,45 @@ export default function Card({
                     @{ambassadorInfo.telegram_bot.nickname}
                   </Link>
                 </li>
-                {ambassadorInfo.status.id !== STATUSES.CANDIDATE && (
-                  <li
-                    className={`${styles.card__infoPoint} ${styles.card__infoPoint_type_status}`}
-                  >
-                    <Text
-                      className={styles.card__pointDescription}
-                      color="secondary"
+                {ambassadorInfo.status.id !== STATUSES.CANDIDATE &&
+                  ambassadorInfo.status.id !== STATUSES.ARCHIVE && (
+                    <li
+                      className={`${styles.card__infoPoint} ${styles.card__infoPoint_type_status}`}
                     >
-                      Статус
-                    </Text>
-                    <div className={styles.card__status}>
-                      {ambassadorInfo.status &&
-                        defineStatus(ambassadorInfo.status.id)}
-                    </div>
-                    <DropdownMenu
-                      items={[
-                        handleStatusChange(STATUSES.DELETED, ambassadorInfo.id),
-                        handleStatusChange(STATUSES.ACTIVE, ambassadorInfo.id),
-                        handleStatusChange(STATUSES.PAUSE, ambassadorInfo.id),
-                        handleStatusChange(STATUSES.PENDING, ambassadorInfo.id),
-                      ]}
-                    />
-                  </li>
-                )}
+                      <Text
+                        className={styles.card__pointDescription}
+                        color="secondary"
+                      >
+                        Статус
+                      </Text>
+
+                      <DropdownMenu
+                        size="xl"
+                        renderSwitcher={props => (
+                          <div className={styles.card__status} {...props}>
+                            {ambassadorInfo.status &&
+                              defineStatus(ambassadorInfo.status.id)}
+                            <ArrowToggle />
+                          </div>
+                        )}
+                        items={[
+                          handleStatusChange(
+                            STATUSES.DELETED,
+                            ambassadorInfo.id,
+                          ),
+                          handleStatusChange(
+                            STATUSES.ACTIVE,
+                            ambassadorInfo.id,
+                          ),
+                          handleStatusChange(STATUSES.PAUSE, ambassadorInfo.id),
+                          handleStatusChange(
+                            STATUSES.PENDING,
+                            ambassadorInfo.id,
+                          ),
+                        ]}
+                      />
+                    </li>
+                  )}
                 {ambassadorInfo.status.id !== STATUSES.CANDIDATE &&
                   ambassadorInfo.status.id !== STATUSES.ARCHIVE && (
                     <li

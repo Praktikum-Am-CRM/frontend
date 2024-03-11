@@ -12,28 +12,31 @@ import {
 } from '@gravity-ui/uikit';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { AmbassadorDataType } from '../../types/types';
+import {
+  AmbassadorDataPartialWithStringStatus,
+  AmbassadorDataType,
+} from '../../types/types';
 import { formatDate } from '../../utils/formatDate';
 import { usePatchDataAmbassadorMutation } from '../../store/amCrm/amCrm.api';
 import { STATUSES } from '../../utils/constants';
 
 type Inputs = {
-  country: string;
-  settlement: string;
-  index: string;
-  street: string;
-  house: string;
-  building: string;
-  appartment: string;
+  address_country: string;
+  address_settlement: string;
+  address_index: string;
+  address_street: string;
+  address_house: number;
+  address_building: string;
+  address_apartment: string;
   email: string;
   educational_institution: string;
   place_work: string;
   specialty_work: string;
   blog_link: string;
-  clothing_size: string;
-  shoe_size: string;
+  size_clothing: string;
+  size_choe: number;
+  own_version: string;
   note: string;
-  comment: string;
 };
 
 const merchArray: string[] = [
@@ -64,42 +67,11 @@ export default function AmbassadorData({
     handleSubmit,
     // formState: { errors },
   } = useForm<Inputs>();
+
   const [patchDataAmbassador] = usePatchDataAmbassadorMutation();
-  const onSubmit: SubmitHandler<Inputs> = (data: {
-    country: string;
-    settlement: string;
-    index: string;
-    street: string;
-    house: string;
-    building: string;
-    appartment: string;
-    email: string;
-    educational_institution: string;
-    place_work: string;
-    specialty_work: string;
-    blog_link: string;
-    clothing_size: string;
-    note: string;
-    comment: string;
-  }) =>
-    patchDataAmbassador({
-      id: user.id,
-      country: data.country,
-      settlement: data.settlement,
-      index: data.index,
-      street: data.street,
-      house: data.house,
-      building: data.building,
-      appartment: data.appartment,
-      email: data.email,
-      educational_institution: data.educational_institution,
-      place_work: data.place_work,
-      specialty_work: data.specialty_work,
-      blog_link: data.blog_link,
-      clothing_size: data.clothing_size,
-      note: data.note,
-      comment: data.comment,
-    });
+  const onSubmit: SubmitHandler<Inputs> = (
+    data: Partial<AmbassadorDataPartialWithStringStatus>,
+  ) => patchDataAmbassador({ ...data, id: user.id });
 
   const variableInput = (
     nameInput: keyof Inputs,
@@ -113,7 +85,7 @@ export default function AmbassadorData({
         view="normal"
         size="l"
         placeholder={placeholder}
-      ></TextInput>
+      />
     ) : (
       <Text>{value}</Text>
     );
@@ -143,7 +115,7 @@ export default function AmbassadorData({
         return (
           <li
             className={styles.ambassodorCard__itemActivity}
-            key={`li ${singleActivity.id}`}
+            key={singleActivity.id}
           >
             {singleActivity.activity_name}
           </li>
@@ -221,38 +193,54 @@ export default function AmbassadorData({
         <ul className={styles.ambassodorCard__list}>
           <li className={styles.ambassodorCard__item}>
             {standartTextInput('Страна')}
-            {variableInput('country', displayData(user.address_country), '')}
+            {variableInput(
+              'address_country',
+              displayData(user.address_country),
+              '',
+            )}
           </li>
           <li className={styles.ambassodorCard__item}>
             {standartTextInput('Город')}
             {variableInput(
-              'settlement',
+              'address_settlement',
               displayData(user.address_settlement),
               '',
             )}
           </li>
           <li className={styles.ambassodorCard__item}>
             {standartTextInput('Индекс')}
-            {variableInput('index', displayData(user.address_index), '')}
+            {variableInput(
+              'address_index',
+              displayData(user.address_index),
+              '',
+            )}
           </li>
           <li
             className={`${styles.ambassodorCard__item} ${styles.ambassodorCard__itemAddress}`}
           >
             {standartTextInput('Адрес')}
-            {variableInput('street', displayData(`${user.address_street}`), '')}
+            {variableInput(
+              'address_street',
+              displayData(`${user.address_street}`),
+              '',
+            )}
             <Text>дом</Text>
-            {variableInput('house', displayData(`${user.address_house}`), '')}
+            {variableInput(
+              'address_house',
+              displayData(`${user.address_house}`),
+              '',
+            )}
             {user.address_building && <Text>строение</Text>}
             {user.address_building &&
               variableInput(
-                'building',
+                'address_building',
                 displayData(`${user.address_building}`),
                 '',
               )}
             {user.address_apartment && <Text>квартира</Text>}
             {user.address_apartment &&
               variableInput(
-                'appartment',
+                'address_apartment',
                 displayData(`${user.address_apartment}`),
                 '',
               )}
@@ -302,19 +290,23 @@ export default function AmbassadorData({
           <li className={styles.ambassodorCard__item}>
             {standartTextInput('Размер одежды')}
             {variableInput(
-              'clothing_size',
+              'size_clothing',
               displayData(user.size_clothing),
               '',
             )}
           </li>
           <li className={styles.ambassodorCard__item}>
             {standartTextInput('Размер обуви')}
-            {variableInput('shoe_size', displayData(user.size_shoe), '')}
+            {variableInput(
+              'size_choe',
+              displayData(user.size_choe.toString()),
+              '',
+            )}
           </li>
-          <li className={styles.ambassodorCard__item}>
+          {/* <li className={styles.ambassodorCard__item}>
             {standartTextInput('Дополнительная информация о себе')}
             {variableInput('note', displayData(user.note), '')}
-          </li>
+          </li> */}
         </ul>
         <ul
           className={`${styles.ambassodorCard__list} ${styles.ambassodorCard__listAnother}`}
@@ -325,7 +317,7 @@ export default function AmbassadorData({
             >
               <Text color="secondary">Комментарий</Text>
               {variableInput(
-                'comment',
+                'note',
                 displayData(user.note),
                 'Вы можете оставить здесь любые заметки, связанные с амбассадором',
               )}
