@@ -31,6 +31,7 @@ export const api = createApi({
     'Auth',
     'Merch',
     'AllReports',
+    'AmbassadorMessages',
   ],
   endpoints: build => ({
     login: build.mutation<LoginResponse, LoginRequest>({
@@ -199,29 +200,29 @@ export const api = createApi({
         url: 'statistic/ambassador_status/',
       }),
     }),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    createOnboardingMini: build.mutation<any, OnboardingMiniType>({
+    createOnboardingMini: build.mutation<void, OnboardingMiniType>({
       query: data => ({
         url: 'ambassador/',
         method: 'POST',
         body: data,
       }),
     }),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    postReportBot: build.mutation<any, ReportBotType>({
+    postReportBot: build.mutation<void, ReportBotType>({
       query: data => ({
         url: 'report/bot/',
         method: 'POST',
         body: data,
       }),
     }),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    postNewMessage: build.mutation<any, any>({
+    postNewMessage: build.mutation<void, NewMessageType>({
       query: data => ({
         url: 'bot_message/',
         method: 'POST',
         body: data,
       }),
+      invalidatesTags: (_result, _error, arg) => [
+        { type: 'AmbassadorMessages', id: arg.ambassadors?.[0] },
+      ],
     }),
     getAmbassadorMessages: build.query<
       MessageHistoryItemType[],
@@ -230,6 +231,9 @@ export const api = createApi({
       query: ({ id }) => ({
         url: `ambassador/${id}/messages/`,
       }),
+      providesTags: (_result, _error, arg) => [
+        { type: 'AmbassadorMessages', id: arg.id },
+      ],
     }),
   }),
 });
